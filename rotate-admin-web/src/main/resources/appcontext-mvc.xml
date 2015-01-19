@@ -8,6 +8,10 @@
 
     <!-- Configures the @Controller programming model -->
     <mvc:annotation-driven/>
+    <mvc:view-controller path="/" view-name="index"/>
+
+    <!-- Resolves view names to protected .jsp resources within the /WEB-INF/views directory -->
+
 
     <!--<mvc:resources location="/static/" mapping="/static/**"/>-->
 
