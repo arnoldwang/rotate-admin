@@ -26,7 +26,7 @@
         <repo.proxy.url>http://mvn.dianpingoa.com/dprepo</repo.proxy.url>
         <servlet.version>2.5</servlet.version>
         <ibatis.version>2.3.4.726</ibatis.version>
-        <spring.version>3.2.3.RELEASE</spring.version>
+        <spring.version>3.2.5.RELEASE</spring.version>
         <pigeon.version>2.3.6</pigeon.version>
         <slf4j.version>1.7.5</slf4j.version>
         <rotate.version>1.0-SNAPSHOT</rotate.version>
@@ -40,6 +40,11 @@
                 <groupId>com.dianping</groupId>
                 <artifactId>rotate-territory-api</artifactId>
                 <version>${rotate.territory.api}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>${servlet.version}</version>
             </dependency>
             <!-- Logging -->
             <dependency>
