@@ -13,4 +13,6 @@ public interface TerritoryServiceAgent {
     List<TerritoryDto> queryChildTerritoriesByTerritoryId(Integer territoryId);
 
     TerritoryTreeDto loadFullTerritoryTree();
+
+    boolean deleteTerritory(int territoryId);
 }

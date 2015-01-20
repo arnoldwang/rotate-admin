@@ -21,10 +21,10 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
 
     @Override
     public List<TerritoryDto> queryChildTerritoriesByTerritoryId(Integer territoryId) {
-        try{
+        try {
             return territoryService.queryChildTerritoriesByTerritoryId(territoryId);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new ApplicationException("战区服务异常,queryChildTerritoriesByTerritoryId");
         }
     }
@@ -32,5 +32,23 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
     @Override
     public TerritoryTreeDto loadFullTerritoryTree() {
         return territoryService.loadFullTerritoryTree();
+    }
+
+    @Override
+    public boolean deleteTerritory(int territoryId) {
+        boolean result = false;
+        try {
+
+            //TODO:01.查询长官
+
+            //02.删除战区
+            result = territoryService.delete(territoryId);
+
+            //TODO:03.删除长官权限
+
+        } catch (Exception ex) {
+            throw new ApplicationException("战区服务异常,delete");
+        }
+        return result;
     }
 }
