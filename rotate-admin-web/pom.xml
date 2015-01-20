@@ -5,11 +5,14 @@
         <groupId>rotate-admin</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
+
     <artifactId>rotate-admin-web</artifactId>
     <packaging>war</packaging>
     <name>rotate-admin-web</name>
-    <url>http://maven.apache.org</url>
+    <version>1.0-SNAPSHOT</version>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -22,6 +25,11 @@
         <dependency>
             <groupId>com.dianping</groupId>
             <artifactId>rotate-territory-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dianping</groupId>
+            <artifactId>rotate-admin-biz</artifactId>
         </dependency>
 
         <dependency>

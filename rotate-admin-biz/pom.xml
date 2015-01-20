@@ -10,7 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
     <name>rotate-admin-biz</name>
     <artifactId>rotate-admin-biz</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${project.version.biz}</version>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,6 +21,21 @@
         <dependency>
             <groupId>com.dianping.lion</groupId>
             <artifactId>lion-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dianping</groupId>
+            <artifactId>rotate-territory-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
         </dependency>
     </dependencies>
 
