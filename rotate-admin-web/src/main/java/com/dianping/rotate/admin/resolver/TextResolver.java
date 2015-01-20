@@ -30,7 +30,7 @@ public class TextResolver implements HandlerExceptionResolver {
         @Override
         public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
             response.setContentType(getContentType());
-//            response.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
 
 
             PrintWriter writer = response.getWriter();
