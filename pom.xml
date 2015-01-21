@@ -30,12 +30,18 @@
         <pigeon.version>2.3.6</pigeon.version>
         <slf4j.version>1.7.5</slf4j.version>
         <rotate.version>1.0-SNAPSHOT</rotate.version>
-        <rotate.territory.api>1.8</rotate.territory.api>
+        <rotate.territory.api>1.9</rotate.territory.api>
         <project.version.biz>1.0-SNAPSHOT</project.version.biz>
         <ba.base.organizationalstructure.api>0.0.17</ba.base.organizationalstructure.api>
+        <smt.base.version>1.0.2-SNAPSHOT</smt.base.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>smt-base</groupId>
+                <artifactId>smt-base</artifactId>
+                <version>${smt.base.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.dianping</groupId>
                 <artifactId>ba-base-organizationalstructure-api</artifactId>
@@ -222,6 +228,17 @@
                 <groupId>com.dianping.cat</groupId>
                 <artifactId>cat-core</artifactId>
                 <version>1.1.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jasig.cas</groupId>
+                <artifactId>cas-server-support-oauth</artifactId>
+                <version>3.5.2-STABLE.2</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.dianping.lion</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
