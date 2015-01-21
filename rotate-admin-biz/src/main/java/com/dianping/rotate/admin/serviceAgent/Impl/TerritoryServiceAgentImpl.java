@@ -10,6 +10,8 @@ import com.dianping.rotate.territory.dto.TerritoryTreeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,19 +34,31 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
     }
 
     @Override
+    public List<TerritoryDto> queryTerritoriyBreadCrumbsByTerritoryId(Integer territoryId) {
+        List<TerritoryDto> parentNodes = territoryService.queryParentTerritoriesByTerritoryId(territoryId);
+
+        TerritoryDto currentNode = territoryService.query(territoryId);
+        if (parentNodes == null) {
+            parentNodes = new ArrayList<TerritoryDto>();
+        }
+        parentNodes.add(currentNode);
+        return parentNodes;
+    }
+
+    @Override
     public TerritoryTreeDto loadFullTerritoryTree() {
         return territoryService.loadFullTerritoryTree();
     }
 
     @Override
-    public boolean deleteTerritory(Integer territoryId,int operatorId) {
+    public boolean deleteTerritory(Integer territoryId, int operatorId) {
         boolean result = Boolean.FALSE;
         try {
 
             //TODO:01.查询长官
 
             //02.删除战区
-            result = territoryService.delete(territoryId,operatorId);
+            result = territoryService.delete(territoryId, operatorId);
 
             //TODO:03.删除长官权限
 
@@ -58,10 +72,9 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
     public Integer create(TerritoryForWebDto territoryForWebDto) {
         try {
             Response<Integer> response = territoryService.create(territoryForWebDto);
-            if(!response.isSuccess()) return null;
+            if (!response.isSuccess()) return null;
             return response.getObj();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new ApplicationException("战区服务异常,create");
         }
     }

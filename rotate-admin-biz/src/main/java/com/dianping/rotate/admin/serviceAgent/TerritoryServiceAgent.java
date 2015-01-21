@@ -13,6 +13,13 @@ public interface TerritoryServiceAgent {
 
     List<TerritoryDto> queryChildTerritoriesByTerritoryId(Integer territoryId);
 
+    /**
+     * 查询给定节点的战区面包屑
+     * @param territoryId
+     * @return
+     */
+    List<TerritoryDto> queryTerritoriyBreadCrumbsByTerritoryId(Integer territoryId);
+
     TerritoryTreeDto loadFullTerritoryTree();
 
     boolean deleteTerritory(Integer territoryId,int operatorId);
