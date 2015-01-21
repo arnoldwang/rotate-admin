@@ -24,9 +24,9 @@ public class TerritoryController {
      * @return
      */
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
-    public @ResponseBody String deleteTerritory(@RequestParam int territoryId){
+    public @ResponseBody String deleteTerritory(@RequestParam int territoryId,@RequestParam int operatorId){
 
-        boolean result = territoryServiceAgent.deleteTerritory(territoryId);
+        boolean result = territoryServiceAgent.deleteTerritory(territoryId,operatorId);
         return StringUtils.EMPTY;
     }
 }
