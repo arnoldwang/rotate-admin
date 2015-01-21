@@ -15,7 +15,8 @@ public interface TerritoryServiceAgent {
 
     TerritoryTreeDto loadFullTerritoryTree();
 
-    boolean deleteTerritory(int territoryId);
+    boolean deleteTerritory(Integer territoryId,int operatorId);
+
 
     Integer create(TerritoryForWebDto territoryForWebDto);
 }

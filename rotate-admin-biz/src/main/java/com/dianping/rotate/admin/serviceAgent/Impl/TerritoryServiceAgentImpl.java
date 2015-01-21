@@ -37,14 +37,14 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
     }
 
     @Override
-    public boolean deleteTerritory(int territoryId) {
-        boolean result = false;
+    public boolean deleteTerritory(Integer territoryId,int operatorId) {
+        boolean result = Boolean.FALSE;
         try {
 
             //TODO:01.查询长官
 
             //02.删除战区
-            result = territoryService.delete(territoryId);
+            result = territoryService.delete(territoryId,operatorId);
 
             //TODO:03.删除长官权限
 

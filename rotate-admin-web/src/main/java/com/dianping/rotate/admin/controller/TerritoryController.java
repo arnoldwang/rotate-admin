@@ -30,9 +30,12 @@ public class TerritoryController {
      * @return
      */
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
-    public @ResponseBody String deleteTerritory(@RequestParam int territoryId){
+    public @ResponseBody String deleteTerritory(@RequestParam int territoryId,@RequestParam int operatorId){
 
-        boolean result = territoryServiceAgent.deleteTerritory(territoryId);
+        boolean result = territoryServiceAgent.deleteTerritory(territoryId,operatorId);
+        if(!result){
+            throw new ApplicationException("战区删除失败!");
+        }
         return StringUtils.EMPTY;
     }
 

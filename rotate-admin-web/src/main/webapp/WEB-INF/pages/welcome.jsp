@@ -9,7 +9,7 @@
 
 <html>
 <head>
-    <title></title>
+    <title>Welcome for test</title>
 </head>
 <body>
 this is welcome page!
