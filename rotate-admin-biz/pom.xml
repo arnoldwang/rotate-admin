@@ -19,6 +19,10 @@
 
     <dependencies>
         <dependency>
+            <artifactId>apollobase-api</artifactId>
+            <groupId>com.dianping</groupId>
+        </dependency>
+        <dependency>
             <groupId>smt-base</groupId>
             <artifactId>smt-base</artifactId>
         </dependency>

@@ -34,9 +34,15 @@
         <project.version.biz>1.0-SNAPSHOT</project.version.biz>
         <ba.base.organizationalstructure.api>0.0.17</ba.base.organizationalstructure.api>
         <smt.base.version>1.0.2-SNAPSHOT</smt.base.version>
+        <apollobase.api.version>1.1</apollobase.api.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <artifactId>apollobase-api</artifactId>
+                <groupId>com.dianping</groupId>
+                <version>${apollobase.api.version}</version>
+            </dependency>
             <dependency>
                 <groupId>smt-base</groupId>
                 <artifactId>smt-base</artifactId>
