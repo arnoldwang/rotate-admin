@@ -32,9 +32,21 @@
         <rotate.version>1.0-SNAPSHOT</rotate.version>
         <rotate.territory.api>1.8</rotate.territory.api>
         <project.version.biz>1.0-SNAPSHOT</project.version.biz>
+        <ba.base.organizationalstructure.api>0.0.17</ba.base.organizationalstructure.api>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.dianping</groupId>
+                <artifactId>ba-base-organizationalstructure-api</artifactId>
+                <version>${ba.base.organizationalstructure.api}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dianping</groupId>
+                <artifactId>dp-common-util</artifactId>
+                <version>0.0.8</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.dianping</groupId>
