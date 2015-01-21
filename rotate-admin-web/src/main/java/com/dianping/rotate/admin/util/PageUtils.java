@@ -14,6 +14,8 @@ public class PageUtils {
 
     private static String getPrefix() {
         if (prefix == null) {
+            // 如果需要映射本地js地址的话，需要在tomcat启动的时候设置vm options, 类似
+            // -Dlocalresource=http://localhost:3002/rotate-admin-static/dist
             prefix = System.getProperty("localresource") != null ? System.getProperty("localresource") :  LionConfigUtils.getProperty("rotate-admin-web.js.path") + LionConfigUtils.getProperty("rotate-admin-web.js.version");
         }
         return prefix;
