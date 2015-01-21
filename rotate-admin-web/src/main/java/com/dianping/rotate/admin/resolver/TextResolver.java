@@ -32,7 +32,6 @@ public class TextResolver implements HandlerExceptionResolver {
             response.setContentType(getContentType());
             response.setCharacterEncoding("UTF-8");
 
-
             PrintWriter writer = response.getWriter();
             writer.print(this.msg);
             writer.flush();

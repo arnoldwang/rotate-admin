@@ -32,9 +32,33 @@
         <rotate.version>1.0-SNAPSHOT</rotate.version>
         <rotate.territory.api>2.0</rotate.territory.api>
         <project.version.biz>1.0-SNAPSHOT</project.version.biz>
+        <ba.base.organizationalstructure.api>0.0.17</ba.base.organizationalstructure.api>
+        <smt.base.version>1.0.2-SNAPSHOT</smt.base.version>
+        <apollobase.api.version>1.1</apollobase.api.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <artifactId>apollobase-api</artifactId>
+                <groupId>com.dianping</groupId>
+                <version>${apollobase.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>smt-base</groupId>
+                <artifactId>smt-base</artifactId>
+                <version>${smt.base.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dianping</groupId>
+                <artifactId>ba-base-organizationalstructure-api</artifactId>
+                <version>${ba.base.organizationalstructure.api}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dianping</groupId>
+                <artifactId>dp-common-util</artifactId>
+                <version>0.0.8</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.dianping</groupId>
@@ -210,6 +234,17 @@
                 <groupId>com.dianping.cat</groupId>
                 <artifactId>cat-core</artifactId>
                 <version>1.1.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jasig.cas</groupId>
+                <artifactId>cas-server-support-oauth</artifactId>
+                <version>3.5.2-STABLE.2</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.dianping.lion</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>

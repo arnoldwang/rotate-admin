@@ -11,4 +11,20 @@
         <property name="callMethod" value="sync" />
         <property name="timeout" value="8000" />
     </bean>
+
+    <bean id="userService" class="com.dianping.dpsf.spring.ProxyBeanFactory" init-method="init">
+        <property name="serviceName" value="http://service.dianping.com/ba/base/organizationalstructure/UserService_1.0.0"/>
+        <property name="iface" value="com.dianping.ba.base.organizationalstructure.api.user.UserService"/>
+        <property name="serialize" value="hessian"/>
+        <property name="callMethod" value="sync"/>
+        <property name="timeout" value="5000"/>
+    </bean>
+
+    <bean id="apolloBaseService" class="com.dianping.dpsf.spring.ProxyBeanFactory" init-method="init">
+        <property name="serviceName" value="http://service.dianping.com/apolloBaseService/apolloBaseService_1.0.0"/>
+        <property name="iface" value="com.dianping.apollobase.api.DepartmentGroupService"/>
+        <property name="serialize" value="hessian"/>
+        <property name="callMethod" value="sync"/>
+        <property name="timeout" value="5000"/>
+    </bean>
 </beans>

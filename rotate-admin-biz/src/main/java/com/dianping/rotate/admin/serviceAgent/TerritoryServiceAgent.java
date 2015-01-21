@@ -1,6 +1,7 @@
 package com.dianping.rotate.admin.serviceAgent;
 
 import com.dianping.rotate.territory.dto.TerritoryDto;
+import com.dianping.rotate.territory.dto.TerritoryForWebDto;
 import com.dianping.rotate.territory.dto.TerritoryTreeDto;
 
 import java.util.List;
@@ -15,4 +16,7 @@ public interface TerritoryServiceAgent {
     TerritoryTreeDto loadFullTerritoryTree();
 
     boolean deleteTerritory(Integer territoryId,int operatorId);
+
+
+    Integer create(TerritoryForWebDto territoryForWebDto);
 }
