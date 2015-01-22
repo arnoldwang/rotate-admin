@@ -4,6 +4,7 @@ import com.dianping.combiz.util.JsonUtils;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.TerritoryServiceAgent;
 import com.dianping.rotate.admin.util.LoginUtils;
+import com.dianping.rotate.territory.dto.TerritoryDto;
 import com.dianping.rotate.territory.dto.TerritoryForWebDto;
 import com.dianping.rotate.territory.dto.TerritoryTreeDto;
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by dev_wzhang on 15-1-20.
@@ -56,6 +58,7 @@ public class TerritoryController {
 
     }
 
+<<<<<<< HEAD
     @RequestMapping(value = "/loadTerritoryTree", method = RequestMethod.GET)
     @ResponseBody
     public TerritoryTreeDto loadTerritoryTree(){
@@ -63,5 +66,40 @@ public class TerritoryController {
     }
 
 
+=======
+    /**
+     * 查询战区面包屑
+     * @param territoryId
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/queryTerritoryBreadCrumbs", method = RequestMethod.POST)
+    @ResponseBody
+    public List<TerritoryDto> queryTerritoryBreadCrumbs(@RequestParam int territoryId){
+        return territoryServiceAgent.queryTerritoriyBreadCrumbsByTerritoryId(territoryId);
+    }
+
+    /**
+     * 查询子站区
+     * @param territoryId
+     * @return
+     */
+    @RequestMapping(value = "/queryChildTerritoriesByTerritoryId", method = RequestMethod.POST)
+    @ResponseBody
+    public List<TerritoryDto> queryChildTerritoriesByTerritoryId(@RequestParam int territoryId){
+        return  territoryServiceAgent.queryChildTerritoriesByTerritoryId(territoryId);
+    }
+
+    /**
+     * 更新战区
+     * @param territoryForWebDto
+     * @return
+     */
+    @RequestMapping(value = "/updateTerritory", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateTerritory(@RequestParam TerritoryForWebDto territoryForWebDto){
+        return  StringUtils.EMPTY;
+    }
+>>>>>>> fc0f3237a7979133dac73ede760213e37fad49e4
 
 }
