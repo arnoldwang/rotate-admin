@@ -5,6 +5,7 @@ import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.TerritoryServiceAgent;
 import com.dianping.rotate.admin.util.LoginUtils;
 import com.dianping.rotate.territory.dto.TerritoryForWebDto;
+import com.dianping.rotate.territory.dto.TerritoryTreeDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,6 +55,13 @@ public class TerritoryController {
         return result;
 
     }
+
+    @RequestMapping(value = "/loadTerritoryTree", method = RequestMethod.GET)
+    @ResponseBody
+    public TerritoryTreeDto loadTerritoryTree(){
+        return territoryServiceAgent.loadFullTerritoryTree();
+    }
+
 
 
 }

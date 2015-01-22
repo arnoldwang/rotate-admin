@@ -20,7 +20,7 @@
         <property name="timeout" value="5000"/>
     </bean>
 
-    <bean id="apolloBaseService" class="com.dianping.dpsf.spring.ProxyBeanFactory" init-method="init">
+    <bean id="departmentGroupService" class="com.dianping.dpsf.spring.ProxyBeanFactory" init-method="init">
         <property name="serviceName" value="http://service.dianping.com/apolloBaseService/apolloBaseService_1.0.0"/>
         <property name="iface" value="com.dianping.apollobase.api.DepartmentGroupService"/>
         <property name="serialize" value="hessian"/>
