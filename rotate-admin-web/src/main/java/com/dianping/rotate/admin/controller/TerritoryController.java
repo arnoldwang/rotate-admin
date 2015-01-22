@@ -27,16 +27,21 @@ public class TerritoryController {
 
     @Autowired
     TerritoryServiceAgent territoryServiceAgent;
+
     /**
      * 删除战区
+     *
      * @param territoryId
      * @return
      */
-    @RequestMapping(value = "/delete",method = RequestMethod.POST)
-    public @ResponseBody String deleteTerritory(@RequestParam int territoryId,@RequestParam int operatorId){
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String deleteTerritory(@RequestParam int territoryId) {
 
-        boolean result = territoryServiceAgent.deleteTerritory(territoryId,operatorId);
-        if(!result){
+        int operatorId = LoginUtils.getUserLoginId();
+        boolean result = territoryServiceAgent.deleteTerritory(territoryId, operatorId);
+        if (!result) {
             throw new ApplicationException("战区删除失败!");
         }
         return StringUtils.EMPTY;
@@ -52,7 +57,7 @@ public class TerritoryController {
 
         Integer result = territoryServiceAgent.create(territoryForWebDto);
 
-        if(result==null) throw new ApplicationException("战区创建失败");
+        if (result == null) throw new ApplicationException("战区创建失败");
 
         return result;
 
@@ -60,42 +65,45 @@ public class TerritoryController {
 
     @RequestMapping(value = "/loadTerritoryTree", method = RequestMethod.GET)
     @ResponseBody
-    public TerritoryTreeDto loadTerritoryTree(){
+    public TerritoryTreeDto loadTerritoryTree() {
         return territoryServiceAgent.loadFullTerritoryTree();
     }
 
     /**
      * 查询战区面包屑
+     *
      * @param territoryId
      * @return
      * @throws IOException
      */
     @RequestMapping(value = "/queryTerritoryBreadCrumbs", method = RequestMethod.POST)
     @ResponseBody
-    public List<TerritoryDto> queryTerritoryBreadCrumbs(@RequestParam int territoryId){
+    public List<TerritoryDto> queryTerritoryBreadCrumbs(@RequestParam int territoryId) {
         return territoryServiceAgent.queryTerritoriyBreadCrumbsByTerritoryId(territoryId);
     }
 
     /**
      * 查询子站区
+     *
      * @param territoryId
      * @return
      */
     @RequestMapping(value = "/queryChildTerritoriesByTerritoryId", method = RequestMethod.POST)
     @ResponseBody
-    public List<TerritoryDto> queryChildTerritoriesByTerritoryId(@RequestParam int territoryId){
-        return  territoryServiceAgent.queryChildTerritoriesByTerritoryId(territoryId);
+    public List<TerritoryDto> queryChildTerritoriesByTerritoryId(@RequestParam int territoryId) {
+        return territoryServiceAgent.queryChildTerritoriesByTerritoryId(territoryId);
     }
 
     /**
      * 更新战区
+     *
      * @param territoryForWebDto
      * @return
      */
     @RequestMapping(value = "/updateTerritory", method = RequestMethod.POST)
     @ResponseBody
-    public String updateTerritory(@RequestParam TerritoryForWebDto territoryForWebDto){
-        return  StringUtils.EMPTY;
+    public String updateTerritory(@RequestParam TerritoryForWebDto territoryForWebDto) {
+        return StringUtils.EMPTY;
     }
 
 }
