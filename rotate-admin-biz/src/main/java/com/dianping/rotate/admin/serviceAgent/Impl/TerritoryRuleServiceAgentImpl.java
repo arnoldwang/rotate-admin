@@ -33,6 +33,6 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
             throw new ApplicationException("战区ID未指定!");
         }
 
-        return territoryRuleService.getRuleByTerritoryId(territoryId);
+        return territoryRuleService.getOwnerRuleByTerritoryId(territoryId);
     }
 }

@@ -74,9 +74,8 @@ public class TerritoryController {
      *
      * @param territoryId
      * @return
-     * @throws IOException
      */
-    @RequestMapping(value = "/queryTerritoryBreadCrumbs", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryTerritoryBreadCrumbs", method = RequestMethod.GET)
     @ResponseBody
     public List<TerritoryDto> queryTerritoryBreadCrumbs(@RequestParam int territoryId) {
         return territoryServiceAgent.queryTerritoriyBreadCrumbsByTerritoryId(territoryId);
