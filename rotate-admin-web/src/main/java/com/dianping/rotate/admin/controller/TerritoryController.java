@@ -4,6 +4,7 @@ import com.dianping.combiz.util.JsonUtils;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.TerritoryServiceAgent;
 import com.dianping.rotate.admin.util.LoginUtils;
+import com.dianping.rotate.smt.dto.Response;
 import com.dianping.rotate.territory.dto.TerritoryDto;
 import com.dianping.rotate.territory.dto.TerritoryForWebDto;
 import com.dianping.rotate.territory.dto.TerritoryTreeDto;
@@ -55,11 +56,11 @@ public class TerritoryController {
 
         territoryForWebDto.setOperatorId(LoginUtils.getUserLoginId());
 
-        Integer result = territoryServiceAgent.create(territoryForWebDto);
+        Response<Integer>  result = territoryServiceAgent.create(territoryForWebDto);
 
-        if (result == null) throw new ApplicationException("战区创建失败");
+        if (!result.isSuccess()) throw new ApplicationException("战区创建失败,"+result.getComment());
 
-        return result;
+        return result.getObj();
 
     }
 
@@ -96,13 +97,17 @@ public class TerritoryController {
     /**
      * 更新战区
      *
-     * @param territoryForWebDto
+     * @param data
      * @return
      */
     @RequestMapping(value = "/updateTerritory", method = RequestMethod.POST)
     @ResponseBody
-    public String updateTerritory(@RequestParam TerritoryForWebDto territoryForWebDto) {
-        return StringUtils.EMPTY;
+    public Integer updateTerritory(@RequestParam("data") String data) throws IOException {
+        TerritoryForWebDto territoryForWebDto = JsonUtils.fromStr(data, TerritoryForWebDto.class);
+        territoryForWebDto.setOperatorId(LoginUtils.getUserLoginId());
+        Response<Integer> result = territoryServiceAgent.update(territoryForWebDto);
+        if(!result.isSuccess()) throw new ApplicationException("战区更新失败,"+result.getComment());
+        return result.getObj();
     }
 
     @RequestMapping(value = "/queryAllValidTerritory", method = RequestMethod.GET)
