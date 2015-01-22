@@ -14,9 +14,15 @@
 <body>
 this is welcome page!
 
-<form action="/territory/delete" method="post">
-    战区id <input name="territoryId" id="territoryId">
-    <input type="submit" value="删除战区" title="删除战区" name="submit"/>
+<%--<form action="/territory/delete" method="post">--%>
+    <%--战区id <input name="territoryId" >--%>
+    <%--<input type="submit" value="删除战区" title="删除战区" name="submit"/>--%>
+<%--</form>--%>
+
+<form action="/territory/queryTerritoryBreadCrumbs" method="post">
+    战区id <input name="territoryId" >
+    <input type="submit" value="面包屑" na me="submit"/>
 </form>
+
 </body>
 </html>
