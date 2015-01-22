@@ -58,7 +58,7 @@ public class TerritoryController {
 
     }
 
-    @RequestMapping(value = "/loadTerritoryTree", method = RequestMethod.GET)
+    @RequestMapping(value = "/tree", method = RequestMethod.GET)
     @ResponseBody
     public TerritoryTreeDto loadTerritoryTree(){
         return territoryServiceAgent.loadFullTerritoryTree();

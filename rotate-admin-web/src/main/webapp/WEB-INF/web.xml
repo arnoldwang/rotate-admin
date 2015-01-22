@@ -105,7 +105,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/data/*</url-pattern>
     </servlet-mapping>
     <error-page>
         <error-code>404</error-code>
