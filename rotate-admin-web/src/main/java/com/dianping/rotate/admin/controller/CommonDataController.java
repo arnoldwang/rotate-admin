@@ -48,10 +48,8 @@ public class CommonDataController {
 
 //    @RequestMapping(value = "/getEnum", method = RequestMethod.GET)
 //    @ResponseBody
-//    public Map getEnum(){
-//        Map<String,Object> result = new HashMap<String, Object>();
-//        result.put("bizInfo",apolloBaseServiceAgent.getAllBizInfo());
-//        return result;
+//    public Object getEnum(){
+//       return cityService.findCities();
 //    }
 
 }

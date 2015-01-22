@@ -45,6 +45,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.dianping.platform</groupId>
+            <artifactId>platform-sdk</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.dianping</groupId>
             <artifactId>rotate-admin-biz</artifactId>
             <version>${project.version.biz}</version>
