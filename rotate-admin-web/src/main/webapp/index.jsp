@@ -10,7 +10,6 @@
         <%= PageUtils.css("asset/index.css") %>
         <script>
             var ENV = {
-                mock: false
             }
         </script>
     </head>
