@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -76,6 +75,15 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
             return response.getObj();
         } catch (Exception e) {
             throw new ApplicationException("战区服务异常,create");
+        }
+    }
+
+    @Override
+    public List<TerritoryDto> queryAllValidTerritory() {
+        try {
+            return territoryService.queryAllValidTerritories();
+        } catch (Exception e) {
+            throw new ApplicationException("战区服务异常,queryAllValidTerritory");
         }
     }
 }

@@ -98,4 +98,10 @@ public class TerritoryController {
         return  StringUtils.EMPTY;
     }
 
+    @RequestMapping(value = "/queryAllValidTerritory", method = RequestMethod.GET)
+    @ResponseBody
+    public List<TerritoryDto> queryAllValidTerritory(){
+        return  territoryServiceAgent.queryAllValidTerritory();
+    }
+
 }
