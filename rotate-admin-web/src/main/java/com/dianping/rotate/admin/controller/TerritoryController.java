@@ -88,7 +88,7 @@ public class TerritoryController {
      * @param territoryId
      * @return
      */
-    @RequestMapping(value = "/queryChildTerritoriesByTerritoryId", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryChildTerritoriesByTerritoryId", method = RequestMethod.GET)
     @ResponseBody
     public List<TerritoryDto> queryChildTerritoriesByTerritoryId(@RequestParam int territoryId) {
         return territoryServiceAgent.queryChildTerritoriesByTerritoryId(territoryId);
@@ -104,6 +104,12 @@ public class TerritoryController {
     @ResponseBody
     public String updateTerritory(@RequestParam TerritoryForWebDto territoryForWebDto) {
         return StringUtils.EMPTY;
+    }
+
+    @RequestMapping(value = "/queryAllValidTerritory", method = RequestMethod.GET)
+    @ResponseBody
+    public List<TerritoryDto> queryAllValidTerritory(){
+        return  territoryServiceAgent.queryAllValidTerritory();
     }
 
 }

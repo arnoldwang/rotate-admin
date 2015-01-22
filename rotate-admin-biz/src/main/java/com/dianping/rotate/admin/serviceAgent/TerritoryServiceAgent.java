@@ -26,4 +26,6 @@ public interface TerritoryServiceAgent {
 
 
     Integer create(TerritoryForWebDto territoryForWebDto);
+
+    List<TerritoryDto> queryAllValidTerritory();
 }
