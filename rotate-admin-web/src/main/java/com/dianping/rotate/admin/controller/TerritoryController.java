@@ -81,7 +81,7 @@ public class TerritoryController {
      * @param territoryId
      * @return
      */
-    @RequestMapping(value = "/queryChildTerritoriesByTerritoryId", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryChildTerritoriesByTerritoryId", method = RequestMethod.GET)
     @ResponseBody
     public List<TerritoryDto> queryChildTerritoriesByTerritoryId(@RequestParam int territoryId){
         return  territoryServiceAgent.queryChildTerritoriesByTerritoryId(territoryId);
