@@ -93,4 +93,13 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
             throw new ApplicationException("战区服务异常,update");
         }
     }
+
+    @Override
+    public TerritoryForWebDto loadTerritoryInfoForWeb(Integer territoryId) {
+        try {
+            return territoryService.loadTerritoryInfoForWeb(territoryId);
+        } catch (Exception e) {
+            throw new ApplicationException("战区服务异常,loadTerritoryInfoForWeb");
+        }
+    }
 }

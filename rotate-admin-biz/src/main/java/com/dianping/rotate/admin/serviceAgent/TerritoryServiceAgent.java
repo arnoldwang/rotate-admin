@@ -31,4 +31,6 @@ public interface TerritoryServiceAgent {
     List<TerritoryDto> queryAllValidTerritory();
 
     Response<Integer> update(TerritoryForWebDto territoryForWebDto);
+
+    TerritoryForWebDto loadTerritoryInfoForWeb(Integer territoryId);
 }

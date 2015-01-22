@@ -1,6 +1,7 @@
 package com.dianping.rotate.admin.controller;
 
 import com.dianping.ba.base.organizationalstructure.api.user.dto.UserDto;
+import com.dianping.combiz.service.CityService;
 import com.dianping.rotate.admin.serviceAgent.ApolloBaseServiceAgent;
 import com.dianping.rotate.admin.serviceAgent.UserServiceAgent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class CommonDataController {
     @Autowired
     private ApolloBaseServiceAgent apolloBaseServiceAgent;
 
+    @Autowired
+    private CityService cityService;
+
     @RequestMapping(value = "/searchUser", method = RequestMethod.GET)
     @ResponseBody
     public List<UserDto> searchUser(@RequestParam("userName") String userName){
@@ -40,5 +44,14 @@ public class CommonDataController {
         result.put("bizInfo",apolloBaseServiceAgent.getAllBizInfo());
         return result;
     }
+
+
+//    @RequestMapping(value = "/getEnum", method = RequestMethod.GET)
+//    @ResponseBody
+//    public Map getEnum(){
+//        Map<String,Object> result = new HashMap<String, Object>();
+//        result.put("bizInfo",apolloBaseServiceAgent.getAllBizInfo());
+//        return result;
+//    }
 
 }
