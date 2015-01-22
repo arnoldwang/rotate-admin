@@ -3,14 +3,16 @@ package com.dianping.rotate.admin.serviceAgent.Impl;
 import com.dianping.apollobase.api.Constants;
 import com.dianping.apollobase.api.DepartmentGroupService;
 import com.dianping.apollobase.api.Group;
-import com.dianping.apollobase.api.GroupBusiness;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.ApolloBaseServiceAgent;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by shenyoujun on 15/1/21.
@@ -32,15 +34,10 @@ public class ApolloBaseServiceAgentImpl implements ApolloBaseServiceAgent {
             if(CollectionUtils.isEmpty(groups)) return result;
 
             for(Group group:groups){
-                List<GroupBusiness> businesses = group.getGroupBusiness();
-                if(businesses!=null){
-                    for(GroupBusiness groupBusiness:businesses){
-                        Map<String,Object> resultMap = new HashMap<String, Object>();
-                        resultMap.put("text",groupBusiness.getBusinessId());
-                        resultMap.put("value",groupBusiness.getBusinessName());
-                        result.add(resultMap);
-                    }
-                }
+                Map<String,Object> resultMap = new HashMap<String, Object>();
+                resultMap.put("text",group.getGroupId());
+                resultMap.put("value",group.getGroupName());
+                result.add(resultMap);
             }
             return result;
         } catch (Exception e) {
