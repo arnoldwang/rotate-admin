@@ -58,15 +58,12 @@ public class TerritoryController {
 
     }
 
-<<<<<<< HEAD
     @RequestMapping(value = "/loadTerritoryTree", method = RequestMethod.GET)
     @ResponseBody
     public TerritoryTreeDto loadTerritoryTree(){
         return territoryServiceAgent.loadFullTerritoryTree();
     }
 
-
-=======
     /**
      * 查询战区面包屑
      * @param territoryId
@@ -100,6 +97,5 @@ public class TerritoryController {
     public String updateTerritory(@RequestParam TerritoryForWebDto territoryForWebDto){
         return  StringUtils.EMPTY;
     }
->>>>>>> fc0f3237a7979133dac73ede760213e37fad49e4
 
 }
