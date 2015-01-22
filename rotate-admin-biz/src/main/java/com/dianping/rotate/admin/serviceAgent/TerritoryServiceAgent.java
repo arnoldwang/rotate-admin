@@ -1,5 +1,6 @@
 package com.dianping.rotate.admin.serviceAgent;
 
+import com.dianping.rotate.smt.dto.Response;
 import com.dianping.rotate.territory.dto.TerritoryDto;
 import com.dianping.rotate.territory.dto.TerritoryForWebDto;
 import com.dianping.rotate.territory.dto.TerritoryTreeDto;
@@ -25,7 +26,9 @@ public interface TerritoryServiceAgent {
     boolean deleteTerritory(Integer territoryId,int operatorId);
 
 
-    Integer create(TerritoryForWebDto territoryForWebDto);
+    Response<Integer> create(TerritoryForWebDto territoryForWebDto);
 
     List<TerritoryDto> queryAllValidTerritory();
+
+    Response<Integer> update(TerritoryForWebDto territoryForWebDto);
 }

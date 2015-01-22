@@ -68,11 +68,9 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
     }
 
     @Override
-    public Integer create(TerritoryForWebDto territoryForWebDto) {
+    public Response<Integer> create(TerritoryForWebDto territoryForWebDto) {
         try {
-            Response<Integer> response = territoryService.create(territoryForWebDto);
-            if (!response.isSuccess()) return null;
-            return response.getObj();
+            return territoryService.create(territoryForWebDto);
         } catch (Exception e) {
             throw new ApplicationException("战区服务异常,create");
         }
@@ -84,6 +82,15 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
             return territoryService.queryAllValidTerritories();
         } catch (Exception e) {
             throw new ApplicationException("战区服务异常,queryAllValidTerritory");
+        }
+    }
+
+    @Override
+    public Response<Integer> update(TerritoryForWebDto territoryForWebDto) {
+        try {
+            return territoryService.update(territoryForWebDto);
+        } catch (Exception e) {
+            throw new ApplicationException("战区服务异常,update");
         }
     }
 }

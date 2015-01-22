@@ -4,6 +4,7 @@ import com.dianping.combiz.util.JsonUtils;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.TerritoryServiceAgent;
 import com.dianping.rotate.admin.util.LoginUtils;
+import com.dianping.rotate.smt.dto.Response;
 import com.dianping.rotate.territory.dto.TerritoryDto;
 import com.dianping.rotate.territory.dto.TerritoryForWebDto;
 import com.dianping.rotate.territory.dto.TerritoryTreeDto;
@@ -27,16 +28,21 @@ public class TerritoryController {
 
     @Autowired
     TerritoryServiceAgent territoryServiceAgent;
+
     /**
      * 删除战区
+     *
      * @param territoryId
      * @return
      */
-    @RequestMapping(value = "/delete",method = RequestMethod.POST)
-    public @ResponseBody String deleteTerritory(@RequestParam int territoryId,@RequestParam int operatorId){
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String deleteTerritory(@RequestParam int territoryId) {
 
-        boolean result = territoryServiceAgent.deleteTerritory(territoryId,operatorId);
-        if(!result){
+        int operatorId = LoginUtils.getUserLoginId();
+        boolean result = territoryServiceAgent.deleteTerritory(territoryId, operatorId);
+        if (!result) {
             throw new ApplicationException("战区删除失败!");
         }
         return StringUtils.EMPTY;
@@ -50,52 +56,58 @@ public class TerritoryController {
 
         territoryForWebDto.setOperatorId(LoginUtils.getUserLoginId());
 
-        Integer result = territoryServiceAgent.create(territoryForWebDto);
+        Response<Integer>  result = territoryServiceAgent.create(territoryForWebDto);
 
-        if(result==null) throw new ApplicationException("战区创建失败");
+        if (!result.isSuccess()) throw new ApplicationException("战区创建失败,"+result.getComment());
 
-        return result;
+        return result.getObj();
 
     }
 
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
     @ResponseBody
-    public TerritoryTreeDto loadTerritoryTree(){
+    public TerritoryTreeDto loadTerritoryTree() {
         return territoryServiceAgent.loadFullTerritoryTree();
     }
 
     /**
      * 查询战区面包屑
+     *
      * @param territoryId
      * @return
-     * @throws IOException
      */
-    @RequestMapping(value = "/queryTerritoryBreadCrumbs", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryTerritoryBreadCrumbs", method = RequestMethod.GET)
     @ResponseBody
-    public List<TerritoryDto> queryTerritoryBreadCrumbs(@RequestParam int territoryId){
+    public List<TerritoryDto> queryTerritoryBreadCrumbs(@RequestParam int territoryId) {
         return territoryServiceAgent.queryTerritoriyBreadCrumbsByTerritoryId(territoryId);
     }
 
     /**
      * 查询子站区
+     *
      * @param territoryId
      * @return
      */
     @RequestMapping(value = "/queryChildTerritoriesByTerritoryId", method = RequestMethod.GET)
     @ResponseBody
-    public List<TerritoryDto> queryChildTerritoriesByTerritoryId(@RequestParam int territoryId){
-        return  territoryServiceAgent.queryChildTerritoriesByTerritoryId(territoryId);
+    public List<TerritoryDto> queryChildTerritoriesByTerritoryId(@RequestParam int territoryId) {
+        return territoryServiceAgent.queryChildTerritoriesByTerritoryId(territoryId);
     }
 
     /**
      * 更新战区
-     * @param territoryForWebDto
+     *
+     * @param data
      * @return
      */
     @RequestMapping(value = "/updateTerritory", method = RequestMethod.POST)
     @ResponseBody
-    public String updateTerritory(@RequestParam TerritoryForWebDto territoryForWebDto){
-        return  StringUtils.EMPTY;
+    public Integer updateTerritory(@RequestParam("data") String data) throws IOException {
+        TerritoryForWebDto territoryForWebDto = JsonUtils.fromStr(data, TerritoryForWebDto.class);
+        territoryForWebDto.setOperatorId(LoginUtils.getUserLoginId());
+        Response<Integer> result = territoryServiceAgent.update(territoryForWebDto);
+        if(!result.isSuccess()) throw new ApplicationException("战区更新失败,"+result.getComment());
+        return result.getObj();
     }
 
     @RequestMapping(value = "/queryAllValidTerritory", method = RequestMethod.GET)
