@@ -34,7 +34,7 @@
         <project.version.biz>1.0-SNAPSHOT</project.version.biz>
         <ba.base.organizationalstructure.api>0.0.17</ba.base.organizationalstructure.api>
         <smt.base.version>1.0.2-SNAPSHOT</smt.base.version>
-        <apollobase.api.version>1.1</apollobase.api.version>
+        <apollobase.api.version>1.2</apollobase.api.version>
     </properties>
     <dependencyManagement>
         <dependencies>
