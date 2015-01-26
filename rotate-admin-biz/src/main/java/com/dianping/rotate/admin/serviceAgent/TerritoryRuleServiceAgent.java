@@ -22,4 +22,11 @@ public interface TerritoryRuleServiceAgent {
      * @return
      */
     List<TerritoryRuleDto> getOwnerRuleByTerritoryId(Integer territoryId);
+
+    /**
+     * 查询战区的规则描述
+     * @param territoryId
+     * @return
+     */
+    public TerritoryRuleDto queryTerritoryRuleTips(Integer territoryId);
 }

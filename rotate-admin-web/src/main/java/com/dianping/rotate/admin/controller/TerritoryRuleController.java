@@ -2,6 +2,7 @@ package com.dianping.rotate.admin.controller;
 
 import com.dianping.rotate.admin.serviceAgent.TerritoryRuleServiceAgent;
 import com.dianping.rotate.territory.dto.TerritoryRuleDto;
+import com.dianping.rotate.territory.dto.TerritoryRuleItemDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ public class TerritoryRuleController {
      * @param territoryId
      * @return
      */
-    @RequestMapping(value = "/queryExtendsTerritoryRule",method = RequestMethod.POST)
+    @RequestMapping(value = "/queryExtendsTerritoryRule",method = RequestMethod.GET)
     @ResponseBody
     public List<TerritoryRuleDto> queryExtendsTerritoryRule(@RequestParam Integer territoryId){
 
@@ -38,10 +39,36 @@ public class TerritoryRuleController {
      * @param territoryId
      * @return
      */
-    @RequestMapping(value = "/queryOwnerTerritoryRule",method = RequestMethod.POST)
+    @RequestMapping(value = "/queryOwnerTerritoryRule",method = RequestMethod.GET)
     @ResponseBody
     public List<TerritoryRuleDto> queryOwnerTerritoryRule(@RequestParam Integer territoryId){
 
         return territoryRuleServiceAgent.getOwnerRuleByTerritoryId(territoryId);
     }
+
+    /**
+     * 查询规则明细
+     * @param territoryId
+     * @return
+     */
+    @RequestMapping(value = "/queryTerritoryRuleWithItem",method = RequestMethod.GET)
+    @ResponseBody
+    public List<TerritoryRuleDto> queryTerritoryRuleWithItem(@RequestParam Integer territoryId){
+        return  territoryRuleServiceAgent.getOwnerRuleByTerritoryId(territoryId);
+    }
+
+
+
+    /**
+     * 查询规则明细tips
+     * @param territoryId
+     * @return
+     */
+    @RequestMapping(value = "/queryTerritoryRuleTips",method = RequestMethod.GET)
+    @ResponseBody
+    public TerritoryRuleDto queryTerritoryRuleTips(@RequestParam Integer territoryId){
+        return  territoryRuleServiceAgent.queryTerritoryRuleTips(territoryId);
+    }
+
+
 }

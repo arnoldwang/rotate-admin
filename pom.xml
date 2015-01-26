@@ -30,7 +30,8 @@
         <pigeon.version>2.3.6</pigeon.version>
         <slf4j.version>1.7.5</slf4j.version>
         <rotate.version>1.0-SNAPSHOT</rotate.version>
-        <rotate.territory.api>2.0.4</rotate.territory.api>
+        <rotate.territory.api>2.0.7</rotate.territory.api>
+        <rotate.shop.api>1.0.8-SNAPSHOT</rotate.shop.api>
         <project.version.biz>1.0-SNAPSHOT</project.version.biz>
         <ba.base.organizationalstructure.api>0.0.17</ba.base.organizationalstructure.api>
         <smt.base.version>1.0.2-SNAPSHOT</smt.base.version>
@@ -64,6 +65,11 @@
                 <groupId>com.dianping</groupId>
                 <artifactId>rotate-territory-api</artifactId>
                 <version>${rotate.territory.api}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dianping</groupId>
+                <artifactId>rotate-shop-api</artifactId>
+                <version>${rotate.shop.api}</version>
             </dependency>
             <dependency>
                 <groupId>javax.servlet</groupId>
