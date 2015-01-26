@@ -41,7 +41,7 @@ public class ApolloBaseServiceAgentImpl implements ApolloBaseServiceAgent {
             }
             return result;
         } catch (Exception e) {
-            throw new ApplicationException("获取BIZ信息失败,ApolloBaseServiceAgent.getAllBizInfo");
+            throw new ApplicationException("获取BIZ信息失败,ApolloBaseServiceAgent.getAllBizInfo"+e.getMessage());
         }
     }
 
