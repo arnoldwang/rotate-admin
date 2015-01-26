@@ -34,7 +34,9 @@ public class LoginUtils {
      * @return
      */
     public static Integer getUserLoginId() {
-        UserProfile authorization = getUserProfile();
-        return authorization.getLoginId();
+        // mock
+        return -12345;
+//        UserProfile authorization = getUserProfile();
+//        return authorization.getLoginId();
     }
 }

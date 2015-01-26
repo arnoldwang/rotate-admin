@@ -11,10 +11,7 @@ import com.dianping.rotate.territory.dto.TerritoryTreeDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -50,9 +47,9 @@ public class TerritoryController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public Integer create(@RequestParam("data") String data) throws IOException {
+    public Integer create(@RequestBody TerritoryForWebDto territoryForWebDto) throws IOException {
 
-        TerritoryForWebDto territoryForWebDto = JsonUtils.fromStr(data, TerritoryForWebDto.class);
+//        TerritoryForWebDto territoryForWebDto = JsonUtils.fromStr(data, TerritoryForWebDto.class);
 
         territoryForWebDto.setOperatorId(LoginUtils.getUserLoginId());
 
