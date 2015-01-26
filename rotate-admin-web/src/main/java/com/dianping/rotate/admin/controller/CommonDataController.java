@@ -31,7 +31,7 @@ import java.util.Map;
  * Created by shenyoujun on 15/1/21.
  */
 @Controller
-@RequestMapping("/territory")
+@RequestMapping("/common")
 public class CommonDataController {
 
 
@@ -62,24 +62,6 @@ public class CommonDataController {
         return userServiceAgent.searchUser(userName);
     }
 
-    @RequestMapping(value = "/getBizInfo", method = RequestMethod.GET)
-    @ResponseBody
-    public Map getBizInfo(){
-        Map<String,Object> result = new HashMap<String, Object>();
-        result.put("bizInfo",apolloBaseServiceAgent.getAllBizInfo());
-        return result;
-    }
-
-
-//    @RequestMapping(value = "/getEnum", method = RequestMethod.GET)
-//    @ResponseBody
-//    public Object getEnum(){
-//       return cityService.findCities();
-//    }
-
-
-
-
     @RequestMapping(value = "/fuzzySearchCitiesByName", method = RequestMethod.GET)
     @ResponseBody
     public List<City> fuzzySearchCitiesByName(final String cityName) {
@@ -106,12 +88,13 @@ public class CommonDataController {
 
 
 
-    @RequestMapping(value = "/getEnum", method = RequestMethod.GET)
+    @RequestMapping(value = "/enums")
     @ResponseBody
     public Object getEnum() {
         Map result = new HashMap();
 
         result.put("province",getProvince());
+        result.put("biz", apolloBaseServiceAgent.getAllBizInfo());
 
         return result;
 

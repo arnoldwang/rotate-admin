@@ -32,20 +32,19 @@ public class TerritoryController {
      * @param territoryId
      * @return
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public
+    @RequestMapping(value = "/{territoryId}", method = RequestMethod.DELETE)
     @ResponseBody
-    String deleteTerritory(@RequestParam int territoryId) {
+    public Integer deleteTerritory(@PathVariable int territoryId) {
 
         int operatorId = LoginUtils.getUserLoginId();
         boolean result = territoryServiceAgent.deleteTerritory(territoryId, operatorId);
         if (!result) {
             throw new ApplicationException("战区删除失败!");
         }
-        return StringUtils.EMPTY;
+        return territoryId;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
     public Integer create(@RequestBody TerritoryForWebDto territoryForWebDto) throws IOException {
 
@@ -113,9 +112,9 @@ public class TerritoryController {
         return  territoryServiceAgent.queryAllValidTerritory();
     }
 
-    @RequestMapping(value = "/base-info", method = RequestMethod.GET)
+    @RequestMapping(value = "/{territoryId}/base-info", method = RequestMethod.GET)
     @ResponseBody
-    public TerritoryForWebDto loadTerritoryBaseInfo(@RequestParam("territoryId") Integer territoryId){
+    public TerritoryForWebDto loadTerritoryBaseInfo(@PathVariable Integer territoryId){
         return  territoryServiceAgent.loadTerritoryInfoForWeb(territoryId);
     }
 
