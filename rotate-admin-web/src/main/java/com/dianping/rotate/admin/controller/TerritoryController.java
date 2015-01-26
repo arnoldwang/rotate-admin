@@ -113,7 +113,7 @@ public class TerritoryController {
         return  territoryServiceAgent.queryAllValidTerritory();
     }
 
-    @RequestMapping(value = "/loadTerritoryBaseInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/base-info", method = RequestMethod.GET)
     @ResponseBody
     public TerritoryForWebDto loadTerritoryBaseInfo(@RequestParam("territoryId") Integer territoryId){
         return  territoryServiceAgent.loadTerritoryInfoForWeb(territoryId);
