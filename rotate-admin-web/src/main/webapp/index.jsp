@@ -10,7 +10,8 @@
         <%= PageUtils.css("asset/index.css") %>
         <script>
             var ENV = {
-            }
+                ajaxPrefix: '/rotate/data'
+            };
         </script>
     </head>
 

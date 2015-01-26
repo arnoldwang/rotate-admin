@@ -45,7 +45,7 @@ public class TerritoryController {
         return StringUtils.EMPTY;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
     public Integer create(@RequestBody TerritoryForWebDto territoryForWebDto) throws IOException {
 

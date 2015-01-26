@@ -1,6 +1,7 @@
 package com.dianping.rotate.admin.resolver;
 
 import com.dianping.rotate.admin.exceptions.ApplicationException;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
@@ -13,6 +14,7 @@ import java.util.Map;
 /**
  * Created by yangjie on 12/1/14.
  */
+@Component
 public class TextResolver implements HandlerExceptionResolver {
 
     static class TextView implements View {

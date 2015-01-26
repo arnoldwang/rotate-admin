@@ -35,8 +35,8 @@ public class ApolloBaseServiceAgentImpl implements ApolloBaseServiceAgent {
 
             for(Group group:groups){
                 Map<String,Object> resultMap = new HashMap<String, Object>();
-                resultMap.put("text",group.getGroupId());
-                resultMap.put("value",group.getGroupName());
+                resultMap.put("value",group.getGroupId());
+                resultMap.put("text",group.getGroupName());
                 result.add(resultMap);
             }
             return result;
