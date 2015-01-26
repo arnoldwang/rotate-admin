@@ -62,7 +62,7 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
             //TODO:03.删除长官权限
 
         } catch (Exception ex) {
-            throw new ApplicationException("战区服务异常,delete");
+            throw new ApplicationException(ex.getMessage());
         }
         return result;
     }
