@@ -28,7 +28,7 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
             return territoryService.queryChildTerritoriesByTerritoryId(territoryId);
 
         } catch (Exception e) {
-            throw new ApplicationException("战区服务异常,queryChildTerritoriesByTerritoryId");
+            throw new ApplicationException("战区服务异常,queryChildTerritoriesByTerritoryId:"+e.getMessage());
         }
     }
 
@@ -62,7 +62,7 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
             //TODO:03.删除长官权限
 
         } catch (Exception ex) {
-            throw new ApplicationException("战区服务异常,delete");
+            throw new ApplicationException("战区服务异常,delete:"+ ex.getMessage());
         }
         return result;
     }
@@ -72,7 +72,7 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
         try {
             return territoryService.create(territoryForWebDto);
         } catch (Exception e) {
-            throw new ApplicationException("战区服务异常,create");
+            throw new ApplicationException("战区服务异常,create:"+e.getMessage());
         }
     }
 
@@ -81,7 +81,7 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
         try {
             return territoryService.queryAllValidTerritories();
         } catch (Exception e) {
-            throw new ApplicationException("战区服务异常,queryAllValidTerritory");
+            throw new ApplicationException("战区服务异常,queryAllValidTerritory:"+e.getMessage());
         }
     }
 
@@ -90,7 +90,7 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
         try {
             return territoryService.update(territoryForWebDto);
         } catch (Exception e) {
-            throw new ApplicationException("战区服务异常,update");
+            throw new ApplicationException("战区服务异常,update:"+e.getMessage());
         }
     }
 
@@ -99,7 +99,7 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
         try {
             return territoryService.loadTerritoryInfoForWeb(territoryId);
         } catch (Exception e) {
-            throw new ApplicationException("战区服务异常,loadTerritoryInfoForWeb");
+            throw new ApplicationException("战区服务异常,loadTerritoryInfoForWeb:"+e.getMessage());
         }
     }
 }
