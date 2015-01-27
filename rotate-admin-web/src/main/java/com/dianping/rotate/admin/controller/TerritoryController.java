@@ -8,6 +8,7 @@ import com.dianping.rotate.smt.dto.Response;
 import com.dianping.rotate.territory.dto.TerritoryDto;
 import com.dianping.rotate.territory.dto.TerritoryForWebDto;
 import com.dianping.rotate.territory.dto.TerritoryTreeDto;
+import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/territory")
+//@Log4j
 public class TerritoryController {
 
     @Autowired
@@ -35,6 +37,7 @@ public class TerritoryController {
     @RequestMapping(value = "/{territoryId}", method = RequestMethod.DELETE)
     @ResponseBody
     public Integer deleteTerritory(@PathVariable int territoryId) {
+
 
         int operatorId = LoginUtils.getUserLoginId();
         boolean result = territoryServiceAgent.deleteTerritory(territoryId, operatorId);

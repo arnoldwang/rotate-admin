@@ -102,4 +102,6 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
             throw new ApplicationException("战区服务异常,loadTerritoryInfoForWeb:"+e.getMessage());
         }
     }
+
+
 }

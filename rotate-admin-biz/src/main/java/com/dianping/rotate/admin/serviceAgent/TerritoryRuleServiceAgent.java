@@ -35,14 +35,19 @@ public interface TerritoryRuleServiceAgent {
      * @param territoryRuleDto
      * @return
      */
-    public TerritoryRuleDto saveTerritoryRule(TerritoryRuleDto territoryRuleDto);
+    public TerritoryRuleDto saveTerritoryRule(TerritoryRuleDto territoryRuleDto,int operatorId);
 
     /**
      * 删除战区规则
      * @param territoryId:战区id
      * @return
      */
-    public int deleteTerritoryRule(int territoryId);
+    public Boolean deleteTerritoryRule(int territoryId);
 
-
+    /**
+     * 运行战区规则
+     * @param territoryId
+     * @return
+     */
+    public Boolean runTerritoryRule(int territoryId,int operatorId);
 }
