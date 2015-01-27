@@ -22,6 +22,12 @@
             <artifactId>apollobase-api</artifactId>
             <groupId>com.dianping</groupId>
         </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+
+        </dependency>
         <dependency>
             <groupId>smt-base</groupId>
             <artifactId>smt-base</artifactId>
@@ -66,6 +72,11 @@
         <dependency>
             <groupId>com.dianping</groupId>
             <artifactId>dp-common-service</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 

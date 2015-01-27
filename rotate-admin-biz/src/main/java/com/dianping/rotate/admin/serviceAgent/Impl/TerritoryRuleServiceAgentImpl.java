@@ -15,7 +15,7 @@ import com.dianping.rotate.territory.dto.TerritoryRuleDto;
 import com.dianping.rotate.territory.dto.TerritoryRuleItemDto;
 import com.dianping.rotate.territory.enums.RuleTypeEnum;
 import com.dianping.rotate.territory.enums.TerritoryRulePropertyEnum;
-import org.apache.commons.lang3.StringUtils;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +26,7 @@ import java.util.Map;
 /**
  * Created by dev_wzhang on 15-1-22.
  */
+//@Log4j
 @Component
 public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent {
 
@@ -47,7 +48,6 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
         if (territoryId == null || territoryId == 0) {
             throw new ApplicationException("战区ID未指定!");
         }
-
         return territoryRuleService.getExtendsRuleByTerritoryId(territoryId);
     }
 
@@ -71,20 +71,41 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
         }
 
         //02.替换规则内容
-        String  resultStr = replaceRuleItemContent(ruleDto);
+        String resultStr = replaceRuleItemContent(ruleDto);
         ruleDto.setRule(resultStr);
         ruleDto.setItems(null);
         return ruleDto;
     }
 
     @Override
-    public TerritoryRuleDto saveTerritoryRule(TerritoryRuleDto territoryRuleDto) {
-        return null;
+    public TerritoryRuleDto saveTerritoryRule(TerritoryRuleDto territoryRuleDto, int operatorId) {
+
+        try {
+            return territoryRuleService.saveTerritoryRule(territoryRuleDto, operatorId);
+        } catch (Exception ex) {
+
+            throw new ApplicationException(ex.getMessage());
+        }
     }
 
     @Override
-    public int deleteTerritoryRule(int territoryId) {
-        return 0;
+    public Boolean deleteTerritoryRule(int territoryId) {
+        try {
+            return territoryRuleService.deleteTerritoryRule(territoryId);
+        } catch (Exception ex) {
+            throw new ApplicationException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public Boolean runTerritoryRule(int territoryId,int operatorId) {
+        try {
+            territoryRuleService.saveTerritoryRunRule(territoryId,operatorId);
+
+        } catch (Exception ex) {
+            throw new ApplicationException(ex.getMessage());
+        }
+        return  Boolean.TRUE;
     }
 
 
@@ -96,52 +117,53 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
             TerritoryRulePropertyEnum enumItem = TerritoryRulePropertyEnum.getByKey(item.getField());
 
             item.setField(enumItem.getText());
-            String concatStr = concatRuleItemStr(item,enumItem);
-            ruleItemMap.put(item.getSequence(),concatStr);
+            String concatStr = concatRuleItemStr(item, enumItem);
+            ruleItemMap.put(item.getSequence(), concatStr);
         }
 
         String resultRuleStr = ruleDto.getRule();
-        for(Integer key : ruleItemMap.keySet()){
-            if(resultRuleStr.contains(key.toString())){
-                resultRuleStr =resultRuleStr.replaceAll(key.toString(),ruleItemMap.get(key));
+        for (Integer key : ruleItemMap.keySet()) {
+            if (resultRuleStr.contains(key.toString())) {
+                resultRuleStr = resultRuleStr.replaceAll(key.toString(), ruleItemMap.get(key));
             }
         }
 
         return resultRuleStr;
     }
 
-    private  String concatRuleItemStr(TerritoryRuleItemDto item,TerritoryRulePropertyEnum enumItem){
-        String concatStr ="( " + enumItem.getText();
-        String[] valueArr= new String[]{};
+    private String concatRuleItemStr(TerritoryRuleItemDto item, TerritoryRulePropertyEnum enumItem) {
+        String concatStr = "( " + enumItem.getText();
+        String[] valueArr = new String[]{};
         if (item.getType() == RuleTypeEnum.In.getId()) {//In操作
-            concatStr += " " + RuleTypeEnum.In.getName() +" ";
+            concatStr += " " + RuleTypeEnum.In.getName() + " ";
             valueArr = item.getValue().split(",");
-        } else if(item.getType() == RuleTypeEnum.Equals.getId()){//Equal操作
+        } else if (item.getType() == RuleTypeEnum.Equals.getId()) {//Equal操作
             valueArr = new String[]{item.getValue()};
-            concatStr += " " + RuleTypeEnum.Equals.getName() +" ";
+            concatStr += " " + RuleTypeEnum.Equals.getName() + " ";
         }
 
         for (String val : valueArr) {
-            switch (enumItem){
+            switch (enumItem) {
                 case CityID:
                     City city = cityService.loadCity(Integer.parseInt(val));
-                    if(city==null){
-                        throw new ApplicationException("无法解析城市：id="+val);
+                    if (city == null) {
+                        throw new ApplicationException("无法解析城市：id=" + val);
                     }
+
                     concatStr += city.getCityName();
                     break;
                 case MainRegionID:
-                    case District:
-                        Region region = regionService.loadRegion(Integer.parseInt(val));
-                        if(region==null){
-                            throw new ApplicationException("无法解析主区域：id="+val);
-                        }
-                        concatStr += region.getRegionName();
-                        break;
+                case District:
+                    Region region = regionService.loadRegion(Integer.parseInt(val));
+                    if (region == null) {
+                        throw new ApplicationException("无法解析主区域：id=" + val);
+                    }
+                    concatStr += region.getRegionName();
+                    break;
                 case MainCategoryId:
-                    Category category = categoryService.loadCategory(1,Integer.parseInt(val));
-                    if(category==null){
-                        throw new ApplicationException("无法解析主分类：id="+val);
+                    Category category = categoryService.loadCategory(1, Integer.parseInt(val));
+                    if (category == null) {
+                        throw new ApplicationException("无法解析主分类：id=" + val);
                     }
                     concatStr += category.getName();
                     break;
@@ -153,7 +175,7 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
             concatStr += ",";
         }
 
-        return concatStr.substring(0, concatStr.length() - 1)+" )";
+        return concatStr.substring(0, concatStr.length() - 1) + " )";
     }
 
 

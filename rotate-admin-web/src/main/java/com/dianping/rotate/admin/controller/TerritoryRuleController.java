@@ -1,6 +1,7 @@
 package com.dianping.rotate.admin.controller;
 
 import com.dianping.rotate.admin.serviceAgent.TerritoryRuleServiceAgent;
+import com.dianping.rotate.admin.util.LoginUtils;
 import com.dianping.rotate.territory.dto.TerritoryRuleDto;
 import com.dianping.rotate.territory.dto.TerritoryRuleItemDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,5 +71,25 @@ public class TerritoryRuleController {
         return  territoryRuleServiceAgent.queryTerritoryRuleTips(territoryId);
     }
 
+    /**
+     * 删除规则
+     * @param territoryId
+     * @return
+     */
+    @RequestMapping(value = "/deleteTerritoryRule",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean deleteTerritoryRule(@RequestParam Integer territoryId){
+        return  territoryRuleServiceAgent.deleteTerritoryRule(territoryId);
+    }
 
+    /**
+     * 保存规则
+     * @param territoryRuleDto
+     * @return
+     */
+    @RequestMapping(value = "/saveTerritoryRule",method = RequestMethod.GET)
+    @ResponseBody
+    public TerritoryRuleDto saveTerritoryRule(@RequestParam TerritoryRuleDto territoryRuleDto){
+        return  territoryRuleServiceAgent.saveTerritoryRule(territoryRuleDto, LoginUtils.getUserLoginId());
+    }
 }

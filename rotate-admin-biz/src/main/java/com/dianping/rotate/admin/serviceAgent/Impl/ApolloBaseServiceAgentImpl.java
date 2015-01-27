@@ -5,6 +5,7 @@ import com.dianping.apollobase.api.DepartmentGroupService;
 import com.dianping.apollobase.api.Group;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.ApolloBaseServiceAgent;
+import lombok.extern.log4j.Log4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ import java.util.Map;
  * Created by shenyoujun on 15/1/21.
  */
 @Component
+@Log4j
 public class ApolloBaseServiceAgentImpl implements ApolloBaseServiceAgent {
 
     @Autowired
