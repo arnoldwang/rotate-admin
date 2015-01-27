@@ -57,7 +57,7 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
             throw new ApplicationException("战区ID未指定!");
         }
 
-        return territoryRuleService. (territoryId);
+        return territoryRuleService.getOwnerRuleByTerritoryId(territoryId);
     }
 
     @Override
@@ -75,6 +75,16 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
         ruleDto.setRule(resultStr);
         ruleDto.setItems(null);
         return ruleDto;
+    }
+
+    @Override
+    public TerritoryRuleDto saveTerritoryRule(TerritoryRuleDto territoryRuleDto) {
+        return null;
+    }
+
+    @Override
+    public int deleteTerritoryRule(int territoryId) {
+        return 0;
     }
 
 

@@ -29,4 +29,20 @@ public interface TerritoryRuleServiceAgent {
      * @return
      */
     public TerritoryRuleDto queryTerritoryRuleTips(Integer territoryId);
+
+    /**
+     * 保存战区规则
+     * @param territoryRuleDto
+     * @return
+     */
+    public TerritoryRuleDto saveTerritoryRule(TerritoryRuleDto territoryRuleDto);
+
+    /**
+     * 删除战区规则
+     * @param territoryId:战区id
+     * @return
+     */
+    public int deleteTerritoryRule(int territoryId);
+
+
 }
