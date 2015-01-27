@@ -19,7 +19,7 @@ import java.util.Map;
  * Created by shenyoujun on 15/1/21.
  */
 @Component
-//@Log4j
+@Log4j
 public class ApolloBaseServiceAgentImpl implements ApolloBaseServiceAgent {
 
     @Autowired
