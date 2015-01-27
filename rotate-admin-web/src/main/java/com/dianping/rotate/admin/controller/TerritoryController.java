@@ -109,16 +109,16 @@ public class TerritoryController {
         return result.getObj();
     }
 
-    @RequestMapping(value = "/queryAllValidTerritory", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ResponseBody
     public List<TerritoryDto> queryAllValidTerritory(){
         return  territoryServiceAgent.queryAllValidTerritory();
     }
 
-    @RequestMapping(value = "/{territoryId}/base-info", method = RequestMethod.GET)
+    @RequestMapping(value = "/base-info", method = RequestMethod.GET)
     @ResponseBody
-    public TerritoryForWebDto loadTerritoryBaseInfo(@PathVariable Integer territoryId){
-        return  territoryServiceAgent.loadTerritoryInfoForWeb(territoryId);
+    public TerritoryForWebDto loadTerritoryBaseInfo(Integer id){
+        return  territoryServiceAgent.loadTerritoryInfoForWeb(id);
     }
 
 
