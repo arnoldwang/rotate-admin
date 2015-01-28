@@ -1,5 +1,6 @@
 package com.dianping.rotate.admin.controller;
 
+import com.dianping.apollobase.api.Group;
 import com.dianping.ba.base.organizationalstructure.api.user.dto.UserDto;
 import com.dianping.combiz.entity.City;
 import com.dianping.combiz.entity.Province;
@@ -87,6 +88,19 @@ public class CommonDataController {
     }
 
 
+    private List<Map<String, Object>> getAllBizInfo() {
+        List<Map<String, Object>> result = Lists.newArrayList();
+        Map<Integer, Group> bizs = apolloBaseServiceAgent.getBizGroups();
+
+        for (Integer bizId: bizs.keySet() ) {
+            Map<String, Object> o = Maps.newHashMap();
+            o.put("value", bizId);
+            o.put("text", bizs.get(bizId).getGroupName());
+            result.add(o);
+        }
+
+        return result;
+    }
 
     @RequestMapping(value = "/enums")
     @ResponseBody
@@ -94,7 +108,7 @@ public class CommonDataController {
         Map result = new HashMap();
 
         result.put("province",getProvince());
-        result.put("biz", apolloBaseServiceAgent.getAllBizInfo());
+        result.put("biz", getAllBizInfo());
 
         return result;
 
