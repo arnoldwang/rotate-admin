@@ -5,6 +5,7 @@ import com.dianping.apollobase.api.DepartmentGroupService;
 import com.dianping.apollobase.api.Group;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.ApolloBaseServiceAgent;
+import com.google.common.collect.Maps;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,26 +27,21 @@ public class ApolloBaseServiceAgentImpl implements ApolloBaseServiceAgent {
     private DepartmentGroupService departmentGroupService;
 
     @Override
-    public List<Map<String,Object>> getAllBizInfo(){
-
+    public Map<Integer, Group> getBizGroups() {
         try {
             List<Group> groups = departmentGroupService.getGroupsOfType(Constants.GROUP_TYPE_ROTATE_BIZ);
 
-            List<Map<String,Object>> result = new ArrayList<Map<String, Object>>();
+            Map<Integer, Group> result = Maps.newHashMap();
 
             if(CollectionUtils.isEmpty(groups)) return result;
 
             for(Group group:groups){
-                Map<String,Object> resultMap = new HashMap<String, Object>();
-                resultMap.put("value",group.getGroupId());
-                resultMap.put("text",group.getGroupName());
-                result.add(resultMap);
+                result.put(group.getGroupId(), group);
             }
             return result;
         } catch (Exception e) {
             throw new ApplicationException("获取BIZ信息失败,ApolloBaseServiceAgent.getAllBizInfo"+e.getMessage());
         }
     }
-
 
 }

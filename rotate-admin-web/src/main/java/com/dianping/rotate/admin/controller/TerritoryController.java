@@ -107,7 +107,7 @@ public class TerritoryController {
         return result.getObj();
     }
 
-    @RequestMapping(value = "/queryAllValidTerritory", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ResponseBody
     public List<TerritoryDto> queryAllValidTerritory(){
         return  territoryServiceAgent.queryAllValidTerritory();

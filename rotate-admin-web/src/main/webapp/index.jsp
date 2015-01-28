@@ -6,7 +6,7 @@
         <%= PageUtils.css("vendor/bootstrap/css/bootstrap.min.css") %>
         <%= PageUtils.css("vendor/bootstrap/css/bootstrap-theme.min.css") %>
         <%= PageUtils.css("vendor/toastr/toastr.css") %>
-
+        <%= PageUtils.css("vendor/typeahead.js/typeahead.css") %>
         <%= PageUtils.css("asset/index.css") %>
         <script>
             var ENV = {

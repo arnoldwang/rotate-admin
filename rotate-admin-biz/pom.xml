@@ -19,6 +19,11 @@
 
     <dependencies>
         <dependency>
+            <artifactId>rotate-org-api</artifactId>
+            <groupId>com.dianping</groupId>
+        </dependency>
+
+        <dependency>
             <artifactId>apollobase-api</artifactId>
             <groupId>com.dianping</groupId>
         </dependency>
