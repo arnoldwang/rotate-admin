@@ -51,7 +51,6 @@ public class TerritoryController {
     @ResponseBody
     public Integer create(@RequestBody TerritoryForWebDto territoryForWebDto) throws IOException {
 
-//        TerritoryForWebDto territoryForWebDto = JsonUtils.fromStr(data, TerritoryForWebDto.class);
 
         territoryForWebDto.setOperatorId(LoginUtils.getUserLoginId());
 

@@ -52,6 +52,14 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
     }
 
     @Override
+    public List<TerritoryRuleDto> getOwnerRuleWithItems(Integer territoryId) {
+        if (territoryId == null || territoryId == 0) {
+            throw new ApplicationException("战区ID未指定!");
+        }
+        return territoryRuleService.getOwnerRuleWithItems(territoryId);
+    }
+
+    @Override
     public List<TerritoryRuleDto> getOwnerRuleByTerritoryId(Integer territoryId) {
         if (territoryId == null || territoryId == 0) {
             throw new ApplicationException("战区ID未指定!");
@@ -59,6 +67,8 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
 
         return territoryRuleService.getOwnerRuleByTerritoryId(territoryId);
     }
+
+
 
     @Override
     public TerritoryRuleDto queryTerritoryRuleTips(Integer territoryId) {
