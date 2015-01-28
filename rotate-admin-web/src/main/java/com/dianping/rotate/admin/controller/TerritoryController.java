@@ -96,13 +96,11 @@ public class TerritoryController {
     /**
      * 更新战区
      *
-     * @param data
      * @return
      */
     @RequestMapping(value = "/updateTerritory", method = RequestMethod.POST)
     @ResponseBody
-    public Integer updateTerritory(@RequestParam("data") String data) throws IOException {
-        TerritoryForWebDto territoryForWebDto = JsonUtils.fromStr(data, TerritoryForWebDto.class);
+    public Integer updateTerritory(@RequestBody TerritoryForWebDto territoryForWebDto) throws IOException {
         territoryForWebDto.setOperatorId(LoginUtils.getUserLoginId());
         Response<Integer> result = territoryServiceAgent.update(territoryForWebDto);
         if(!result.isSuccess()) throw new ApplicationException("战区更新失败,"+result.getComment());
