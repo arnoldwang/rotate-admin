@@ -1,8 +1,10 @@
 package com.dianping.rotate.admin.translator.ruleItem;
 
+import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.territory.dto.TerritoryRuleItemDto;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -34,6 +36,10 @@ public abstract class AbstractRuleItemTranslator implements RuleItemTranslator {
         r.setField(t.get("field").toString());
         r.setType((Integer)t.get("type"));
         List list = (List)t.get("value");
+        if(CollectionUtils.isEmpty(list)){
+            throw new ApplicationException("请至少选择一个选项");
+        }
+
         List<Integer> value = Lists.newArrayList();
         for(Object o:list){
             value.add(decode(o));
