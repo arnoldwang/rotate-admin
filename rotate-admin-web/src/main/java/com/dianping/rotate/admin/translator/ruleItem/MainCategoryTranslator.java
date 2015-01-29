@@ -27,8 +27,9 @@ public class MainCategoryTranslator extends AbstractRuleItemTranslator {
     public Object encode(Integer v) {
         Category me = categoryService.loadCategory(CommonDataController.CATEGORY_CITY_ID, v);
         if (me == null) {
-            return Lists.newArrayList();
+            throw new ApplicationException(String.format("找不到分类%s",v));
         }
+
         List<Category> ret = categoryService.getMainCategoryPath(CommonDataController.CATEGORY_CITY_ID, v);
         if (ret.size() == 0) {
             ret.add(me);
