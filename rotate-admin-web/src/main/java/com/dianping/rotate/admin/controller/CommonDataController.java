@@ -12,10 +12,15 @@ import com.dianping.combiz.service.filter.CityFilter;
 import com.dianping.combiz.util.CodeConstants;
 import com.dianping.rotate.admin.serviceAgent.ApolloBaseServiceAgent;
 import com.dianping.rotate.admin.serviceAgent.UserServiceAgent;
+import com.dianping.rotate.shop.constants.ApolloShopStatusEnum;
+import com.dianping.rotate.shop.constants.ApolloShopTypeEnum;
+import com.dianping.rotate.territory.enums.RuleTypeEnum;
+import com.dianping.rotate.territory.enums.TerritoryRulePropertyEnum;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by shenyoujun on 15/1/21.
@@ -34,6 +36,20 @@ import java.util.Map;
 @Controller
 @RequestMapping("/common")
 public class CommonDataController {
+
+    public static Map<TerritoryRulePropertyEnum,String> SimpleTerritoryRulePropertyTypeMap =  Maps.newHashMap();
+
+    static {
+        SimpleTerritoryRulePropertyTypeMap.put(TerritoryRulePropertyEnum.Province,"province");
+        SimpleTerritoryRulePropertyTypeMap.put(TerritoryRulePropertyEnum.ShopStatus,"apolloShopStatus");
+        SimpleTerritoryRulePropertyTypeMap.put(TerritoryRulePropertyEnum.Type,"apolloShopType");
+    }
+
+
+
+
+    public static final Integer  SimpleTerritoryRulePropertyType = 1;
+    public static final Integer  ComplexTerritoryRulePropertyType = 2;
 
 
     public static final int CATEGORY_CITY_ID = 1;
@@ -107,12 +123,63 @@ public class CommonDataController {
     public Object getEnum() {
         Map result = new HashMap();
 
-        result.put("province",getProvince());
+
         result.put("biz", getAllBizInfo());
+
+
+        buildTerritoryRuleProperty(result);
 
         return result;
 
     }
+
+    private void buildTerritoryRuleProperty(Map result) {
+
+        List<Map> list = new ArrayList<Map>();
+        for(TerritoryRulePropertyEnum t:TerritoryRulePropertyEnum.values()){
+            Map map = Maps.newHashMap();
+            map.put("text",t.getText());
+            map.put("value",t.getKey());
+
+            if(SimpleTerritoryRulePropertyTypeMap.get(t)!=null){
+                map.put("type",SimpleTerritoryRulePropertyType);
+                map.put("enumKey",SimpleTerritoryRulePropertyTypeMap.get(t));
+            }else{
+                map.put("type",ComplexTerritoryRulePropertyType);
+            }
+            list.add(map);
+        }
+
+
+        result.put("territoryRuleProperty",list);
+        result.put(SimpleTerritoryRulePropertyTypeMap.get(TerritoryRulePropertyEnum.Province), getProvince());
+        result.put(SimpleTerritoryRulePropertyTypeMap.get(TerritoryRulePropertyEnum.Type), getApolloShopType());
+        result.put(SimpleTerritoryRulePropertyTypeMap.get(TerritoryRulePropertyEnum.ShopStatus), getApolloShopStatus());
+        result.put("ruleType", getRuleType());
+    }
+
+    private Object getApolloShopStatus() {
+        List result = new ArrayList();
+        for(ApolloShopStatusEnum a: ApolloShopStatusEnum.values()){
+            Map map = Maps.newHashMap();
+            map.put("text",a.getDesc());
+            map.put("value",a.getCode());
+            result.add(map);
+        }
+        return result;
+    }
+
+    private Object getApolloShopType() {
+        List result = new ArrayList();
+        for(ApolloShopTypeEnum a: ApolloShopTypeEnum.values()){
+            Map map = Maps.newHashMap();
+            map.put("text",a.getDesc());
+            map.put("value",a.getCode());
+            result.add(map);
+        }
+        return result;
+    }
+
 
     private Object getProvince() {
         return Lists.transform(provinceService.findProvinceList(null, null), new Function<Province, Object>() {
@@ -143,4 +210,14 @@ public class CommonDataController {
         return categoryService.getCategoryListByParentCategoryId(categoryId,CATEGORY_CITY_ID);
     }
 
+    public Object getRuleType() {
+        List result = new ArrayList();
+        for(RuleTypeEnum ruleTypeEnum:RuleTypeEnum.values()){
+            Map map = Maps.newHashMap();
+            map.put("text",ruleTypeEnum.getName());
+            map.put("value",ruleTypeEnum.getId());
+            result.add(map);
+        }
+        return result;
+    }
 }

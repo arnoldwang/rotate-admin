@@ -16,6 +16,8 @@ public interface TerritoryRuleServiceAgent {
      */
     List<TerritoryRuleDto> getExtendsRuleByTerritoryId(Integer territoryId);
 
+
+    List<TerritoryRuleDto> getOwnerRuleWithItems(Integer territoryId);
     /**
      * 查询指定战区的规则(不包含继承的规则)
      * @param territoryId
