@@ -5,9 +5,11 @@ import com.dianping.combiz.entity.City;
 import com.dianping.combiz.entity.Region;
 import com.dianping.combiz.service.CategoryService;
 import com.dianping.combiz.service.CityService;
+import com.dianping.combiz.service.ProvinceService;
 import com.dianping.combiz.service.RegionService;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.TerritoryRuleServiceAgent;
+import com.dianping.rotate.shop.constants.ApolloShopStatusEnum;
 import com.dianping.rotate.shop.constants.ApolloShopTypeEnum;
 import com.dianping.rotate.territory.api.TerritoryRuleService;
 import com.dianping.rotate.territory.dto.TerritoryRuleDto;
@@ -39,6 +41,9 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ProvinceService provinceService;
 
 
     @Override
@@ -142,10 +147,7 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
     private String concatRuleItemStr(TerritoryRuleItemDto item, TerritoryRulePropertyEnum enumItem) {
         String concatStr = "( " + enumItem.getText();
         String[] valueArr = new String[]{};
-        if (item.getType() == RuleTypeEnum.In.getId()) {//In操作
-            concatStr += " " + RuleTypeEnum.In.getName() + " ";
-            valueArr = item.getValue().split(",");
-        } else if (item.getType() == RuleTypeEnum.Equals.getId()) {//Equal操作
+        if (item.getType() == RuleTypeEnum.Equals.getId()) {//Equal操作
             valueArr = new String[]{item.getValue()};
             concatStr += " " + RuleTypeEnum.Equals.getName() + " ";
         }
@@ -177,6 +179,12 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
                     break;
                 case Type:
                     concatStr += ApolloShopTypeEnum.getDescByCode(Integer.parseInt(val));
+                    break;
+                case Province:
+                    concatStr +=    provinceService.loadById(Integer.parseInt(val)).getProvinceName();
+                    break;
+                case ShopStatus:
+                    concatStr +=    ApolloShopStatusEnum.getDescByCode(Integer.parseInt(val));
                     break;
 
             }
