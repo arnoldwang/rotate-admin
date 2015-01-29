@@ -11,6 +11,7 @@ import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.TerritoryRuleServiceAgent;
 import com.dianping.rotate.shop.constants.ApolloShopStatusEnum;
 import com.dianping.rotate.shop.constants.ApolloShopTypeEnum;
+import com.dianping.rotate.smt.dto.Response;
 import com.dianping.rotate.territory.api.TerritoryRuleService;
 import com.dianping.rotate.territory.dto.TerritoryRuleDto;
 import com.dianping.rotate.territory.dto.TerritoryRuleItemDto;
@@ -94,7 +95,11 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
     public Integer saveTerritoryRule(TerritoryRuleDto territoryRuleDto, int operatorId) {
 
         try {
-            return territoryRuleService.saveTerritoryRule(territoryRuleDto, operatorId);
+            Response<Integer> r =  territoryRuleService.saveTerritoryRule(territoryRuleDto, operatorId);
+            if(r.isSuccess()){
+                return r.getObj();
+            }
+            throw new ApplicationException(r.getComment());
         } catch (Exception ex) {
 
             throw new ApplicationException(ex.getMessage());
