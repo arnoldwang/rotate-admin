@@ -185,12 +185,23 @@ public class TerritoryRuleController {
 
     /**
      * 保存规则
-     * @param territoryRuleDto
      * @return
      */
     @RequestMapping(value = "/saveTerritoryRule",method = RequestMethod.GET)
     @ResponseBody
-    public TerritoryRuleDto saveTerritoryRule(@RequestParam TerritoryRuleDto territoryRuleDto){
-        return  territoryRuleServiceAgent.saveTerritoryRule(territoryRuleDto, LoginUtils.getUserLoginId());
+    public TerritoryRuleDto saveTerritoryRule(@RequestParam Map map){
+        TerritoryRuleDto t = new TerritoryRuleDto();
+
+        t.setTerritoryId((Integer) map.get("territoryId"));
+        t.setRule((String) map.get("rule"));
+        t.setId((Integer) map.get("id"));
+        List<TerritoryRuleItemDto> items = new ArrayList<TerritoryRuleItemDto>();
+        int i=1;
+        for(Map item:(List<Map>)map.get("items")){
+            TerritoryRuleItemDto t1 = getRuleItemTranslator((String) item.get("field")).toDto(item);
+            t1.setSequence(i++);
+            items.add(t1);
+        }
+        return  territoryRuleServiceAgent.saveTerritoryRule(t, LoginUtils.getUserLoginId());
     }
 }
