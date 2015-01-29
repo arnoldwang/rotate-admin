@@ -35,6 +35,6 @@ public class MainRegionTranslator extends AbstractRuleItemTranslator {
 
     @Override
     public Integer decode(Object o) {
-        return (Integer)((Map)o).get("districtId");
+        return (Integer)((Map)o).get("mainRegionId");
     }
 }
