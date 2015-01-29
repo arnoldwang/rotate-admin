@@ -9,6 +9,11 @@ public class ApplicationException extends RuntimeException {
         super(message);
     }
 
+
+    public ApplicationException(String message,Object...args) {
+        super(String.format(message,args));
+    }
+
     public ApplicationException(String message, Throwable cause) {
         super(message, cause);
     }

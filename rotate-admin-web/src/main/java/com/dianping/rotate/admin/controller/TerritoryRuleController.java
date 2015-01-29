@@ -3,8 +3,11 @@ package com.dianping.rotate.admin.controller;
 import com.dianping.remote.share.Translator;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.TerritoryRuleServiceAgent;
+import com.dianping.rotate.admin.serviceAgent.TerritoryServiceAgent;
 import com.dianping.rotate.admin.translator.ruleItem.*;
 import com.dianping.rotate.admin.util.LoginUtils;
+import com.dianping.rotate.territory.dto.TerritoryDto;
+import com.dianping.rotate.territory.dto.TerritoryForWebDto;
 import com.dianping.rotate.territory.dto.TerritoryRuleDto;
 import com.dianping.rotate.territory.dto.TerritoryRuleItemDto;
 import com.dianping.rotate.territory.enums.TerritoryRulePropertyEnum;
@@ -49,6 +52,9 @@ public class TerritoryRuleController {
     @Autowired
     MainRegionTranslator mainRegionTranslator;
 
+
+    @Autowired
+    TerritoryServiceAgent territoryServiceAgent;
 
 
     /**
@@ -155,8 +161,16 @@ public class TerritoryRuleController {
         if(CollectionUtils.isNotEmpty(dtos)){
             TerritoryRuleDto t = dtos.get(0);
             return buildTerritoryRuleResult(t);
+        }else{
+            TerritoryForWebDto t = territoryServiceAgent.loadTerritoryInfoForWeb(territoryId);
+            if(t==null){
+                throw new ApplicationException("战区%s不存在",territoryId);
+            }
+            Map result = Maps.newHashMap();
+            result.put("territoryId",t.getId());
+            result.put("ruleName",t.getTerritoryName());
+            return result;
         }
-        return   null;
     }
 
 

@@ -8,5 +8,5 @@ import java.util.List;
  * Created by dev_wzhang on 15-1-19.
  */
 public interface TeamTerritoryService {
-    List<TeamTerritoryDTO> getTeamByBizId(Integer bizId);
+    List<TeamTerritoryDTO> getTeamsByBizId(Integer bizId);
 }

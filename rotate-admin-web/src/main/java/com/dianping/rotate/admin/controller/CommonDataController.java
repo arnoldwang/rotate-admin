@@ -200,6 +200,12 @@ public class CommonDataController {
         return regionService.findRegionListByCityId(cityId, CodeConstants.RegionType.District);
     }
 
+    @RequestMapping(value = "/getMainRegionListByRegionId", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMainRegionListByRegionId(Integer districtId) {
+        return regionService.findChildRegionList(districtId, CodeConstants.RegionType.BusinessDistrict,true);
+    }
+
 
     @RequestMapping(value = "/getChildrenCategoryListByCategoryId", method = RequestMethod.GET)
     @ResponseBody
