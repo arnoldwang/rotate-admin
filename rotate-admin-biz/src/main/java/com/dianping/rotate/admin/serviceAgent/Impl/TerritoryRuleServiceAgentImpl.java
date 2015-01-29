@@ -86,7 +86,7 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
     }
 
     @Override
-    public TerritoryRuleDto saveTerritoryRule(TerritoryRuleDto territoryRuleDto, int operatorId) {
+    public Integer saveTerritoryRule(TerritoryRuleDto territoryRuleDto, int operatorId) {
 
         try {
             return territoryRuleService.saveTerritoryRule(territoryRuleDto, operatorId);

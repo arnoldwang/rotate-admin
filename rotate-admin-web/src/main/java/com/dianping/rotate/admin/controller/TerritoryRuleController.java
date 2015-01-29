@@ -15,10 +15,7 @@ import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -201,9 +198,9 @@ public class TerritoryRuleController {
      * 保存规则
      * @return
      */
-    @RequestMapping(value = "/saveTerritoryRule",method = RequestMethod.GET)
+    @RequestMapping(value = "/saveTerritoryRule",method = RequestMethod.POST)
     @ResponseBody
-    public TerritoryRuleDto saveTerritoryRule(@RequestParam Map map){
+    public Integer saveTerritoryRule(@RequestBody Map map){
         TerritoryRuleDto t = new TerritoryRuleDto();
 
         t.setTerritoryId((Integer) map.get("territoryId"));
@@ -216,6 +213,7 @@ public class TerritoryRuleController {
             t1.setSequence(i++);
             items.add(t1);
         }
+        t.setItems(items);
         return  territoryRuleServiceAgent.saveTerritoryRule(t, LoginUtils.getUserLoginId());
     }
 }

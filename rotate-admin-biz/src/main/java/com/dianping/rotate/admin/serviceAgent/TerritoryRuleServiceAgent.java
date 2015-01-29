@@ -37,7 +37,7 @@ public interface TerritoryRuleServiceAgent {
      * @param territoryRuleDto
      * @return
      */
-    public TerritoryRuleDto saveTerritoryRule(TerritoryRuleDto territoryRuleDto,int operatorId);
+    public Integer saveTerritoryRule(TerritoryRuleDto territoryRuleDto,int operatorId);
 
     /**
      * 删除战区规则

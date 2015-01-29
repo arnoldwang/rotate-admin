@@ -50,7 +50,7 @@ public class MainCategoryTranslator extends AbstractRuleItemTranslator {
 
     @Override
     public Integer decode(Object o) {
-        List<Map> list=(List<Map>)o;
+        List<Map> list=(List<Map>)(((Map)o).get("items"));
         if(CollectionUtils.isNotEmpty(list)){
             Map last = list.get(list.size()-1);
             if(last.get("categoryId")!=null){
