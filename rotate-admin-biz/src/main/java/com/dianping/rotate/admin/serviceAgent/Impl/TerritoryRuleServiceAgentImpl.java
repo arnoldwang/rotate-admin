@@ -6,7 +6,6 @@ import com.dianping.combiz.entity.Region;
 import com.dianping.combiz.service.CategoryService;
 import com.dianping.combiz.service.CityService;
 import com.dianping.combiz.service.RegionService;
-import com.dianping.combiz.util.CodeConstants;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.TerritoryRuleServiceAgent;
 import com.dianping.rotate.shop.constants.ApolloShopTypeEnum;
@@ -15,7 +14,6 @@ import com.dianping.rotate.territory.dto.TerritoryRuleDto;
 import com.dianping.rotate.territory.dto.TerritoryRuleItemDto;
 import com.dianping.rotate.territory.enums.RuleTypeEnum;
 import com.dianping.rotate.territory.enums.TerritoryRulePropertyEnum;
-import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
