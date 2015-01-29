@@ -34,7 +34,7 @@ public class TerritoryTeamController  {
      * @param territoryId
      * @return
      */
-    @RequestMapping(value = "/queryTerritoryTeam", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/queryTerritoryTeam", method = RequestMethod.GET)
     @ResponseBody
     public Object queryTerritoryTeam(@RequestParam int territoryId) {
         List<TerritoryTeamDto> territoryTeamDtoList = territoryTeamServiceAgent.getTeamByTerritoryId(territoryId);
