@@ -11,6 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +30,28 @@ public class MainCategoryTranslator extends AbstractRuleItemTranslator {
         if (me == null) {
             throw new ApplicationException(String.format("找不到分类%s",v));
         }
+        List<Category> categories = categoryService.getRootCategories(CommonDataController.CATEGORY_CITY_ID);
+
 
         List<Category> ret = categoryService.getMainCategoryPath(CommonDataController.CATEGORY_CITY_ID, v);
         if (ret.size() == 0) {
-            ret.add(me);
+            for(Category category:categories){
+                if(category.getId().equals(v)){
+                    ret.add(category);
+                }
+            }
+            if (ret.size() == 0){
+               List<List<Category>> list =  categoryService.getAllCategoryPath(v,CommonDataController.CATEGORY_CITY_ID);
+                if(CollectionUtils.isNotEmpty(list)){
+                    ret = list.get(0);
+                }else{
+                    throw new ApplicationException("找不到分类%s的上级",v);
+                }
+            }
+
         }
+
+        Collections.reverse(ret);
         return Lists.transform(ret, new Function<Category, Object>() {
             @Override
             public Object apply(Category category) {

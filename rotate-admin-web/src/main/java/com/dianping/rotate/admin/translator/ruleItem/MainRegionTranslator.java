@@ -3,6 +3,7 @@ package com.dianping.rotate.admin.translator.ruleItem;
 import com.dianping.combiz.entity.Region;
 import com.dianping.combiz.service.CityService;
 import com.dianping.combiz.service.RegionService;
+import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,10 @@ public class MainRegionTranslator extends AbstractRuleItemTranslator {
 
     @Override
     public Integer decode(Object o) {
+        Integer v = (Integer)((Map)o).get("mainRegionId");
+        if(v==null){
+            throw new ApplicationException("请选择商区");
+        }
         return (Integer)((Map)o).get("mainRegionId");
     }
 }
