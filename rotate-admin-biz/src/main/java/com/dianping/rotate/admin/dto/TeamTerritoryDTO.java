@@ -8,6 +8,7 @@ public class TeamTerritoryDTO {
     private String teamName;
     private Integer territoryId;
     private String territoryName;
+    private String territoryChiefName;
 
     public Integer getTeamId() {
         return teamId;
@@ -41,13 +42,11 @@ public class TeamTerritoryDTO {
         this.territoryName = territoryName;
     }
 
-    public String getChiefName() {
-        return chiefName;
+    public String getTerritoryChiefName() {
+        return territoryChiefName;
     }
 
-    public void setChiefName(String chiefName) {
-        this.chiefName = chiefName;
+    public void setTerritoryChiefName(String territoryChiefName) {
+        this.territoryChiefName = territoryChiefName;
     }
-
-    private String chiefName;
 }

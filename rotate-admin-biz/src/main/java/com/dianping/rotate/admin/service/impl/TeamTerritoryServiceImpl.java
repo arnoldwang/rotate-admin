@@ -1,6 +1,5 @@
 package com.dianping.rotate.admin.service.impl;
 
-import com.dianping.apollobase.api.DepartmentGroupService;
 import com.dianping.apollobase.api.Group;
 import com.dianping.ba.base.organizationalstructure.api.user.UserService;
 import com.dianping.rotate.admin.dto.TeamTerritoryDTO;
@@ -49,7 +48,7 @@ public class TeamTerritoryServiceImpl implements TeamTerritoryService {
     }
 
     @Override
-    public List<TeamTerritoryDTO> getTeamByBizId(Integer bizId) {
+    public List<TeamTerritoryDTO> getTeamsByBizId(Integer bizId) {
         Integer departmentId = getTeamIdByBizId(bizId);
 
         if (departmentId == null) {
@@ -67,6 +66,8 @@ public class TeamTerritoryServiceImpl implements TeamTerritoryService {
     private TeamTerritoryDTO buildTeamTerritory(Team team) {
         TeamTerritoryDTO dto = new TeamTerritoryDTO();
 
+        dto.setTeamName(team.getTeamName());
+
         TerritoryDto territory = rotateTeamTerritoryService.getTerritoryByTeamId(team.getTeamID());
 
         // 可能还没有绑定战区
@@ -74,12 +75,11 @@ public class TeamTerritoryServiceImpl implements TeamTerritoryService {
             dto.setTerritoryId(territory.getId());
             dto.setTerritoryName(territory.getTerritoryName());
 
-
             Integer userId = rotateTerritoryChiefService.getUserByTerritoryId(territory.getId());
 
             // 可能还没有战区长官
             if (userId != null) {
-                dto.setChiefName(userService.queryUserByLoginID(userId).getRealName());
+                dto.setTerritoryChiefName(userService.queryUserByLoginID(userId).getRealName());
             }
         }
 

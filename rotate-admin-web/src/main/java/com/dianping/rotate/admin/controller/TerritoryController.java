@@ -1,6 +1,5 @@
 package com.dianping.rotate.admin.controller;
 
-import com.dianping.combiz.util.JsonUtils;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.TerritoryServiceAgent;
 import com.dianping.rotate.admin.util.LoginUtils;
@@ -8,8 +7,6 @@ import com.dianping.rotate.smt.dto.Response;
 import com.dianping.rotate.territory.dto.TerritoryDto;
 import com.dianping.rotate.territory.dto.TerritoryForWebDto;
 import com.dianping.rotate.territory.dto.TerritoryTreeDto;
-import lombok.extern.log4j.Log4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -96,13 +93,11 @@ public class TerritoryController {
     /**
      * 更新战区
      *
-     * @param data
      * @return
      */
     @RequestMapping(value = "/updateTerritory", method = RequestMethod.POST)
     @ResponseBody
-    public Integer updateTerritory(@RequestParam("data") String data) throws IOException {
-        TerritoryForWebDto territoryForWebDto = JsonUtils.fromStr(data, TerritoryForWebDto.class);
+    public Integer updateTerritory(@RequestBody TerritoryForWebDto territoryForWebDto) throws IOException {
         territoryForWebDto.setOperatorId(LoginUtils.getUserLoginId());
         Response<Integer> result = territoryServiceAgent.update(territoryForWebDto);
         if(!result.isSuccess()) throw new ApplicationException("战区更新失败,"+result.getComment());
