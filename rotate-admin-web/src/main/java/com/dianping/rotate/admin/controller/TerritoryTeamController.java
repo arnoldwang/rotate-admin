@@ -49,6 +49,7 @@ public class TerritoryTeamController  {
             map.put("territoryId",item.getTerritoryId());
             map.put("teamName",getTeamName(item.getTeamId()));
             map.put("cityName","");
+            result.add(map);
         }
         return result;
     }

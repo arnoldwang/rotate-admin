@@ -153,7 +153,7 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
         String concatStr = "( " + enumItem.getText();
         String[] valueArr = new String[]{};
         if (item.getType() == RuleTypeEnum.Equals.getId()) {//Equal操作
-            valueArr = new String[]{item.getValue()};
+            valueArr = item.getValue().split(",");
             concatStr += " " + RuleTypeEnum.Equals.getName() + " ";
         }
 
