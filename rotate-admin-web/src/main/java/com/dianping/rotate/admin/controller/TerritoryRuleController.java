@@ -3,8 +3,11 @@ package com.dianping.rotate.admin.controller;
 import com.dianping.remote.share.Translator;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.TerritoryRuleServiceAgent;
+import com.dianping.rotate.admin.serviceAgent.TerritoryServiceAgent;
 import com.dianping.rotate.admin.translator.ruleItem.*;
 import com.dianping.rotate.admin.util.LoginUtils;
+import com.dianping.rotate.territory.dto.TerritoryDto;
+import com.dianping.rotate.territory.dto.TerritoryForWebDto;
 import com.dianping.rotate.territory.dto.TerritoryRuleDto;
 import com.dianping.rotate.territory.dto.TerritoryRuleItemDto;
 import com.dianping.rotate.territory.enums.TerritoryRulePropertyEnum;
@@ -12,10 +15,7 @@ import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -49,6 +49,9 @@ public class TerritoryRuleController {
     @Autowired
     MainRegionTranslator mainRegionTranslator;
 
+
+    @Autowired
+    TerritoryServiceAgent territoryServiceAgent;
 
 
     /**
@@ -155,8 +158,16 @@ public class TerritoryRuleController {
         if(CollectionUtils.isNotEmpty(dtos)){
             TerritoryRuleDto t = dtos.get(0);
             return buildTerritoryRuleResult(t);
+        }else{
+            TerritoryForWebDto t = territoryServiceAgent.loadTerritoryInfoForWeb(territoryId);
+            if(t==null){
+                throw new ApplicationException("战区%s不存在",territoryId);
+            }
+            Map result = Maps.newHashMap();
+            result.put("territoryId",t.getId());
+            result.put("ruleName",t.getTerritoryName());
+            return result;
         }
-        return   null;
     }
 
 
@@ -187,9 +198,9 @@ public class TerritoryRuleController {
      * 保存规则
      * @return
      */
-    @RequestMapping(value = "/saveTerritoryRule",method = RequestMethod.GET)
+    @RequestMapping(value = "/saveTerritoryRule",method = RequestMethod.POST)
     @ResponseBody
-    public TerritoryRuleDto saveTerritoryRule(@RequestParam Map map){
+    public Integer saveTerritoryRule(@RequestBody Map map){
         TerritoryRuleDto t = new TerritoryRuleDto();
 
         t.setTerritoryId((Integer) map.get("territoryId"));
@@ -202,6 +213,7 @@ public class TerritoryRuleController {
             t1.setSequence(i++);
             items.add(t1);
         }
+        t.setItems(items);
         return  territoryRuleServiceAgent.saveTerritoryRule(t, LoginUtils.getUserLoginId());
     }
 }

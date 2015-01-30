@@ -86,6 +86,15 @@ public class TerritoryServiceAgentImpl implements TerritoryServiceAgent {
     }
 
     @Override
+    public List<TerritoryDto> queryAllLeafTerritories(Integer id) {
+        try {
+            return territoryService.queryAllLeafTerritories(id);
+        } catch (Exception e) {
+            throw new ApplicationException("战区服务异常,queryAllLeafTerritories:"+e.getMessage());
+        }
+    }
+
+    @Override
     public Response<Integer> update(TerritoryForWebDto territoryForWebDto) {
         try {
             return territoryService.update(territoryForWebDto);

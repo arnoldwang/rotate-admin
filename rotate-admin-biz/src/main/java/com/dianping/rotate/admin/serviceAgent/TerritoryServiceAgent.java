@@ -29,6 +29,9 @@ public interface TerritoryServiceAgent {
     Response<Integer> create(TerritoryForWebDto territoryForWebDto);
 
     List<TerritoryDto> queryAllValidTerritory();
+    List<TerritoryDto> queryAllLeafTerritories(Integer id);
+
+
 
     Response<Integer> update(TerritoryForWebDto territoryForWebDto);
 
