@@ -1,8 +1,6 @@
 package com.dianping.rotate.admin.controller;
 
-import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.TerritoryTeamServiceAgent;
-import com.dianping.rotate.admin.util.LoginUtils;
 import com.dianping.rotate.org.api.TeamService;
 import com.dianping.rotate.org.dto.Team;
 import com.dianping.rotate.territory.dto.TerritoryTeamDto;
@@ -26,6 +24,7 @@ public class TerritoryTeamController  {
     @Autowired
     private TerritoryTeamServiceAgent territoryTeamServiceAgent;
 
+    @Autowired
     private TeamService teamService;
 
     /**
