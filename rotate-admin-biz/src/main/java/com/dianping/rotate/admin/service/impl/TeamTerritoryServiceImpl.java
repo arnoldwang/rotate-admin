@@ -2,6 +2,7 @@ package com.dianping.rotate.admin.service.impl;
 
 import com.dianping.apollobase.api.Group;
 import com.dianping.ba.base.organizationalstructure.api.user.UserService;
+import com.dianping.ba.base.organizationalstructure.api.user.dto.UserDto;
 import com.dianping.rotate.admin.dto.TeamTerritoryDTO;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.service.TeamTerritoryService;
@@ -12,6 +13,7 @@ import com.dianping.rotate.territory.api.TerritoryChiefService;
 import com.dianping.rotate.territory.dto.TerritoryDto;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,7 @@ public class TeamTerritoryServiceImpl implements TeamTerritoryService {
     @Autowired
     private UserService userService;
 
+
     private Integer getTeamIdByBizId(Integer bizId) {
         Map<Integer, Group> bizes =  apolloBaseServiceAgent.getBizGroups();
         try {
@@ -55,18 +58,67 @@ public class TeamTerritoryServiceImpl implements TeamTerritoryService {
             return Lists.newArrayList();
         }
 
-        return Lists.transform(rotateTeamService.getLeafTeamsByDepartmentId(departmentId), new Function<Team, TeamTerritoryDTO>() {
-            @Override
-            public TeamTerritoryDTO apply(Team team) {
-                return buildTeamTerritory(team);
-            }
-        });
+        List<Team> teams = rotateTeamService.getLeafTeamsByDepartmentId(departmentId);
+
+        return buildTeamTerritories(teams);
+
+
     }
 
-    private TeamTerritoryDTO buildTeamTerritory(Team team) {
+    private List<TeamTerritoryDTO> buildTeamTerritories(List<Team> teams) {
+        final Map<Integer, TerritoryDto> teamIdToTerritoryMap = rotateTeamTerritoryService.getTeamToTerritoryMap(Lists.transform(teams, new Function<Team, Integer>() {
+            @Override
+            public Integer apply(Team input) {
+                return input.getTeamID();
+            }
+        }));
+
+        final Map<Integer, Integer> territoryIdToChiefIdMap = rotateTerritoryChiefService.getTerritoryToChiefMap(Lists.transform(Lists.newArrayList(teamIdToTerritoryMap.values()), new Function<TerritoryDto, Integer>() {
+            @Override
+            public Integer apply(TerritoryDto input) {
+                return input.getId();
+            }
+        }));
+
+        List<UserDto> users = userService.queryUserByLoginIDs(Lists.newArrayList(territoryIdToChiefIdMap.values()));
+
+        final Map<Integer, UserDto> chiefIdToChiefMap = Maps.newHashMap();
+        for (UserDto user: users) {
+            chiefIdToChiefMap.put(user.getLoginId(), user);
+        }
+
+        return Lists.transform(teams, new Function<Team, TeamTerritoryDTO>() {
+            @Override
+            public TeamTerritoryDTO apply(Team input) {
+                TeamTerritoryDTO dto = new TeamTerritoryDTO();
+                dto.setTeamId(input.getTeamID());
+                dto.setTeamName(input.getTeamName());
+
+                TerritoryDto territory = teamIdToTerritoryMap.get(dto.getTeamId());
+                if (territory != null) {
+                    dto.setTerritoryId(territory.getId());
+                    dto.setTerritoryName(territory.getTerritoryName());
+
+                    Integer chiefId = territoryIdToChiefIdMap.get(territory.getId());
+
+                    if (chiefId != null) {
+                        UserDto chief = chiefIdToChiefMap.get(chiefId);
+                        if (chief != null) {
+                            dto.setTerritoryChiefName(chief.getRealName());
+                        }
+                    }
+                }
+                return dto;
+            }
+        });
+
+    }
+
+    private TeamTerritoryDTO buildTeamTerritory2(Team team) {
         TeamTerritoryDTO dto = new TeamTerritoryDTO();
 
         dto.setTeamName(team.getTeamName());
+        dto.setTeamId(team.getTeamID());
 
         TerritoryDto territory = rotateTeamTerritoryService.getTerritoryByTeamId(team.getTeamID());
 

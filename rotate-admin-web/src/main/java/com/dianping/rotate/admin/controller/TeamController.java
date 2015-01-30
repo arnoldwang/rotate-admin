@@ -1,13 +1,12 @@
 package com.dianping.rotate.admin.controller;
 
 import com.dianping.rotate.admin.dto.TeamTerritoryDTO;
+import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.service.TeamTerritoryService;
+import com.dianping.rotate.smt.dto.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,9 +19,23 @@ public class TeamController {
     @Autowired
     TeamTerritoryService teamTerritoryService;
 
-    @RequestMapping(value="/query", method = RequestMethod.GET)
+    @Autowired
+    com.dianping.rotate.territory.api.TeamTerritoryService rotateTeamTerritoryService;
+
+    @RequestMapping(value="/query")
     @ResponseBody
     public List<TeamTerritoryDTO> queryTeamTerritory(@RequestParam("bizId") Integer bizId) {
         return teamTerritoryService.getTeamsByBizId(bizId);
+    }
+
+    @RequestMapping(value="/bindTerritory", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean bindTerritory(@RequestBody TeamTerritoryDTO dto) {
+        Response<Void> r = rotateTeamTerritoryService.bind(dto.getTeamId(), dto.getTerritoryId());
+        if (!r.isSuccess()) {
+            throw new ApplicationException(r.getComment());
+        }
+
+        return true;
     }
 }
