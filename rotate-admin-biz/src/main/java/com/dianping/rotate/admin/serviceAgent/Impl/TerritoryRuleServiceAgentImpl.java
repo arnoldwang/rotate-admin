@@ -129,12 +129,14 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
     @Override
     public Boolean runTerritoryRule(int territoryId,int operatorId) {
         try {
-            territoryRuleService.saveTerritoryRunRule(territoryId,operatorId);
-
+            Response<Boolean> response =territoryRuleService.saveTerritoryRunRule(territoryId, operatorId);
+            if(response.isSuccess()&&response.getObj()){
+                return true;
+            }
+            throw new ApplicationException(response.getComment());
         } catch (Exception ex) {
             throw new ApplicationException(ex.getMessage());
         }
-        return  Boolean.TRUE;
     }
 
 
