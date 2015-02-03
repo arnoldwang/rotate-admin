@@ -113,28 +113,4 @@ public class TeamTerritoryServiceImpl implements TeamTerritoryService {
         });
 
     }
-
-    private TeamTerritoryDTO buildTeamTerritory2(Team team) {
-        TeamTerritoryDTO dto = new TeamTerritoryDTO();
-
-        dto.setTeamName(team.getTeamName());
-        dto.setTeamId(team.getTeamID());
-
-        TerritoryDto territory = rotateTeamTerritoryService.getTerritoryByTeamId(team.getTeamID());
-
-        // 可能还没有绑定战区
-        if (territory != null) {
-            dto.setTerritoryId(territory.getId());
-            dto.setTerritoryName(territory.getTerritoryName());
-
-            Integer userId = rotateTerritoryChiefService.getUserByTerritoryId(territory.getId());
-
-            // 可能还没有战区长官
-            if (userId != null) {
-                dto.setTerritoryChiefName(userService.queryUserByLoginID(userId).getRealName());
-            }
-        }
-
-        return dto;
-    }
 }

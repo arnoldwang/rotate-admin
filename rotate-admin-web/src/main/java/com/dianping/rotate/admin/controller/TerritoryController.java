@@ -53,8 +53,8 @@ public class TerritoryController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    public Integer create(@RequestBody String data) throws IOException {
-        TerritoryForWebDto territoryForWebDto      = JsonUtils.fromStr(data, TerritoryForWebDto.class);
+    public Integer create(@RequestBody TerritoryForWebDto territoryForWebDto) throws IOException {
+//        TerritoryForWebDto territoryForWebDto      = JsonUtils.fromStr(data, TerritoryForWebDto.class);
 
         territoryForWebDto.setOperatorId(LoginUtils.getUserLoginId());
 
