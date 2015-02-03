@@ -15,6 +15,7 @@ import com.dianping.rotate.smt.dto.Response;
 import com.dianping.rotate.territory.api.TerritoryRuleService;
 import com.dianping.rotate.territory.dto.TerritoryRuleDto;
 import com.dianping.rotate.territory.dto.TerritoryRuleItemDto;
+import com.dianping.rotate.territory.dto.TerritoryRunHistoryDto;
 import com.dianping.rotate.territory.enums.RuleTypeEnum;
 import com.dianping.rotate.territory.enums.TerritoryRulePropertyEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,21 +110,33 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
     @Override
     public Boolean deleteTerritoryRule(int territoryId) {
         try {
-            return territoryRuleService.deleteTerritoryRule(territoryId);
+            Response<Boolean> response = territoryRuleService.deleteTerritoryRule(territoryId);
+            if(response.isSuccess()){
+                return response.getObj();
+            }
+            throw new ApplicationException(response.getComment());
         } catch (Exception ex) {
             throw new ApplicationException(ex.getMessage());
         }
     }
 
+
+    @Override
+    public TerritoryRunHistoryDto getRunningTerritoryRunHistory(){
+        return territoryRuleService.getRunningTerritoryRunHistory();
+    }
+
     @Override
     public Boolean runTerritoryRule(int territoryId,int operatorId) {
         try {
-            territoryRuleService.saveTerritoryRunRule(territoryId,operatorId);
-
+            Response<Boolean> response =territoryRuleService.saveTerritoryRunRule(territoryId, operatorId);
+            if(response.isSuccess()&&response.getObj()){
+                return true;
+            }
+            throw new ApplicationException(response.getComment());
         } catch (Exception ex) {
             throw new ApplicationException(ex.getMessage());
         }
-        return  Boolean.TRUE;
     }
 
 

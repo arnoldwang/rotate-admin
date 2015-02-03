@@ -1,6 +1,7 @@
 package com.dianping.rotate.admin.serviceAgent;
 
 import com.dianping.rotate.territory.dto.TerritoryRuleDto;
+import com.dianping.rotate.territory.dto.TerritoryRunHistoryDto;
 
 import java.util.List;
 
@@ -52,4 +53,6 @@ public interface TerritoryRuleServiceAgent {
      * @return
      */
     public Boolean runTerritoryRule(int territoryId,int operatorId);
+
+    TerritoryRunHistoryDto getRunningTerritoryRunHistory();
 }

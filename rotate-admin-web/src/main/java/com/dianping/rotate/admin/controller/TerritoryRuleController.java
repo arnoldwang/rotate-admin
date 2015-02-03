@@ -62,20 +62,18 @@ public class TerritoryRuleController {
     @RequestMapping(value = "/queryExtendsTerritoryRule",method = RequestMethod.GET)
     @ResponseBody
     public Object queryExtendsTerritoryRule(@RequestParam Integer territoryId){
-
-
         return territoryRuleServiceAgent.getExtendsRuleByTerritoryId(territoryId);
-
-
     }
 
+    @RequestMapping(value = "/runTerritory",method = RequestMethod.GET)
+    @ResponseBody
+    public Object runTerritory(@RequestParam Integer territoryId){
+        return territoryRuleServiceAgent.runTerritoryRule(territoryId, LoginUtils.getUserLoginId());
+    }
+
+
+
     private Object buildTerritoryRuleResult(TerritoryRuleDto t) {
-//
-//        "id": 1,
-//                "rule": "1",
-//                "ruleName": "123",
-//                "territoryId": 1,
-//                "items": [
         Map result = Maps.newHashMap();
 
         result.put("id",t.getId());
