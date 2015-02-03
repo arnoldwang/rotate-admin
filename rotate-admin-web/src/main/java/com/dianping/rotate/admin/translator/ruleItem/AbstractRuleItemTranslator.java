@@ -42,7 +42,11 @@ public abstract class AbstractRuleItemTranslator implements RuleItemTranslator {
 
         List<Integer> value = Lists.newArrayList();
         for(Object o:list){
-            value.add(decode(o));
+            Integer rr = decode(o);
+            if(value.contains(rr)){
+                throw new ApplicationException("一个选项里面有重复的值");
+            }
+            value.add(rr);
         }
         r.setValue(StringUtils.join(value,","));
         return r;
