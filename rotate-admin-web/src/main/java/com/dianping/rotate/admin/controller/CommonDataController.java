@@ -16,6 +16,7 @@ import com.dianping.rotate.shop.constants.ApolloShopStatusEnum;
 import com.dianping.rotate.shop.constants.ApolloShopTypeEnum;
 import com.dianping.rotate.territory.enums.RuleTypeEnum;
 import com.dianping.rotate.territory.enums.RunStatusEnum;
+import com.dianping.rotate.territory.enums.TerritoryOperateType;
 import com.dianping.rotate.territory.enums.TerritoryRulePropertyEnum;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -126,11 +127,23 @@ public class CommonDataController {
 
         result.put("biz", getAllBizInfo());
         result.put("runStatus",getRunStatusEnums());
+        result.put("operateType",getOperateTypeEnums());
 
         buildTerritoryRuleProperty(result);
 
         return result;
 
+    }
+
+    private Object getOperateTypeEnums() {
+        List result = new ArrayList();
+        for(TerritoryOperateType a: TerritoryOperateType.values()){
+            Map map = Maps.newHashMap();
+            map.put("text",a.getText());
+            map.put("value",a.getCode());
+            result.add(map);
+        }
+        return result;
     }
 
     private Object getRunStatusEnums() {
@@ -237,4 +250,6 @@ public class CommonDataController {
         }
         return result;
     }
+
+
 }
