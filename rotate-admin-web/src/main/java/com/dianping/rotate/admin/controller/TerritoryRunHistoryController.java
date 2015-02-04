@@ -32,7 +32,7 @@ public class TerritoryRunHistoryController {
     @Autowired
     private TerritoryRunStatusServiceAgent territoryRunStatusServiceAgent;
 
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/historyList", method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> queryTerritoryRunHistory(
             @RequestParam int pageSize,
@@ -65,7 +65,7 @@ public class TerritoryRunHistoryController {
 
     }
 
-    @RequestMapping(value = "/leafHistoryList", method = RequestMethod.POST)
+    @RequestMapping(value = "/leafHistoryList", method = RequestMethod.GET)
     @ResponseBody
     public List<TerritoryRunStatusForWebDto> queryLeafHistoryList(@RequestParam Integer runHistoryId) {
 
