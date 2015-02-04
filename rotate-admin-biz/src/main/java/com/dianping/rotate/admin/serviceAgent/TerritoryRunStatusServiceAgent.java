@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface TerritoryRunStatusServiceAgent {
     List<TerritoryRunStatusForWebDto> getTerritoryRunListsByHistoryId(Integer runHistoryId);
+
+    void reRunTerritoryRule(Integer id,Integer operatorId);
 }

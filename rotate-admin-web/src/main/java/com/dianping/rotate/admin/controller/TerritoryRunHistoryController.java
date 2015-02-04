@@ -3,6 +3,7 @@ package com.dianping.rotate.admin.controller;
 import com.dianping.core.type.PageModel;
 import com.dianping.rotate.admin.serviceAgent.TerritoryRunHistoryServiceAgent;
 import com.dianping.rotate.admin.serviceAgent.TerritoryRunStatusServiceAgent;
+import com.dianping.rotate.admin.util.LoginUtils;
 import com.dianping.rotate.territory.dto.TerritoryRunHistoryForWebDto;
 import com.dianping.rotate.territory.dto.TerritoryRunStatusForWebDto;
 import com.google.common.collect.Lists;
@@ -73,5 +74,15 @@ public class TerritoryRunHistoryController {
 
 
     }
+
+    @RequestMapping(value = "/reRunTerritoryRule", method = RequestMethod.GET)
+    @ResponseBody
+    public String reRunTerritoryRule(@RequestParam Integer id) {
+
+        territoryRunStatusServiceAgent.reRunTerritoryRule(id, LoginUtils.getUserLoginId());
+        return "设置成功";
+    }
+
+
 
 }
