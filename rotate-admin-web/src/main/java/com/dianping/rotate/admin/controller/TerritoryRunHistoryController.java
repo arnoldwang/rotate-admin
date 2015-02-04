@@ -40,10 +40,10 @@ public class TerritoryRunHistoryController {
 
         Map<String,Object> result = new HashMap<String, Object>();
 
-        int count = 0;
+        int total = 0;
         List<TerritoryRunHistoryForWebDto> resultList = Lists.newArrayList();
 
-        result.put("count",count);
+        result.put("total",total);
         result.put("historyList",resultList);
 
         PageModel pageModel = territoryRunHistoryServiceAgent.queryTerritoryRunHistoryLists(pageIndex,pageSize);
@@ -55,10 +55,10 @@ public class TerritoryRunHistoryController {
 
         if(CollectionUtils.isEmpty(historyLists)) return result;
 
-        count = pageModel.getPageCount();
+        total = pageModel.getRecordCount();
         resultList=historyLists;
 
-        result.put("count",count);
+        result.put("total",total);
         result.put("historyList",resultList);
 
         return result;
