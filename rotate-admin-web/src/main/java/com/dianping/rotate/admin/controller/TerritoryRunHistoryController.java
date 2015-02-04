@@ -58,6 +58,9 @@ public class TerritoryRunHistoryController {
         count = pageModel.getPageCount();
         resultList=historyLists;
 
+        result.put("count",count);
+        result.put("historyList",resultList);
+
         return result;
 
     }
