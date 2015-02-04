@@ -44,7 +44,7 @@ public class TerritoryRunHistoryController {
         List<TerritoryRunHistoryForWebDto> resultList = Lists.newArrayList();
 
         result.put("total",total);
-        result.put("historyList",resultList);
+        result.put("items",resultList);
 
         PageModel pageModel = territoryRunHistoryServiceAgent.queryTerritoryRunHistoryLists(pageIndex,pageSize);
 
@@ -59,7 +59,7 @@ public class TerritoryRunHistoryController {
         resultList=historyLists;
 
         result.put("total",total);
-        result.put("historyList",resultList);
+        result.put("items",resultList);
 
         return result;
 
