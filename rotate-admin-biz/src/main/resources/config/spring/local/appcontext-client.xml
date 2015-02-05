@@ -62,5 +62,21 @@
         <property name="timeout" value="8000" />
     </bean>
 
+    <bean  class="com.dianping.dpsf.spring.ProxyBeanFactory" init-method="init">
+        <property name="serviceName" value="http://service.dianping.com/rotate/territory/TerritoryRunStatusService_0.0.1" />
+        <property name="iface" value="com.dianping.rotate.territory.api.TerritoryRunStatusService" />
+        <property name="serialize" value="hessian" />
+        <property name="callMethod" value="sync" />
+        <property name="timeout" value="8000" />
+    </bean>
+
+    <bean  class="com.dianping.dpsf.spring.ProxyBeanFactory" init-method="init">
+        <property name="serviceName" value="http://service.dianping.com/rotate/territory/TerritoryRunHistoryService_0.0.1" />
+        <property name="iface" value="com.dianping.rotate.territory.api.TerritoryRunHistoryService" />
+        <property name="serialize" value="hessian" />
+        <property name="callMethod" value="sync" />
+        <property name="timeout" value="8000" />
+    </bean>
+
 
 </beans>
