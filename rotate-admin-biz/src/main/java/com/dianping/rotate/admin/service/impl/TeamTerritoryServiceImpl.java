@@ -14,6 +14,7 @@ import com.dianping.rotate.territory.dto.TerritoryDto;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,6 +67,10 @@ public class TeamTerritoryServiceImpl implements TeamTerritoryService {
     }
 
     private List<TeamTerritoryDTO> buildTeamTerritories(List<Team> teams) {
+        if (CollectionUtils.isEmpty(teams)) {
+            return Lists.newArrayList();
+        }
+
         final Map<Integer, TerritoryDto> teamIdToTerritoryMap = rotateTeamTerritoryService.getTeamToTerritoryMap(Lists.transform(teams, new Function<Team, Integer>() {
             @Override
             public Integer apply(Team input) {

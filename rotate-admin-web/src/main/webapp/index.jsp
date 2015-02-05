@@ -3,11 +3,11 @@
 <html>
     <head>
         <meta charset="utf8">
-        <%= PageUtils.css("vendor/bootstrap/css/bootstrap.min.css") %>
-        <%= PageUtils.css("vendor/bootstrap/css/bootstrap-theme.min.css") %>
-        <%= PageUtils.css("vendor/toastr/toastr.css") %>
-        <%= PageUtils.css("vendor/typeahead.js/typeahead.css") %>
-        <%= PageUtils.css("asset/index.css") %>
+        <%= PageUtils.css("vendor/bootstrap/css/bootstrap.min") %>
+        <%= PageUtils.css("vendor/bootstrap/css/bootstrap-theme.min") %>
+        <%= PageUtils.css("vendor/toastr/toastr") %>
+        <%= PageUtils.css("vendor/typeahead.js/typeahead") %>
+        <%= PageUtils.css("asset/index") %>
         <script>
             var ENV = {
                 ajaxPrefix: '/rotate/data'
@@ -16,10 +16,10 @@
     </head>
 
     <body>
-        <%= PageUtils.js("node_modules.js") %>
-        <%= PageUtils.js("jquery-vendors.js") %>
-        <%= PageUtils.js("services.js") %>
-        <%= PageUtils.js("modules.js") %>
-        <%= PageUtils.js("index.js") %>
+        <%= PageUtils.js("node_modules") %>
+        <%= PageUtils.js("jquery-vendors") %>
+        <%= PageUtils.js("services") %>
+        <%= PageUtils.js("modules") %>
+        <%= PageUtils.js("index") %>
     </body>
 </html>
