@@ -1,7 +1,9 @@
 package com.dianping.rotate.admin.controller;
 
 import com.dianping.ba.base.organizationalstructure.api.user.UserService;
+import com.dianping.rotate.admin.dto.TerritoryExtendDTO;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
+import com.dianping.rotate.admin.service.TerritoryService;
 import com.dianping.rotate.admin.serviceAgent.TerritoryServiceAgent;
 import com.dianping.rotate.admin.util.LoginUtils;
 import com.dianping.rotate.admin.utils.JsonUtils;
@@ -31,6 +33,9 @@ public class TerritoryController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    TerritoryService territoryService;
 
     /**
      * 删除战区
@@ -123,6 +128,12 @@ public class TerritoryController {
     @ResponseBody
     public List<TerritoryDto> queryAllLeafTerritories(){
         return  territoryServiceAgent.queryAllLeafTerritories(null);
+    }
+
+    @RequestMapping(value = "/leavesWithExtend", method = RequestMethod.GET)
+    @ResponseBody
+    public List<TerritoryExtendDTO> queryAllLeafTerritoriesWithExtend(){
+        return  territoryService.queryAllLeafTerritoriesWithExtend(null);
     }
 
 
