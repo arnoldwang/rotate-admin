@@ -12,7 +12,7 @@ import com.dianping.rotate.territory.api.OrgChangeHistoryService;
 import com.dianping.rotate.territory.dto.OrgChangeHistoryDto;
 import com.dianping.taskcenter.TaskCenterService;
 import com.dianping.taskcenter.constants.Category;
-import com.dianping.taskcenter.constants.Source;
+import com.dianping.taskcenter.dto.OperationResult;
 import com.dianping.taskcenter.dto.TaskDTO;
 import com.dianping.taskcenter.dto.TaskListRequest;
 import com.google.common.collect.Lists;
@@ -60,7 +60,7 @@ public class TaskCenterServiceAgentImpl implements TaskCenterServiceAgent {
 
             return result;
         } catch (Exception e) {
-            throw new ApplicationException("任务中心服务异常,queryTasks:"+e.getMessage());
+            throw new ApplicationException("任务中心服务异常,queryTasks:" + e.getMessage());
         }
     }
 
@@ -69,6 +69,7 @@ public class TaskCenterServiceAgentImpl implements TaskCenterServiceAgent {
 
         taskInfoDto.setCreateTime(taskDTO.getAddTime());
         taskInfoDto.setId(taskDTO.getId());
+        taskInfoDto.setTaskTag(taskDTO.getStatus());
 
         try {
             Integer teamId = Integer.parseInt(taskDTO.getOutBizId());
@@ -76,7 +77,7 @@ public class TaskCenterServiceAgentImpl implements TaskCenterServiceAgent {
             if (taskDTO.getCategoryId() == Category.ORG_CREATE) {
                 Team team = getTeam(teamMap, teamId);
                 String content = MessageAssembleUtils.assembleMessageWithTeam(Message.ORG_CREATE,
-                        Message.NONE_TEAM_NAME,team);
+                        Message.NONE_TEAM_NAME, team);
                 taskInfoDto.setContent(content);
                 result.add(taskInfoDto);
             } else if (taskDTO.getCategoryId() == Category.ORG_CHANGE) {
@@ -87,22 +88,22 @@ public class TaskCenterServiceAgentImpl implements TaskCenterServiceAgent {
                     OrgChangeHistoryDto historyChange = response.getObj();
                     generateOrgChangeContent(historyChange, taskInfoDto, teamMap);
                 }
-                taskInfoDto.setContent(response.getComment());
+                taskInfoDto.setContent(MessageAssembleUtils.assembleErrorMessage(Message.ERROR_MSG, response.getComment()));
             }
 
 
             result.add(taskInfoDto);
         } catch (NumberFormatException e) {
-            taskInfoDto.setContent(MessageAssembleUtils.assembleErrorMessage(Message.ERROR_MSG,"解析内容失败"));
+            taskInfoDto.setContent(MessageAssembleUtils.assembleErrorMessage(Message.ERROR_MSG, "解析内容失败"));
         }
     }
 
     private Team getTeam(Map<Integer, Team> teamMap, Integer teamId) {
 
-        if(teamId == null) return null;
+        if (teamId == null) return null;
 
         Team team = teamMap.get(teamId);
-        if(team==null){
+        if (team == null) {
             team = getTeamNotInCache(teamId, teamMap);
         }
         return team;
@@ -126,23 +127,37 @@ public class TaskCenterServiceAgentImpl implements TaskCenterServiceAgent {
             return;
         }
 
-        Team team = getTeam(teamMap,historyChange.getOrganizationId());
-        Team preSupOrgTeam = getTeam(teamMap,historyChange.getPreSupOrgId());
-        Team curSupOrgTeam = getTeam(teamMap,historyChange.getCurSupOrgId());
+        Team team = getTeam(teamMap, historyChange.getOrganizationId());
+        Team preSupOrgTeam = getTeam(teamMap, historyChange.getPreSupOrgId());
+        Team curSupOrgTeam = getTeam(teamMap, historyChange.getCurSupOrgId());
 
         String content = MessageAssembleUtils.assembleMessageWithTeam(Message.ORG_CHANGE,
-                Message.NONE_TEAM_NAME,team,preSupOrgTeam,curSupOrgTeam);
+                Message.NONE_TEAM_NAME, team, preSupOrgTeam, curSupOrgTeam);
         taskInfoDto.setContent(content);
     }
 
 
+    @Override
+    public int getTaskCount(int ownerId, int sourceId, int status) {
+        try {
+            return taskCenterService.getTaskCount(ownerId, DEFAULT_QUERY_ID, sourceId, status);
+        } catch (Exception e) {
+            throw new ApplicationException("任务中心服务异常,getTaskCount:" + e.getMessage());
+        }
+    }
 
     @Override
-    public int getTaskCount(int ownerId) {
+    public void maskTaskFinish(int id) {
         try {
-            return taskCenterService.getTaskCount(ownerId,DEFAULT_QUERY_ID, Source.CUSTOMER_ROTATE_TERRITORY,DEFAULT_QUERY_ID);
+
+            TaskDTO taskDTO = new TaskDTO();
+            taskDTO.setId(id);
+            OperationResult<TaskDTO> result = taskCenterService.markTaskFinish(taskDTO);
+            if(!result.isSuccess()){
+                throw new ApplicationException("标记任务失败,maskTaskFinish:"+result.getComment());
+            }
         } catch (Exception e) {
-            throw new ApplicationException("任务中心服务异常,getTaskCount:"+e.getMessage());
+            throw new ApplicationException("任务中心服务异常,maskTaskFinish:" + e.getMessage());
         }
     }
 }

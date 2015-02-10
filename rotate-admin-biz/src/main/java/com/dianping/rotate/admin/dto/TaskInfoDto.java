@@ -10,6 +10,7 @@ public class TaskInfoDto implements Serializable{
     private Integer id;
     private String content;
     private Date createTime;
+    private Integer taskTag;
 
     public Integer getId() {
         return id;
@@ -33,5 +34,13 @@ public class TaskInfoDto implements Serializable{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getTaskTag() {
+        return taskTag;
+    }
+
+    public void setTaskTag(Integer taskTag) {
+        this.taskTag = taskTag;
     }
 }

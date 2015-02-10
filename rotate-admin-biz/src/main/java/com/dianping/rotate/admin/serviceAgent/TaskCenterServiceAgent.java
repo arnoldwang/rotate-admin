@@ -12,6 +12,8 @@ public interface TaskCenterServiceAgent {
 
     List<TaskInfoDto> queryTasks(TaskListRequest taskListRequest);
 
-    int getTaskCount(int ownerId);
+    int getTaskCount(int ownerId,int sourceId,int status);
+
+    void maskTaskFinish(int taskId);
 
 }
