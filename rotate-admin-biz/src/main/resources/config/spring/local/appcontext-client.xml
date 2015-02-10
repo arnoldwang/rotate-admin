@@ -99,7 +99,7 @@
        <property name="timeout" value="5000"/>
    </bean>
 
-    <bean id="orgChangeHistoryService" class="com.dianping.dpsf.spring.ProxyBeanFactory"init-method="init">
+    <bean id="orgChangeHistoryService" class="com.dianping.dpsf.spring.ProxyBeanFactory" init-method="init">
         <property name="serviceName"
                   value="http://service.dianping.com/rotate/territory/OrgChangeHistoryService_0.0.1"/>
         <property name="iface" value="com.dianping.rotate.territory.api.OrgChangeHistoryService"/>
