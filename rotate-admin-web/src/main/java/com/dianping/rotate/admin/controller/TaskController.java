@@ -9,6 +9,7 @@ import com.dianping.taskcenter.enums.SortByEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,7 +27,7 @@ public class TaskController {
     @Autowired
     private TaskCenterServiceAgent taskCenterServiceAgent;
 
-    @RequestMapping(value = "/taskList")
+    @RequestMapping(value = "/taskList", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> queryTerritoryRunHistory(
             @RequestParam int pageSize,
@@ -55,7 +56,7 @@ public class TaskController {
         return result;
     }
 
-    @RequestMapping(value = "/tag")
+    @RequestMapping(value = "/tag",method = RequestMethod.GET)
     @ResponseBody
     public String tagTag(
             @RequestParam int id) {
