@@ -37,7 +37,7 @@ public class TaskCenterServiceAgentImpl implements TaskCenterServiceAgent {
     @Autowired
     private TeamServiceAgent teamServiceAgent;
 
-    @Autowired
+//    @Autowired
     private OrgChangeHistoryService orgChangeHistoryService;
 
     private static final int DEFAULT_QUERY_ID = -1;
