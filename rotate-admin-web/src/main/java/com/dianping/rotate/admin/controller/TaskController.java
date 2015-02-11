@@ -41,12 +41,12 @@ public class TaskController {
         queryDto.setOffset((pageIndex - 1) == 0 ? 0 : (pageIndex - 1) * pageSize + 1);
         queryDto.setOwnerId(LoginUtils.getUserLoginId());
         queryDto.setSortBy(SortByEnum.STATUS.getSort());
-        queryDto.setStatus(taskValue == Boolean.TRUE ? 0 : -1);
+        queryDto.setStatus(taskValue == Boolean.TRUE ? 0 : null);
 
         List<TaskInfoDto> resultList = taskCenterServiceAgent.queryTasks(queryDto);
 
         int total = taskCenterServiceAgent.getTaskCount(LoginUtils.getUserLoginId(),
-                Source.CUSTOMER_ROTATE_TERRITORY, taskValue == Boolean.TRUE ? 0 : -1);
+                Source.CUSTOMER_ROTATE_TERRITORY, taskValue == Boolean.TRUE ? 0 : null);
 
 
         Map<String, Object> result = new HashMap<String, Object>();
