@@ -40,8 +40,6 @@ public class TaskCenterServiceAgentImpl implements TaskCenterServiceAgent {
     @Autowired
     private OrgChangeHistoryService orgChangeHistoryService;
 
-    private static final int DEFAULT_QUERY_ID = -1;
-
     @Override
     public List<TaskInfoDto> queryTasks(TaskListRequest taskListRequest) {
 
@@ -138,7 +136,11 @@ public class TaskCenterServiceAgentImpl implements TaskCenterServiceAgent {
     @Override
     public int getTaskCount(Integer ownerId, Integer sourceId, Integer status) {
         try {
-            return taskCenterService.getTaskCount(ownerId, DEFAULT_QUERY_ID, sourceId, status);
+            TaskListRequest input = new TaskListRequest();
+            input.setStatus(status);
+            input.setSourceId(sourceId);
+            input.setOwnerId(ownerId);
+            return taskCenterService.getTaskCount(input);
         } catch (Exception e) {
             throw new ApplicationException("任务中心服务异常,getTaskCount:" + e.getMessage());
         }
