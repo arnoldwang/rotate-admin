@@ -79,7 +79,6 @@ public class TaskCenterServiceAgentImpl implements TaskCenterServiceAgent {
                 String content = MessageAssembleUtils.assembleMessageWithTeam(Message.ORG_CREATE,
                         Message.NONE_TEAM_NAME, team);
                 taskInfoDto.setContent(content);
-                result.add(taskInfoDto);
             } else if (taskDTO.getCategoryId() == Category.ORG_CHANGE) {
                 //如果是父节点变更，bizId存的是orgChangeHistory的主键，通过orgChangeHistoryService拿到父节点变更历史
                 Response<OrgChangeHistoryDto> response = orgChangeHistoryService.findById(teamId);
@@ -91,8 +90,6 @@ public class TaskCenterServiceAgentImpl implements TaskCenterServiceAgent {
                     taskInfoDto.setContent(MessageAssembleUtils.assembleErrorMessage(Message.ERROR_MSG, response.getComment()));
                 }
             }
-
-
             result.add(taskInfoDto);
         } catch (NumberFormatException e) {
             taskInfoDto.setContent(MessageAssembleUtils.assembleErrorMessage(Message.ERROR_MSG, "解析内容失败"));
