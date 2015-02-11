@@ -12,7 +12,7 @@ public interface TaskCenterServiceAgent {
 
     List<TaskInfoDto> queryTasks(TaskListRequest taskListRequest);
 
-    int getTaskCount(int ownerId,int sourceId,int status);
+    int getTaskCount(Integer ownerId,Integer sourceId,Integer status);
 
     void maskTaskFinish(int taskId);
 

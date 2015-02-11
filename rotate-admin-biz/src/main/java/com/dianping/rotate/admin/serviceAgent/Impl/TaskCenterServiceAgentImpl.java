@@ -136,7 +136,7 @@ public class TaskCenterServiceAgentImpl implements TaskCenterServiceAgent {
 
 
     @Override
-    public int getTaskCount(int ownerId, int sourceId, int status) {
+    public int getTaskCount(Integer ownerId, Integer sourceId, Integer status) {
         try {
             return taskCenterService.getTaskCount(ownerId, DEFAULT_QUERY_ID, sourceId, status);
         } catch (Exception e) {
