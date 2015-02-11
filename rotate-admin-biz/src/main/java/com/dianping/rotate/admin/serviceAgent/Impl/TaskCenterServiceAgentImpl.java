@@ -87,8 +87,9 @@ public class TaskCenterServiceAgentImpl implements TaskCenterServiceAgent {
                 if (response.isSuccess()) {
                     OrgChangeHistoryDto historyChange = response.getObj();
                     generateOrgChangeContent(historyChange, taskInfoDto, teamMap);
+                }else {
+                    taskInfoDto.setContent(MessageAssembleUtils.assembleErrorMessage(Message.ERROR_MSG, response.getComment()));
                 }
-                taskInfoDto.setContent(MessageAssembleUtils.assembleErrorMessage(Message.ERROR_MSG, response.getComment()));
             }
 
 
