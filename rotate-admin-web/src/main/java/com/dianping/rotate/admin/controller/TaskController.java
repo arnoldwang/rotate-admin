@@ -6,6 +6,7 @@ import com.dianping.rotate.admin.util.LoginUtils;
 import com.dianping.taskcenter.constants.Source;
 import com.dianping.taskcenter.dto.TaskListRequest;
 import com.dianping.taskcenter.enums.SortByEnum;
+import com.dianping.taskcenter.enums.SortEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,7 @@ public class TaskController {
         queryDto.setOffset((pageIndex - 1) == 0 ? 0 : (pageIndex - 1) * pageSize + 1);
         queryDto.setOwnerId(LoginUtils.getUserLoginId());
         queryDto.setSortBy(SortByEnum.STATUS.getSort());
+        queryDto.setSortOrder(SortEnum.ASC.getSort());
         queryDto.setStatus(taskValue == Boolean.TRUE ? 0 : null);
 
         List<TaskInfoDto> resultList = taskCenterServiceAgent.queryTasks(queryDto);
