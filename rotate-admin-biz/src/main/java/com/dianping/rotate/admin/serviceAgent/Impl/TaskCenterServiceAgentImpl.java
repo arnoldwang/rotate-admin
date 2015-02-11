@@ -46,7 +46,7 @@ public class TaskCenterServiceAgentImpl implements TaskCenterServiceAgent {
     public List<TaskInfoDto> queryTasks(TaskListRequest taskListRequest) {
 
         try {
-            List<TaskDTO> taskDTOs = taskCenterService.getTasksByTaskRequest(taskListRequest);
+            List<TaskDTO> taskDTOs = taskCenterService.getTasks(taskListRequest);
 
             if (CollectionUtils.isEmpty(taskDTOs)) return Collections.emptyList();
 
