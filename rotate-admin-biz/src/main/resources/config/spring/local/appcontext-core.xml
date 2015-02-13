@@ -20,4 +20,15 @@
 <avatar:cache jms-url="${cache.jms.url}" topic-name="${cache.jms.topic.name}"
 			  jms-username="${cache.jms.username}" jms-password="${cache.jms.password}"/>
 
+
+    <bean name="beanMappingService" class="com.dianping.rotate.admin.framework.BeanMappingServiceImpl"></bean>
+
+    <bean id="beanMapper" class="org.dozer.spring.DozerBeanMapperFactoryBean">
+        <property name="mappingFiles">
+            <list>
+                <value>classpath*:config/beanMapping/*.xml</value>
+            </list>
+        </property>
+    </bean>
+
 </beans>
