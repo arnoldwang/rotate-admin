@@ -13,7 +13,6 @@ import com.dianping.rotate.org.dto.Team;
 import com.dianping.rotate.org.dto.TigerTeamDto;
 import com.dianping.rotate.smt.dto.Response;
 import com.dianping.rotate.territory.api.TeamTerritoryService;
-import com.dianping.rotate.territory.api.TerritoryService;
 import com.dianping.rotate.territory.dto.TerritoryDto;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
@@ -45,7 +44,7 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
     private UserService userService;
 
     @Override
-    public List<VirtualTeamVo> queryTigerTeamList(Integer bizId) {
+    public List<VirtualTeamVo> queryVirtualTeamList(Integer bizId) {
         Response<List<TigerTeamDto>> response = tigerTeamService.queryTigerTeamsByBiz(bizId);
 
         if (!response.isSuccess()) {
@@ -83,5 +82,32 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
 
 
         return virtualTeamVoList;
+    }
+
+    @Override
+    public int saveVirtualTeam(VirtualTeamVo virtualTeamVo,int operatorId) {
+
+        TigerTeamDto tigerTeamDto = beanMappingService.transform(virtualTeamVo,TigerTeamDto.class);
+
+        //save team
+        Response<Integer> responseTiger = tigerTeamService.saveTigerTeam(tigerTeamDto, operatorId);
+        if(!responseTiger.isSuccess()){
+            throw new ApplicationException(responseTiger.getComment());
+        }
+
+        //bind team territory
+        Response responseTeamTerritory =  teamTerritoryService.bind(responseTiger.getObj(), virtualTeamVo.getTerritoryId());
+        if(!responseTeamTerritory.isSuccess()){
+            throw  new ApplicationException(responseTeamTerritory.getComment());
+        }
+
+
+        return responseTiger.getObj();
+    }
+
+    @Override
+    public VirtualTeamVo getVirtualTeam(Integer teamId) {
+        //tigerTeamService.
+        return null;
     }
 }

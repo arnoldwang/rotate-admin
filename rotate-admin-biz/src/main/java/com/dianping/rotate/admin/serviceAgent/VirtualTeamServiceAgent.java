@@ -1,7 +1,6 @@
 package com.dianping.rotate.admin.serviceAgent;
 
 import com.dianping.rotate.admin.vo.VirtualTeamVo;
-import com.dianping.rotate.org.dto.TigerTeamDto;
 
 import java.util.List;
 
@@ -10,5 +9,14 @@ import java.util.List;
  */
 public interface VirtualTeamServiceAgent {
 
-    public List<VirtualTeamVo> queryTigerTeamList(Integer bizId);
+    /**
+     * 查询虚拟组
+     * @param bizId
+     * @return
+     */
+    public List<VirtualTeamVo> queryVirtualTeamList(Integer bizId);
+
+    public int saveVirtualTeam(VirtualTeamVo virtualTeamVo,int ooperatorId);
+
+    public VirtualTeamVo getVirtualTeam(Integer teamId);
 }
