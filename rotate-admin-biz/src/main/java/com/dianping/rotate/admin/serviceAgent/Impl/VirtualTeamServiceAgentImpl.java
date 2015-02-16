@@ -3,6 +3,7 @@ package com.dianping.rotate.admin.serviceAgent.Impl;
 import com.dianping.ba.base.organizationalstructure.api.organization.OrganizationService;
 import com.dianping.ba.base.organizationalstructure.api.user.UserService;
 import com.dianping.ba.base.organizationalstructure.api.user.dto.UserDto;
+import com.dianping.pigeon.remoting.common.exception.InvalidParameterException;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.framework.BeanMappingService;
 import com.dianping.rotate.admin.serviceAgent.VirtualTeamServiceAgent;
@@ -88,6 +89,9 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
     public int saveVirtualTeam(VirtualTeamVo virtualTeamVo,int operatorId) {
 
         TigerTeamDto tigerTeamDto = beanMappingService.transform(virtualTeamVo,TigerTeamDto.class);
+        if(tigerTeamDto == null){
+            throw new InvalidParameterException("参数错误!");
+        }
 
         //save team
         Response<Integer> responseTiger = tigerTeamService.saveTigerTeam(tigerTeamDto, operatorId);

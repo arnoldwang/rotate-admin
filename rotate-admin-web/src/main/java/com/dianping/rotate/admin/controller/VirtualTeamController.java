@@ -1,5 +1,6 @@
 package com.dianping.rotate.admin.controller;
 
+import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.VirtualTeamServiceAgent;
 import com.dianping.rotate.admin.util.LoginUtils;
 import com.dianping.rotate.admin.vo.VirtualTeamVo;
@@ -24,15 +25,14 @@ public class VirtualTeamController {
 
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     @ResponseBody
-    public List<VirtualTeamVo> queryVirtualTeam(@RequestParam Integer bizId){
+    public List<VirtualTeamVo> queryVirtualTeam(@RequestParam Integer bizId) {
         return virtualTeamServiceAgent.queryVirtualTeamList(bizId);
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public String saveVirtualTeam(@RequestParam VirtualTeamVo virtualTeamVo){
-
-        virtualTeamServiceAgent.saveVirtualTeam(virtualTeamVo,LoginUtils.getUserLoginId());
+    public String saveVirtualTeam(@RequestParam VirtualTeamVo virtualTeamVo) {
+        virtualTeamServiceAgent.saveVirtualTeam(virtualTeamVo, LoginUtils.getUserLoginId());
 
         return "保存成功";
     }
