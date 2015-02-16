@@ -51,7 +51,7 @@ public class TerritoryServiceImpl implements TerritoryService {
         Collections.sort(ts, new Comparator<TerritoryDto>() {
             @Override
             public int compare(TerritoryDto o1, TerritoryDto o2) {
-                return o1.getId() - o2.getId();
+                return o1.getTerritoryName().compareTo(o2.getTerritoryName());
             }
         });
 
