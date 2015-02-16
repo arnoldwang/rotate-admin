@@ -30,16 +30,28 @@
         <pigeon.version>2.3.6</pigeon.version>
         <slf4j.version>1.7.5</slf4j.version>
         <rotate.version>1.0-SNAPSHOT</rotate.version>
-        <rotate.territory.api>2.4.1-SNAPSHOT</rotate.territory.api>
+        <rotate.territory.api>2.4.2-SNAPSHOT</rotate.territory.api>
         <rotate.shop.api>1.0.8-SNAPSHOT</rotate.shop.api>
         <project.version.biz>1.0-SNAPSHOT</project.version.biz>
         <ba.base.organizationalstructure.api>0.0.17</ba.base.organizationalstructure.api>
         <smt.base.version>1.0.2-SNAPSHOT</smt.base.version>
         <apollobase.api.version>1.3</apollobase.api.version>
         <rotate.org.version>1.10-SNAPSHOT</rotate.org.version>
+        <task.center.api.version>1.0.10-SNAPSHOT</task.center.api.version>
+        <rotate.org.api.version>2.3-SNAPSHOT</rotate.org.api.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <artifactId>rotate-org-api</artifactId>
+                <groupId>com.dianping</groupId>
+                <version>${rotate.org.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dianping</groupId>
+                <artifactId>taskcenter-api</artifactId>
+                <version>${task.center.api.version}</version>
+            </dependency>
             <dependency>
                 <artifactId>apollobase-api</artifactId>
                 <groupId>com.dianping</groupId>

@@ -19,6 +19,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.dianping</groupId>
+            <artifactId>taskcenter-api</artifactId>
+        </dependency>
+        <dependency>
             <artifactId>rotate-org-api</artifactId>
             <groupId>com.dianping</groupId>
         </dependency>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//log4j/log4j Configuration//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+                     threshold="null" debug="null">
+    <appender name="CONSOLE"
+              class="com.dianping.combiz.misc.ExtendedConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[rotate-admin-web]%d %-5p [%c] %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="avatarAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <!-- <param name="Threshold" value="INFO" /> -->
+        <param name="File" value="/data/applogs/rotate-admin-web/logs/avatar.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[rotate-admin-web]%d %-5p [%c] %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="appAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <!-- <param name="Threshold" value="INFO" /> -->
+        <param name="File" value="/data/applogs/rotate-admin-web/logs/app.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[rotate-admin-web]%d %-5p [%c] %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="errorAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <!-- <param name="Threshold" value="INFO" /> -->
+        <param name="File" value="/data/applogs/rotate-admin-web/logs/error.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[rotate-admin-web]%d %-5p [%c] %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="ibatisAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <!-- <param name="Threshold" value="INFO" /> -->
+        <param name="File" value="/data/applogs/rotate-admin-web/logs/ibatis.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[rotate-admin-web]%d %-5p [%c] %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="illegalAccessAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/data/applogs/rotate-admin-web/logs/illegalAccess.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[rotate-admin-web]%d %-5p [%c] %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="catAppender" class="com.dianping.cat.log4j.CatAppender">
+    </appender>
+
+    <appender name="moPayLogAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <!-- <param name="Threshold" value="INFO" /> -->
+        <param name="File" value="/data/applogs/rotate-admin-web/logs/mopay.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[rotate-admin-web]%d %-5p %m%n"/>
+        </layout>
+    </appender>
+
+    <logger name="com.dianping.apollo.eventbus.log.MOPayLogEventListener">
+        <appender-ref ref="moPayLogAppender"/>
+    </logger>
+
+    <logger name="com.dianping.avatar" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="avatarAppender"/>
+    </logger>
+
+    <logger name="com.ibatis" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ibatisAppender"/>
+    </logger>
+
+    <logger name="java.sql">
+        <level value="WARN"/>
+    </logger>
+
+    <logger name="org.springframework.jms">
+        <level value="ERROR"/>
+    </logger>
+    <logger name="org.apache.activemq">
+        <level value="ERROR"/>
+    </logger>
+
+
+
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="appAppender"/>
+        <appender-ref ref="catAppender"/>
+    </root>
+
+</log4j:configuration>

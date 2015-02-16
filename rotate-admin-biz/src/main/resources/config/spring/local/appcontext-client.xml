@@ -89,5 +89,23 @@
         <property name="timeout" value="8000" />
     </bean>
 
+    <bean id="taskCenterService" class="com.dianping.dpsf.spring.ProxyBeanFactory"
+         init-method="init">
+       <property name="serviceName"
+                 value="http://service.dianping.com/taskcenterService/taskcenterService_1.0.0"/>
+       <property name="iface" value="com.dianping.taskcenter.TaskCenterService"/>
+       <property name="serialize" value="hessian"/>
+       <property name="callMethod" value="sync"/>
+       <property name="timeout" value="5000"/>
+   </bean>
+
+    <bean id="orgChangeHistoryService" class="com.dianping.dpsf.spring.ProxyBeanFactory" init-method="init">
+        <property name="serviceName"
+                  value="http://service.dianping.com/rotate/territory/OrgChangeHistoryService_0.0.1"/>
+        <property name="iface" value="com.dianping.rotate.territory.api.OrgChangeHistoryService"/>
+        <property name="serialize" value="hessian"/>
+        <property name="callMethod" value="sync"/>
+        <property name="timeout" value="5000"/>
+    </bean>
 
 </beans>
