@@ -13,6 +13,7 @@ import com.dianping.rotate.org.api.TeamService;
 import com.dianping.rotate.org.api.TigerTeamService;
 import com.dianping.rotate.org.dto.Team;
 import com.dianping.rotate.org.dto.TigerTeamDto;
+import com.dianping.rotate.org.enums.StatusEnum;
 import com.dianping.rotate.smt.dto.Response;
 import com.dianping.rotate.territory.api.TeamTerritoryService;
 import com.dianping.rotate.territory.dto.TerritoryDto;
@@ -54,29 +55,29 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
         }
 
         List<TigerTeamDto> tigerTeamDtoList = response.getObj();
-        if(CollectionUtils.isEmpty(tigerTeamDtoList)){
-            return  Lists.newArrayList();
+        if (CollectionUtils.isEmpty(tigerTeamDtoList)) {
+            return Lists.newArrayList();
         }
 
         List<VirtualTeamVo> virtualTeamVoList = Lists.newArrayList();
         for (TigerTeamDto item : tigerTeamDtoList) {
-            VirtualTeamVo vo = beanMappingService.transform(item,VirtualTeamVo.class);
+            VirtualTeamVo vo = beanMappingService.transform(item, VirtualTeamVo.class);
             //获取父节点名称
             Team team = teamService.getTeam(item.getParentTeamId());
-            if(team != null) {
+            if (team != null) {
                 vo.setParentTeamName(team.getTeamName());
             }
 
             //获取战区ID和名称
-            TerritoryDto territory =  teamTerritoryService.getTerritoryByTeamId(item.getId());
-            if(territory!=null) {
+            TerritoryDto territory = teamTerritoryService.getTerritoryByTeamId(item.getId());
+            if (territory != null) {
                 vo.setTerritoryId(territory.getId());
                 vo.setTerritoryName(territory.getTerritoryName());
             }
 
             //获取组长
             UserDto userDto = userService.queryUserByLoginID(item.getTeamLeaderId());
-            if(userDto!=null){
+            if (userDto != null) {
                 vo.setTeamLeaderName(userDto.getRealName());
             }
             virtualTeamVoList.add(vo);
@@ -87,33 +88,36 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
     }
 
     @Override
-    public int saveVirtualTeam(VirtualTeamVo virtualTeamVo,int operatorId) {
+    public int saveVirtualTeam(VirtualTeamVo virtualTeamVo, int operatorId) {
 
-        TigerTeamDto tigerTeamDto = beanMappingService.transform(virtualTeamVo,TigerTeamDto.class);
-        if(tigerTeamDto == null){
+        TigerTeamDto tigerTeamDto = beanMappingService.transform(virtualTeamVo, TigerTeamDto.class);
+        if (tigerTeamDto == null) {
             throw new InvalidParameterException("参数错误!");
         }
+        tigerTeamDto.setStatus(StatusEnum.VALID.getCode());//置为有效
+        
         List<Integer> teamMembers = Lists.newArrayList();
-        if(!CollectionUtils.isEmpty( virtualTeamVo.getMembers())){
-            for(TeamMemberVo item : virtualTeamVo.getMembers()){
+        if (!CollectionUtils.isEmpty(virtualTeamVo.getMembers())) {
+            for (TeamMemberVo item : virtualTeamVo.getMembers()) {
                 teamMembers.add(item.getMemberId());
             }
         }
         tigerTeamDto.setTeamMembers(teamMembers);
 
-
         //save team
         Response<Integer> responseTiger = tigerTeamService.saveTigerTeam(tigerTeamDto, operatorId);
-        if(!responseTiger.isSuccess()){
+        if (!responseTiger.isSuccess()) {//保存失败
             throw new ApplicationException(responseTiger.getComment());
+        }
+        if (responseTiger.getObj() == 0) {//没有返回组id
+            throw new ApplicationException("保存异常,未获取到teamId!");
         }
 
         //bind team territory
-        Response responseTeamTerritory =  teamTerritoryService.bind(responseTiger.getObj(), virtualTeamVo.getTerritoryId());
-        if(!responseTeamTerritory.isSuccess()){
-            throw  new ApplicationException(responseTeamTerritory.getComment());
+        Response responseTeamTerritory = teamTerritoryService.bind(responseTiger.getObj(), virtualTeamVo.getTerritoryId());
+        if (!responseTeamTerritory.isSuccess()) {
+            throw new ApplicationException(responseTeamTerritory.getComment());
         }
-
 
         return responseTiger.getObj();
     }
