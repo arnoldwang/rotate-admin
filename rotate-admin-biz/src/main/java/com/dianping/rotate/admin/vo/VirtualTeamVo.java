@@ -26,7 +26,7 @@ public class VirtualTeamVo implements Serializable {
     private Integer territoryId;
     private String territoryName;
     private Integer bizId;
-    private Integer teamType;
+    private Integer teamType =1;
     private List<TeamMemberVo> members;
 }
 

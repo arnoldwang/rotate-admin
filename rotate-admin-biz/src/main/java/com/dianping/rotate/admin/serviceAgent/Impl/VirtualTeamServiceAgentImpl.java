@@ -62,6 +62,7 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
         List<VirtualTeamVo> virtualTeamVoList = Lists.newArrayList();
         for (TigerTeamDto item : tigerTeamDtoList) {
             VirtualTeamVo vo = beanMappingService.transform(item, VirtualTeamVo.class);
+            vo.setTeamType(1);
             //获取父节点名称
             Team team = teamService.getTeam(item.getParentTeamId());
             if (team != null) {
@@ -95,7 +96,7 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
             throw new InvalidParameterException("参数错误!");
         }
         tigerTeamDto.setStatus(StatusEnum.VALID.getCode());//置为有效
-        
+
         List<Integer> teamMembers = Lists.newArrayList();
         if (!CollectionUtils.isEmpty(virtualTeamVo.getMembers())) {
             for (TeamMemberVo item : virtualTeamVo.getMembers()) {
