@@ -9,4 +9,7 @@ import java.util.List;
  */
 public interface TeamTerritoryService {
     List<TeamTerritoryDTO> getTeamsByBizId(Integer bizId);
+
+
+    List<TeamTerritoryDTO> getAllTeamsByBizId(Integer bizId);
 }

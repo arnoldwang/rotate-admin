@@ -81,6 +81,20 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
             if (userDto != null) {
                 vo.setTeamLeaderName(userDto.getRealName());
             }
+
+            //设置组成员
+            List<TeamMemberVo> memberVoList = Lists.newArrayList();
+            if (!CollectionUtils.isEmpty(item.getTeamMembers())) {
+                List<UserDto> userDtoList = userService.queryUserByLoginIDs(item.getTeamMembers());
+                for(UserDto user : userDtoList){
+                    TeamMemberVo memberVo = new TeamMemberVo();
+                    memberVo.setMemberId(user.getLoginId());
+                    memberVo.setMemberName(user.getRealName());
+                    memberVoList.add(memberVo);
+                }
+                vo.setMembers(memberVoList);
+            }
+
             virtualTeamVoList.add(vo);
         }
 

@@ -38,4 +38,12 @@ public class TeamController {
 
         return true;
     }
+
+
+
+    @RequestMapping(value="/queryAll")
+    @ResponseBody
+    public List<TeamTerritoryDTO> queryAllTeamTerritory(@RequestParam("bizId") Integer bizId) {
+        return teamTerritoryService.getAllTeamsByBizId(bizId);
+    }
 }
