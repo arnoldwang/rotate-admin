@@ -33,4 +33,11 @@ public class VirtualTeamController {
         return "保存成功";
     }
 
+    @RequestMapping(value="/delete")
+    @ResponseBody
+    public String deleteVirtualTeam(@RequestParam(value = "teamId") Integer teamId) {
+        virtualTeamServiceAgent.deleteVirtualTeam(teamId);
+
+        return "删除成功";
+    }
 }

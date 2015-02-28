@@ -142,4 +142,10 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
         //tigerTeamService.
         return null;
     }
+
+    @Override
+    public Boolean deleteVirtualTeam(Integer teamId){
+
+        return  Boolean.TRUE;
+    }
 }
