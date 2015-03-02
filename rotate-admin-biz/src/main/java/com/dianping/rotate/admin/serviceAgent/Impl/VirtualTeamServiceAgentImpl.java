@@ -147,7 +147,12 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
 
     @Override
     public Boolean deleteVirtualTeam(Integer teamId){
+        try {
 
+            teamTerritoryService.unbindTeam(teamId);
+        }catch (Exception ex){
+            throw new ApplicationException(ex.getMessage());
+        }
         return  Boolean.TRUE;
     }
 }
