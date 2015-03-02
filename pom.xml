@@ -38,7 +38,7 @@
         <apollobase.api.version>1.3</apollobase.api.version>
         <rotate.org.version>1.10-SNAPSHOT</rotate.org.version>
         <task.center.api.version>1.0.10-SNAPSHOT</task.center.api.version>
-        <rotate.org.api.version>2.6-SNAPSHOT</rotate.org.api.version>
+        <rotate.org.api.version>2.8-SNAPSHOT</rotate.org.api.version>
     </properties>
     <dependencyManagement>
         <dependencies>

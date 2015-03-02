@@ -20,5 +20,5 @@ public interface VirtualTeamServiceAgent {
 
     public VirtualTeamVo getVirtualTeam(Integer teamId);
 
-    Boolean deleteVirtualTeam(Integer teamId);
+    Boolean deleteVirtualTeam(Integer teamId,int operatorId);
 }

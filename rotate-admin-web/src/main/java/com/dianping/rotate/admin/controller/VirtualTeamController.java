@@ -36,7 +36,8 @@ public class VirtualTeamController {
     @RequestMapping(value="/delete")
     @ResponseBody
     public String deleteVirtualTeam(@RequestParam(value = "teamId") Integer teamId) {
-        virtualTeamServiceAgent.deleteVirtualTeam(teamId);
+
+        virtualTeamServiceAgent.deleteVirtualTeam(teamId, LoginUtils.getUserLoginId());
 
         return "删除成功";
     }

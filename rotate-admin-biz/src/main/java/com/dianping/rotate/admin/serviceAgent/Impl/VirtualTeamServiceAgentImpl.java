@@ -1,6 +1,5 @@
 package com.dianping.rotate.admin.serviceAgent.Impl;
 
-import com.dianping.ba.base.organizationalstructure.api.organization.OrganizationService;
 import com.dianping.ba.base.organizationalstructure.api.user.UserService;
 import com.dianping.ba.base.organizationalstructure.api.user.dto.UserDto;
 import com.dianping.pigeon.remoting.common.exception.InvalidParameterException;
@@ -146,10 +145,13 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
     }
 
     @Override
-    public Boolean deleteVirtualTeam(Integer teamId){
+    public Boolean deleteVirtualTeam(Integer teamId,int operatorId){
         try {
 
             teamTerritoryService.unbindTeam(teamId);
+
+            tigerTeamService.softDeleteTigerTeam(teamId,operatorId);
+
         }catch (Exception ex){
             throw new ApplicationException(ex.getMessage());
         }
