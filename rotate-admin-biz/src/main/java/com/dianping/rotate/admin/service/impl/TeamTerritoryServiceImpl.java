@@ -67,7 +67,7 @@ public class TeamTerritoryServiceImpl implements TeamTerritoryService {
     }
 
     @Override
-    public List<TeamTerritoryDTO> getAllTeamsByBizId(Integer bizId) {
+    public List<Team> getAllTeamsByBizId(Integer bizId) {
         Integer departmentId = getTeamIdByBizId(bizId);
 
         if (departmentId == null) {
@@ -76,7 +76,7 @@ public class TeamTerritoryServiceImpl implements TeamTerritoryService {
 
         List<Team> teams = rotateTeamService.getNotLeafTeamsByDepartmentId(departmentId);
 
-        return buildTeamTerritories(teams);
+        return teams;
 
     }
 

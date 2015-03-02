@@ -3,6 +3,7 @@ package com.dianping.rotate.admin.controller;
 import com.dianping.rotate.admin.dto.TeamTerritoryDTO;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.service.TeamTerritoryService;
+import com.dianping.rotate.org.dto.Team;
 import com.dianping.rotate.smt.dto.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,7 @@ public class TeamController {
 
     @RequestMapping(value="/queryAll")
     @ResponseBody
-    public List<TeamTerritoryDTO> queryAllTeamTerritory(@RequestParam("bizId") Integer bizId) {
+    public List<Team> queryAllTeamTerritory(@RequestParam("bizId") Integer bizId) {
         return teamTerritoryService.getAllTeamsByBizId(bizId);
     }
 }
