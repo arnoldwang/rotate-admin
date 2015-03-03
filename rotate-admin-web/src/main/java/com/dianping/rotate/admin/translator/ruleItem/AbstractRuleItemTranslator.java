@@ -42,6 +42,11 @@ public abstract class AbstractRuleItemTranslator implements RuleItemTranslator {
 
         List<Integer> value = Lists.newArrayList();
         for(Object o:list){
+            if(o instanceof Map){
+               if( ((Map)o).get("notFound") !=null ){
+                   throw new ApplicationException("请先删除不存在的选项");
+               }
+            }
             Integer rr = decode(o);
             if(value.contains(rr)){
                 throw new ApplicationException("一个选项里面有重复的值");
@@ -53,4 +58,13 @@ public abstract class AbstractRuleItemTranslator implements RuleItemTranslator {
     }
 
     public abstract Integer decode(Object o);
+
+
+    public Object buildNotFoundResult(Integer v,String desc){
+        Map map = Maps.newHashMap();
+        map.put("notFound",true);
+        map.put("id",v);
+        map.put("desc",desc);
+        return map;
+    }
 }

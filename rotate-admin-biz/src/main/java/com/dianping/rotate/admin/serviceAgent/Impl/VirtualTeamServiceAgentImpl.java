@@ -1,17 +1,18 @@
 package com.dianping.rotate.admin.serviceAgent.Impl;
 
-import com.dianping.ba.base.organizationalstructure.api.organization.OrganizationService;
 import com.dianping.ba.base.organizationalstructure.api.user.UserService;
 import com.dianping.ba.base.organizationalstructure.api.user.dto.UserDto;
 import com.dianping.pigeon.remoting.common.exception.InvalidParameterException;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.framework.BeanMappingService;
 import com.dianping.rotate.admin.serviceAgent.VirtualTeamServiceAgent;
+import com.dianping.rotate.admin.vo.TeamMemberVo;
 import com.dianping.rotate.admin.vo.VirtualTeamVo;
 import com.dianping.rotate.org.api.TeamService;
 import com.dianping.rotate.org.api.TigerTeamService;
 import com.dianping.rotate.org.dto.Team;
 import com.dianping.rotate.org.dto.TigerTeamDto;
+import com.dianping.rotate.org.enums.StatusEnum;
 import com.dianping.rotate.smt.dto.Response;
 import com.dianping.rotate.territory.api.TeamTerritoryService;
 import com.dianping.rotate.territory.dto.TerritoryDto;
@@ -53,31 +54,46 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
         }
 
         List<TigerTeamDto> tigerTeamDtoList = response.getObj();
-        if(CollectionUtils.isEmpty(tigerTeamDtoList)){
-            return  Lists.newArrayList();
+        if (CollectionUtils.isEmpty(tigerTeamDtoList)) {
+            return Lists.newArrayList();
         }
 
         List<VirtualTeamVo> virtualTeamVoList = Lists.newArrayList();
         for (TigerTeamDto item : tigerTeamDtoList) {
-            VirtualTeamVo vo = beanMappingService.transform(item,VirtualTeamVo.class);
+            VirtualTeamVo vo = beanMappingService.transform(item, VirtualTeamVo.class);
+            vo.setTeamType(1);
             //获取父节点名称
             Team team = teamService.getTeam(item.getParentTeamId());
-            if(team != null) {
+            if (team != null) {
                 vo.setParentTeamName(team.getTeamName());
             }
 
             //获取战区ID和名称
-            TerritoryDto territory =  teamTerritoryService.getTerritoryByTeamId(item.getId());
-            if(territory!=null) {
+            TerritoryDto territory = teamTerritoryService.getTerritoryByTeamId(item.getId());
+            if (territory != null) {
                 vo.setTerritoryId(territory.getId());
                 vo.setTerritoryName(territory.getTerritoryName());
             }
 
             //获取组长
             UserDto userDto = userService.queryUserByLoginID(item.getTeamLeaderId());
-            if(userDto!=null){
+            if (userDto != null) {
                 vo.setTeamLeaderName(userDto.getRealName());
             }
+
+            //设置组成员
+            List<TeamMemberVo> memberVoList = Lists.newArrayList();
+            if (!CollectionUtils.isEmpty(item.getTeamMembers())) {
+                List<UserDto> userDtoList = userService.queryUserByLoginIDs(item.getTeamMembers());
+                for(UserDto user : userDtoList){
+                    TeamMemberVo memberVo = new TeamMemberVo();
+                    memberVo.setMemberId(user.getLoginId());
+                    memberVo.setMemberName(user.getRealName());
+                    memberVoList.add(memberVo);
+                }
+                vo.setMembers(memberVoList);
+            }
+
             virtualTeamVoList.add(vo);
         }
 
@@ -86,25 +102,38 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
     }
 
     @Override
-    public int saveVirtualTeam(VirtualTeamVo virtualTeamVo,int operatorId) {
+    public int saveVirtualTeam(VirtualTeamVo virtualTeamVo, int operatorId) {
 
-        TigerTeamDto tigerTeamDto = beanMappingService.transform(virtualTeamVo,TigerTeamDto.class);
-        if(tigerTeamDto == null){
+        TigerTeamDto tigerTeamDto = beanMappingService.transform(virtualTeamVo, TigerTeamDto.class);
+        if (tigerTeamDto == null) {
             throw new InvalidParameterException("参数错误!");
         }
+        tigerTeamDto.setStatus(StatusEnum.VALID.getCode());//置为有效
+
+        List<Integer> teamMembers = Lists.newArrayList();
+        if (!CollectionUtils.isEmpty(virtualTeamVo.getMembers())) {
+            for (TeamMemberVo item : virtualTeamVo.getMembers()) {
+                teamMembers.add(item.getMemberId());
+            }
+        }
+        tigerTeamDto.setTeamMembers(teamMembers);
 
         //save team
         Response<Integer> responseTiger = tigerTeamService.saveTigerTeam(tigerTeamDto, operatorId);
-        if(!responseTiger.isSuccess()){
+        if (!responseTiger.isSuccess()) {//保存失败
             throw new ApplicationException(responseTiger.getComment());
+        }
+        if (responseTiger.getObj() == 0) {//没有返回组id
+            throw new ApplicationException("保存异常,未获取到teamId!");
         }
 
         //bind team territory
-        Response responseTeamTerritory =  teamTerritoryService.bind(responseTiger.getObj(), virtualTeamVo.getTerritoryId());
-        if(!responseTeamTerritory.isSuccess()){
-            throw  new ApplicationException(responseTeamTerritory.getComment());
+        if(virtualTeamVo.getTerritoryId() != null && virtualTeamVo.getTerritoryId()>0) {
+            Response responseTeamTerritory = teamTerritoryService.bind(responseTiger.getObj(), virtualTeamVo.getTerritoryId());
+            if (!responseTeamTerritory.isSuccess()) {
+                throw new ApplicationException(responseTeamTerritory.getComment());
+            }
         }
-
 
         return responseTiger.getObj();
     }
@@ -113,5 +142,19 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
     public VirtualTeamVo getVirtualTeam(Integer teamId) {
         //tigerTeamService.
         return null;
+    }
+
+    @Override
+    public Boolean deleteVirtualTeam(Integer teamId,int operatorId){
+        try {
+
+            teamTerritoryService.unbindTeam(teamId);
+
+            tigerTeamService.softDeleteTigerTeam(teamId,operatorId);
+
+        }catch (Exception ex){
+            throw new ApplicationException(ex.getMessage());
+        }
+        return  Boolean.TRUE;
     }
 }

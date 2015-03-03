@@ -1,15 +1,11 @@
 package com.dianping.rotate.admin.controller;
 
-import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.VirtualTeamServiceAgent;
 import com.dianping.rotate.admin.util.LoginUtils;
 import com.dianping.rotate.admin.vo.VirtualTeamVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,10 +27,18 @@ public class VirtualTeamController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public String saveVirtualTeam(@RequestParam VirtualTeamVo virtualTeamVo) {
+    public String saveVirtualTeam(@RequestBody VirtualTeamVo virtualTeamVo) {
         virtualTeamServiceAgent.saveVirtualTeam(virtualTeamVo, LoginUtils.getUserLoginId());
 
         return "保存成功";
     }
 
+    @RequestMapping(value="/delete")
+    @ResponseBody
+    public String deleteVirtualTeam(@RequestParam(value = "teamId") Integer teamId) {
+
+        virtualTeamServiceAgent.deleteVirtualTeam(teamId, LoginUtils.getUserLoginId());
+
+        return "删除成功";
+    }
 }

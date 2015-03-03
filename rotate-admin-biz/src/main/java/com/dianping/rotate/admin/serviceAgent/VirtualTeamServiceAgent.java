@@ -19,4 +19,6 @@ public interface VirtualTeamServiceAgent {
     public int saveVirtualTeam(VirtualTeamVo virtualTeamVo,int ooperatorId);
 
     public VirtualTeamVo getVirtualTeam(Integer teamId);
+
+    Boolean deleteVirtualTeam(Integer teamId,int operatorId);
 }
