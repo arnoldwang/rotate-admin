@@ -20,4 +20,5 @@
     <avatar:cache jms-url="${cache.jms.url}" topic-name="${cache.jms.topic.name}"
                   jms-username="${cache.jms.username}" jms-password="${cache.jms.password}"/>
 
+    <bean id="authorizeFilter" class="com.dianping.rotate.admin.AuthorizeFilter" />
 </beans>

@@ -1,8 +1,5 @@
 package com.dianping.rotate.admin.util;
 
-import com.dianping.rotate.admin.exceptions.ApplicationException;
-import com.dianping.rotate.admin.model.UserProfile;
-import com.dianping.rotate.admin.utils.Beans;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -15,28 +12,27 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginUtils {
 
     /**
-     * 获取用户信息
-     * @return
-     */
-    public static UserProfile getUserProfile() {
-        HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-
-        OAuthUtil oAuthUtil = Beans.getBean(OAuthUtil.class);
-        UserProfile authorization = oAuthUtil.getUserProfile(req.getHeader("Authorization"));
-        if (authorization == null) {
-            throw new ApplicationException("用户未登录");
-        }
-        return authorization;
-    }
-
-    /**
      * 获取用户信息Id
      * @return
      */
     public static Integer getUserLoginId() {
-        // mock
-        return -12345;
-//        UserProfile authorization = getUserProfile();
-//        return authorization.getLoginId();
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+
+        if (attributes == null) {
+            return 0;
+        }
+
+        return getUserLoginIdWithRequest(attributes.getRequest());
+    }
+
+    public static Integer getUserLoginIdWithRequest(HttpServletRequest req) {
+
+        String userInfoStr = req.getRemoteUser();
+        String[] infos = userInfoStr.split("\\|");
+        try {
+            return Integer.parseInt(infos[1]);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }
