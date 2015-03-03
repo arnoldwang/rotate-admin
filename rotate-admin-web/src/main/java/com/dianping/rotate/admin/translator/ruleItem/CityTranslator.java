@@ -1,5 +1,6 @@
 package com.dianping.rotate.admin.translator.ruleItem;
 
+import com.dianping.combiz.entity.City;
 import com.dianping.combiz.service.CityService;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.google.common.collect.Maps;
@@ -18,10 +19,13 @@ public class CityTranslator extends AbstractRuleItemTranslator {
 
     @Override
     public Object encode(Integer v) {
-
+        City city = cityService.loadCity(v);
+        if(city==null){
+            return buildNotFoundResult(v,"城市不存在");
+        }
         Map map = Maps.newHashMap();
         map.put("cityId",v);
-        map.put("cityName",cityService.loadCity(v).getCityName());
+        map.put("cityName",city.getCityName());
         return map;
     }
 

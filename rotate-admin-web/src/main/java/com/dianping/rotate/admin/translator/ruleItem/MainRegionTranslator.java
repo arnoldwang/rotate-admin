@@ -23,8 +23,11 @@ public class MainRegionTranslator extends AbstractRuleItemTranslator {
     @Override
     public Object encode(Integer v) {
         Map map = Maps.newHashMap();
-        Region district = regionService.loadMainParentDistrict(v, true);
         Region region = regionService.loadRegion(v);
+        if(region==null){
+            return buildNotFoundResult(v,"商区不存在");
+        }
+        Region district = regionService.loadMainParentDistrict(v, true);
         map.put("districtId",district.getRegionId());
         map.put("districtName",district.getRegionName());
         map.put("mainRegionId",region.getRegionId());

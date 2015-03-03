@@ -2,6 +2,7 @@ package com.dianping.rotate.admin.controller;
 
 import com.dianping.apollobase.api.Group;
 import com.dianping.ba.base.organizationalstructure.api.user.dto.UserDto;
+import com.dianping.combiz.entity.Category;
 import com.dianping.combiz.entity.City;
 import com.dianping.combiz.entity.Province;
 import com.dianping.combiz.service.CategoryService;
@@ -11,6 +12,7 @@ import com.dianping.combiz.service.RegionService;
 import com.dianping.combiz.service.filter.CityFilter;
 import com.dianping.combiz.util.CodeConstants;
 import com.dianping.rotate.admin.serviceAgent.ApolloBaseServiceAgent;
+import com.dianping.rotate.admin.serviceAgent.CategoryServiceAgent;
 import com.dianping.rotate.admin.serviceAgent.UserServiceAgent;
 import com.dianping.rotate.shop.constants.ApolloShopStatusEnum;
 import com.dianping.rotate.shop.constants.ApolloShopTypeEnum;
@@ -57,6 +59,9 @@ public class CommonDataController {
 
     @Autowired
     private UserServiceAgent userServiceAgent;
+
+    @Autowired
+    private CategoryServiceAgent categoryServiceAgent;
 
     @Autowired
     private ApolloBaseServiceAgent apolloBaseServiceAgent;
@@ -128,6 +133,15 @@ public class CommonDataController {
         result.put("biz", getAllBizInfo());
         result.put("runStatus",getRunStatusEnums());
         result.put("operateType",getOperateTypeEnums());
+        result.put("categoryList",Lists.transform(categoryServiceAgent.getDistinctCategories(), new Function<Category, Object>() {
+            @Override
+            public Object apply(Category category) {
+                Map map = Maps.newHashMap();
+                map.put("text",category.getName());
+                map.put("value",category.getId());
+                return map;
+            }
+        }))     ;
 
         buildTerritoryRuleProperty(result);
 
