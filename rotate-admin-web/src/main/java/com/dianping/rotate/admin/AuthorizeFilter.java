@@ -33,6 +33,7 @@ public class AuthorizeFilter implements Filter {
 //            httpResponse.setStatus(403);
 //            httpResponse.getWriter().print("您没有权限访问该页面");
             response.setCharacterEncoding("UTF-8");
+            request.setCharacterEncoding("UTF-8");
             request.getRequestDispatcher("not-found.jsp").forward(request,response);
         }
     }

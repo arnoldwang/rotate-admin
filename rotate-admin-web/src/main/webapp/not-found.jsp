@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <%@ page import="com.dianping.rotate.admin.util.PageUtils" %>
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
-<%@ page contentType="text/html; UTF-8" %>
 <html>
     <head>
         <meta charset="utf8">
