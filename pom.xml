@@ -39,7 +39,7 @@
         <rotate.org.version>1.10-SNAPSHOT</rotate.org.version>
         <task.center.api.version>1.0.10-SNAPSHOT</task.center.api.version>
         <rotate.org.api.version>2.8-SNAPSHOT</rotate.org.api.version>
-        <cas.client.core.product.version>3.2.1-memcached-SNAPSHOT</cas.client.core.product.version>
+        <cas.client.core.product.version>3.2.1-memcached.STABLE.4</cas.client.core.product.version>
     </properties>
     <dependencyManagement>
         <dependencies>
