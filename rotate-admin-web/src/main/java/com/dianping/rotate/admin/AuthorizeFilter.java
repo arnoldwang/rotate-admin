@@ -29,9 +29,10 @@ public class AuthorizeFilter implements Filter {
         if (isDev() ||permissionService.getPermissions(loginId).contains(PermissionType.OPERATOR.value) ) {
             chain.doFilter(request, response);
         } else {
-            HttpServletResponse httpResponse = (HttpServletResponse) response;
-            httpResponse.setStatus(403);
-            httpResponse.getWriter().print("您没有权限访问该页面");
+//            HttpServletResponse httpResponse = (HttpServletResponse) response;
+//            httpResponse.setStatus(403);
+//            httpResponse.getWriter().print("您没有权限访问该页面");
+            request.getRequestDispatcher("not-found.jsp").forward(request,response);
         }
     }
 
