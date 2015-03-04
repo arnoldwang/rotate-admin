@@ -278,38 +278,6 @@
                 <artifactId>cas-client-core-product</artifactId>
                 <version>${cas.client.core.product.version}</version>
                 <exclusions>
-                    <exclusion>
-                        <groupId>org.apache.axis2</groupId>
-                        <artifactId>axis2-adb</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.axis2</groupId>
-                        <artifactId>axis2-kernel</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>axis2-transport-http</groupId>
-                        <artifactId>axis2-transport-http</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>axis2-transport-local</groupId>
-                        <artifactId>axis2-transport-local</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.neethi</groupId>
-                        <artifactId>neethi</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring-context</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.dianping</groupId>
-                        <artifactId>avatar-cache</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.dianping.zebra</groupId>
-                        <artifactId>zebra-ds-monitor-client</artifactId>
-                    </exclusion>
 
                     <exclusion>
                         <groupId>com.dianping.lion</groupId>
