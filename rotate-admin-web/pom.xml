@@ -16,16 +16,8 @@
     <dependencies>
 
         <dependency>
-        <groupId>org.jasig.cas</groupId>
-        <artifactId>cas-server-support-oauth</artifactId>
-
-            <exclusions>
-
-                <exclusion>
-                    <artifactId>xmldsig</artifactId>
-                    <groupId>javax.xml</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.jasig.cas.client</groupId>
+            <artifactId>cas-client-core-product</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
