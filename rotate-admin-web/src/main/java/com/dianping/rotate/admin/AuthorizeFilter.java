@@ -32,7 +32,7 @@ public class AuthorizeFilter implements Filter {
 //            HttpServletResponse httpResponse = (HttpServletResponse) response;
 //            httpResponse.setStatus(403);
 //            httpResponse.getWriter().print("您没有权限访问该页面");
-            response.setContentType("text/html;charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
             request.getRequestDispatcher("not-found.jsp").forward(request,response);
         }
     }
