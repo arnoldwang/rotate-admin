@@ -4,10 +4,4 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 
-       <bean name="oAuthUtil" class="com.dianping.rotate.admin.util.OAuthUtil">
-              <property name="clientId" value="${customerinfo-web.oauth.clientId}"/>
-              <property name="clientSecret" value="${customerinfo-web.oauth.clientSecret}"/>
-              <property name="callbackUrl" value="${customerinfo-web.oauth.callbackUrl}"/>
-              <property name="serverUrl" value="${customerinfo-web.oauth.serverUrl}"/>
-       </bean>
 </beans>
