@@ -16,6 +16,11 @@
     <dependencies>
 
         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.jasig.cas.client</groupId>
             <artifactId>cas-client-core-product</artifactId>
         </dependency>
