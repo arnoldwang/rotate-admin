@@ -80,6 +80,7 @@ public class TerritoryRuleController {
         result.put("rule",t.getRule());
         result.put("territoryId",t.getTerritoryId());
         result.put("ruleName",t.getRuleName());
+        result.put("description",t.getDescription());
 
         result.put("items",buildTerritoryRuleItemsResult(t.getItems()));
 
