@@ -76,7 +76,7 @@
             <dependency>
                 <artifactId>rotate-org-api</artifactId>
                 <groupId>com.dianping</groupId>
-                <version>${rotate.org.version}</version>
+                <version>${rotate.org.api.version}</version>
             </dependency>
 
             <dependency>
