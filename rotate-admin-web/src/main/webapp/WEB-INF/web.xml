@@ -38,6 +38,8 @@
     <filter-mapping>
         <filter-name>characterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <!-- Support put with form parameters -->
     <filter>

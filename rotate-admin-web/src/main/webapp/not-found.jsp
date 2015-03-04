@@ -14,7 +14,7 @@
 
     <body>
         <header id="header"></header>
-        <div id="content">
+        <div id="content" style="width: 960px;margin: 0 auto;text-align: center">
 
             你没有权限访问该系统
         </div>
