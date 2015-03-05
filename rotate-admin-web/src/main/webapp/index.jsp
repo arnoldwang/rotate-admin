@@ -30,28 +30,16 @@
 
         <%
             if (StringUtils.isBlank(System.getProperty("ssoServerName"))) {
-//            if (true) {
         %>
-
-        <!-- feedback -->
-        <script src="/feedback/static/js/feedback.js"></script>
 
         <!-- header -->
         <link rel="stylesheet" href="/hu/headunified/static/css/head.css">
         <script src="/hu/js/head.js"></script>
 
         <script>
-
-//            window.app.state.onChange(function(data) {
-//
-//            });
-
-
             if (!HEADER.isExceptional()){
                 HEADER.render("crm");
             }
-
-
         </script>
         <!-- end -->
 
