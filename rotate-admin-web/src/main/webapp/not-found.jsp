@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <%@ page import="com.dianping.rotate.admin.util.PageUtils" %>
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
-<%@ page import="com.dianping.lion.EnvZooKeeperConfig" %>
 <html>
     <head>
         <meta charset="utf8">
@@ -10,37 +9,41 @@
         <%= PageUtils.css("vendor/toastr/toastr") %>
         <%= PageUtils.css("vendor/typeahead.js/typeahead") %>
         <%= PageUtils.css("asset/index") %>
-        <script>
-            var ENV = {
-                ajaxPrefix: '/rotate/data'
-            };
-        </script>
     </head>
 
     <body>
         <header id="header"></header>
-        <div id="content"></div>
+        <div id="content" style="width: 960px;margin: 0 auto;text-align: center">
 
-        <%= PageUtils.js("node_modules") %>
-        <%= PageUtils.js("jquery-vendors") %>
-        <%= PageUtils.js("services") %>
-        <%= PageUtils.js("modules") %>
-        <%= PageUtils.js("index") %>
+            你没有权限访问该系统
+        </div>
+
 
 
         <%
-            if (StringUtils.isBlank(System.getProperty("ssoServerName"))&& !EnvZooKeeperConfig.getEnv().equals("alpha")) {
-
+            if (StringUtils.isBlank(System.getProperty("ssoServerName"))) {
+//            if (true) {
         %>
+
+        <!-- feedback -->
+        <script src="/feedback/static/js/feedback.js"></script>
 
         <!-- header -->
         <link rel="stylesheet" href="/hu/headunified/static/css/head.css">
         <script src="/hu/js/head.js"></script>
 
         <script>
+
+//            window.app.state.onChange(function(data) {
+//
+//            });
+
+
             if (!HEADER.isExceptional()){
                 HEADER.render("crm");
             }
+
+
         </script>
         <!-- end -->
 

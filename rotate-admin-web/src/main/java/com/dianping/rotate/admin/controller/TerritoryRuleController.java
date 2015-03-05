@@ -80,6 +80,7 @@ public class TerritoryRuleController {
         result.put("rule",t.getRule());
         result.put("territoryId",t.getTerritoryId());
         result.put("ruleName",t.getRuleName());
+        result.put("description",t.getDescription());
 
         result.put("items",buildTerritoryRuleItemsResult(t.getItems()));
 
@@ -204,6 +205,7 @@ public class TerritoryRuleController {
         t.setTerritoryId((Integer) map.get("territoryId"));
         t.setRule((String) map.get("rule"));
         t.setId((Integer) map.get("id"));
+        t.setDescription((String)map.get("description"));
         List<TerritoryRuleItemDto> items = new ArrayList<TerritoryRuleItemDto>();
         int i=1;
         for(Map item:(List<Map>)map.get("items")){

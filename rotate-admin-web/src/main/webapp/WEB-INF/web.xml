@@ -77,11 +77,6 @@
             <param-name>serverNameLionKey</param-name>
             <param-value>rotate-pc-web.serverName</param-value>
         </init-param>
-        <init-param>
-            <param-name>excludeUrl</param-name>
-            <!-- 不走sso -->
-            <param-value>^(/diff\.jsp).*</param-value>
-        </init-param>
     </filter>
 
     <filter-mapping>
@@ -104,7 +99,6 @@
         <filter-name>authorizeFilter</filter-name>
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 
 

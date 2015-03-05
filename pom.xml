@@ -30,7 +30,7 @@
         <pigeon.version>2.3.6</pigeon.version>
         <slf4j.version>1.7.5</slf4j.version>
         <rotate.version>1.0-SNAPSHOT</rotate.version>
-        <rotate.territory.api>2.4.2-SNAPSHOT</rotate.territory.api>
+        <rotate.territory.api>2.4.3-SNAPSHOT</rotate.territory.api>
         <rotate.shop.api>1.0.8-SNAPSHOT</rotate.shop.api>
         <project.version.biz>1.0-SNAPSHOT</project.version.biz>
         <ba.base.organizationalstructure.api>0.0.17</ba.base.organizationalstructure.api>
@@ -39,6 +39,7 @@
         <rotate.org.version>1.10-SNAPSHOT</rotate.org.version>
         <task.center.api.version>1.0.10-SNAPSHOT</task.center.api.version>
         <rotate.org.api.version>2.8-SNAPSHOT</rotate.org.api.version>
+        <cas.client.core.product.version>3.2.1-memcached.STABLE.4</cas.client.core.product.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -64,11 +65,18 @@
                 <version>${apollobase.api.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>4.1.0.Final</version>
+            </dependency>
+
+
 
             <dependency>
                 <artifactId>rotate-org-api</artifactId>
                 <groupId>com.dianping</groupId>
-                <version>${rotate.org.version}</version>
+                <version>${rotate.org.api.version}</version>
             </dependency>
 
             <dependency>
@@ -273,13 +281,22 @@
                 <version>1.1.3</version>
             </dependency>
             <dependency>
-                <groupId>org.jasig.cas</groupId>
-                <artifactId>cas-server-support-oauth</artifactId>
-                <version>3.5.2-STABLE.2</version>
+                <groupId>org.jasig.cas.client</groupId>
+                <artifactId>cas-client-core-product</artifactId>
+                <version>${cas.client.core.product.version}</version>
                 <exclusions>
+
                     <exclusion>
                         <groupId>com.dianping.lion</groupId>
-                        <artifactId>*</artifactId>
+                        <artifactId>lion-alpha</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.dianping.lion</groupId>
+                        <artifactId>lion-qa</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.dianping.lion</groupId>
+                        <artifactId>lion-product</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
