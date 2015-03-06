@@ -62,6 +62,14 @@
             <artifactId>rotate-shop-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.dianping</groupId>
+            <artifactId>shop-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dianping</groupId>
+            <artifactId>rotate-core-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
             <version>${spring.version}</version>
