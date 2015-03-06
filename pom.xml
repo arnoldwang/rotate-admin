@@ -30,7 +30,8 @@
         <pigeon.version>2.3.6</pigeon.version>
         <slf4j.version>1.7.5</slf4j.version>
         <rotate.version>1.0-SNAPSHOT</rotate.version>
-        <rotate.territory.api>2.4.3-SNAPSHOT</rotate.territory.api>
+        <rotate.territory.api>2.4.4-SNAPSHOT</rotate.territory.api>
+        <rotate.shop.api>1.0.8-SNAPSHOT</rotate.shop.api>
         <project.version.biz>1.0-SNAPSHOT</project.version.biz>
         <rotate.shop.api>1.1.1-SNAPSHOT</rotate.shop.api>
         <ba.base.organizationalstructure.api>0.0.17</ba.base.organizationalstructure.api>
@@ -41,9 +42,16 @@
         <rotate.org.api.version>2.8-SNAPSHOT</rotate.org.api.version>
         <cas.client.core.product.version>3.2.1-memcached.STABLE.4</cas.client.core.product.version>
         <rotate-core-api.version>0.0.7-SNAPSHOT</rotate-core-api.version>
+        <arts.version>1.2.9</arts.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.dp.arts</groupId>
+                <artifactId>arts-client</artifactId>
+                <version>${arts.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer</artifactId>

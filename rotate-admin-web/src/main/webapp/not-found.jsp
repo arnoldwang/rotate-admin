@@ -1,9 +1,13 @@
 <!DOCTYPE html>
+<%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import="com.dianping.rotate.admin.util.PageUtils" %>
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
+
 <html>
     <head>
-        <meta charset="utf8">
+        <%--<meta charset="utf8">--%>
+        <%--<meta http-equiv="Content-Type" content="text/html charset=utf-8">--%>
+
         <%= PageUtils.css("vendor/bootstrap/css/bootstrap.min") %>
         <%= PageUtils.css("vendor/bootstrap/css/bootstrap-theme.min") %>
         <%= PageUtils.css("vendor/toastr/toastr") %>
