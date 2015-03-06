@@ -127,4 +127,15 @@
         <property name="callMethod" value="sync"/>
         <property name="timeout" value="5000"/>
     </bean>
+
+    <bean id="apolloShopSearcher" class="com.dianping.dpsf.spring.ProxyBeanFactory"
+          init-method="init">
+        <property name="serviceName" value="search.arts.apolloshop"/>
+        <property name="iface" value="com.dp.arts.client.SearchService"/>
+        <property name="serialize" value="hessian"/>
+        <property name="callMethod" value="sync"/>
+        <property name="timeout" value="2000"/>
+    </bean>
+
+
 </beans>
