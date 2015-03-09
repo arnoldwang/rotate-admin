@@ -32,6 +32,7 @@
         <rotate.version>1.0-SNAPSHOT</rotate.version>
         <rotate.territory.api>2.4.4-SNAPSHOT</rotate.territory.api>
         <rotate.shop.api>1.1.2-SNAPSHOT</rotate.shop.api>
+        <rotate.core.api>0.0.8-SNAPSHOT</rotate.core.api>
         <project.version.biz>1.0-SNAPSHOT</project.version.biz>
         <ba.base.organizationalstructure.api>0.0.17</ba.base.organizationalstructure.api>
         <smt.base.version>1.0.2-SNAPSHOT</smt.base.version>
@@ -44,6 +45,11 @@
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.dianping</groupId>
+                <artifactId>rotate-core-api</artifactId>
+                <version>${rotate.core.api}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.dp.arts</groupId>

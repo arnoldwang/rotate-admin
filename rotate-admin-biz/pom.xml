@@ -19,6 +19,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.dianping</groupId>
+            <artifactId>rotate-core-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.dp.arts</groupId>
             <artifactId>arts-client</artifactId>
         </dependency>

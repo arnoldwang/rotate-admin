@@ -5,6 +5,8 @@ import com.dianping.ba.base.organizationalstructure.api.user.dto.UserDto;
 import com.dianping.combiz.entity.City;
 import com.dianping.combiz.service.CityService;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
+import com.dianping.rotate.admin.util.LoginUtils;
+import com.dianping.rotate.core.api.service.RotateGroupUserService;
 import com.dianping.rotate.shop.api.ApolloShopService;
 import com.dianping.rotate.territory.api.TerritoryService;
 import com.dianping.rotate.territory.dto.TerritoryDto;
@@ -47,6 +49,9 @@ public class ShopController {
 
     @Autowired
     ApolloShopService apolloShopService;
+
+    @Autowired
+    RotateGroupUserService rotateGroupUserService;
 
     private static final String[] fields = {
         "shopname",  "shopid", "bizrotateids", "bigcustomerbiz", "territoryids", "cityid", "bizusers"
@@ -120,6 +125,59 @@ public class ShopController {
             throw new ApplicationException(e.getMessage());
         }
     }
+
+
+    @RequestMapping(value = "/release", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean release(@RequestBody Map o) {
+        Integer loginId = LoginUtils.getUserLoginId();
+        try {
+            List<Map> items = (List<Map>) o.get("selectedItems");
+
+            com.dianping.rotate.smt.dto.Response<Boolean> ret = rotateGroupUserService.releaseToPublic(Lists.transform(items, new Function<Map, Integer>() {
+                @Override
+                public Integer apply(Map input) {
+                    return (Integer) input.get("shopId");
+                }
+            }), loginId, loginId);
+
+            if (ret.isSuccess()) {
+                return ret.getObj();
+            } else {
+                throw new ApplicationException(ret.getComment());
+            }
+
+        } catch (Exception e) {
+            throw new ApplicationException(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/transfer", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean transfer(@RequestBody Map o) {
+        Integer loginId = LoginUtils.getUserLoginId();
+        try {
+            Integer salesId = (Integer) o.get("salesId");
+            List<Map> items = (List<Map>) o.get("selectedItems");
+
+            com.dianping.rotate.smt.dto.Response<Boolean> ret = rotateGroupUserService.transfer(Lists.transform(items, new Function<Map, Integer>() {
+                @Override
+                public Integer apply(Map input) {
+                    return (Integer) input.get("shopId");
+                }
+            }), salesId, loginId);
+
+            if (ret.isSuccess()) {
+                return ret.getObj();
+            } else {
+                throw new ApplicationException(ret.getComment());
+            }
+
+        } catch (Exception e) {
+            throw new ApplicationException(e.getMessage());
+        }
+    }
+
 
     private Object buildSearchResults(Response response, final String bizId) {
         if (!response.getStatus().equals(Response.OK)) {
