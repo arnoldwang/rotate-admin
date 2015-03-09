@@ -14,6 +14,8 @@ public class UserShopInfoDTO {
 
 	private String shopStatus;
 
+	private int rotateGroupShopId;
+
 	private int shopGroupId;
 
 	private int rotateGroupId;
@@ -52,6 +54,14 @@ public class UserShopInfoDTO {
 
 	public void setShopStatus(String shopStatus) {
 		this.shopStatus = shopStatus;
+	}
+
+	public int getRotateGroupShopId() {
+		return rotateGroupShopId;
+	}
+
+	public void setRotateGroupShopId(int rotateGroupShopId) {
+		this.rotateGroupShopId = rotateGroupShopId;
 	}
 
 	public int getShopGroupId() {

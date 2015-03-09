@@ -7,6 +7,7 @@ import com.dianping.rotate.admin.serviceAgent.RotateServiceAgent;
 import com.dianping.rotate.core.api.dto.RotateGroupUserDTO;
 import com.dianping.rotate.core.api.service.RotateGroupUserService;
 import com.dianping.rotate.shop.api.ApolloShopService;
+import com.dianping.rotate.shop.api.RotateGroupService;
 import com.dianping.rotate.shop.api.RotateGroupShopService;
 import com.dianping.rotate.shop.constants.ApolloShopStatusEnum;
 import com.dianping.rotate.shop.constants.ApolloShopTypeEnum;
@@ -33,6 +34,9 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 	RotateGroupShopService rotateGroupShopService;
 
 	@Autowired
+	RotateGroupService rotateGroupService;
+
+	@Autowired
 	CityService cityService;
 
 	@Autowired
@@ -56,9 +60,6 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 			UserShopInfoDTO userShopInfoDTO = new UserShopInfoDTO();
 			ApolloShopDTO apolloShopDTO = apolloShopService.getApolloShop(rotateGroupShopDTO.getShopID(), bizId);
 			ShopDTO shopDTO = shopService.loadShop(rotateGroupShopDTO.getShopID());
-			if (shopDTO.getCityId() != cityId)
-				continue;
-			//todo
 			String userName = "公海";
 			RotateGroupUserDTO rotateGroupUserDTO = rotateGroupUserService.findByRotateGroupId(rotateGroupShopDTO.getRotateGroupID());
 			if (rotateGroupUserDTO != null) {
@@ -71,6 +72,7 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 			userShopInfoDTO.setShopName(shopDTO.getShopName());
 			userShopInfoDTO.setType(ApolloShopTypeEnum.getDescByCode(apolloShopDTO.getType()));
 			userShopInfoDTO.setShopStatus(ApolloShopStatusEnum.getDescByCode(apolloShopDTO.getShopStatus()));
+			userShopInfoDTO.setRotateGroupShopId(rotateGroupShopDTO.getId());
 			userShopInfoDTO.setShopGroupId(rotateGroupShopDTO.getShopGroupID());
 			userShopInfoDTO.setRotateGroupId(rotateGroupShopDTO.getRotateGroupID());
 			userShopInfoDTO.setShopId(rotateGroupShopDTO.getShopID());
@@ -86,5 +88,35 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 				apolloShopService.getApolloShop(shopId, bizId).getShopGroupID(), bizId, cityId);
 
 		return totalNum;
+	}
+
+	@Override
+	public List<UserShopInfoDTO> changeOwner(int bizId, int cityId, int salesId, int rotateGroupShopId, int shopId,
+											 int shopGroupId, int rotateGroupId, int pageSize, int pageIndex) {
+		List<RotateGroupShopDTO> rotateGroupShopDTOs =
+				rotateGroupShopService.getAllRotateGroupShopByShopGroupIDAndBizIDAndCityID(shopGroupId, bizId, cityId);
+		int newRotateGroupId = 0;
+
+		for (RotateGroupShopDTO rotateGroupShopDTO : rotateGroupShopDTOs) {
+			RotateGroupUserDTO rotateGroupUserDTO = rotateGroupUserService.findByRotateGroupId(rotateGroupShopDTO.getRotateGroupID());
+			if (rotateGroupUserDTO != null)
+				if (salesId == rotateGroupUserDTO.getUserId()) {
+					newRotateGroupId = rotateGroupUserDTO.getRotateGroupId();
+					break;
+				}
+		}
+		if (0 == newRotateGroupId) {
+			newRotateGroupId = rotateGroupService.createRotateGroup(bizId).getId();
+		}
+
+		RotateGroupShopDTO newRotateGroupShop = new RotateGroupShopDTO();
+		newRotateGroupShop.setId(rotateGroupShopId);
+		newRotateGroupShop.setRotateGroupID(newRotateGroupId);
+		newRotateGroupShop.setShopID(shopId);
+		newRotateGroupShop.setShopGroupID(shopGroupId);
+		newRotateGroupShop.setStatus(1);
+		rotateGroupShopService.updateRotateGroupShop(newRotateGroupShop);
+
+		return getUserShopInfo(shopId, bizId, cityId, pageSize, pageIndex);
 	}
 }

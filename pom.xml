@@ -33,7 +33,7 @@
         <rotate.territory.api>2.4.4-SNAPSHOT</rotate.territory.api>
         <rotate.shop.api>1.0.8-SNAPSHOT</rotate.shop.api>
         <project.version.biz>1.0-SNAPSHOT</project.version.biz>
-        <rotate.shop.api>1.1.1-SNAPSHOT</rotate.shop.api>
+        <rotate.shop.api>1.1.2-SNAPSHOT</rotate.shop.api>
         <ba.base.organizationalstructure.api>0.0.17</ba.base.organizationalstructure.api>
         <smt.base.version>1.0.2-SNAPSHOT</smt.base.version>
         <apollobase.api.version>1.3</apollobase.api.version>

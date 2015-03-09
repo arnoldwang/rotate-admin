@@ -2,6 +2,7 @@ package com.dianping.rotate.admin.controller;
 
 import com.dianping.rotate.admin.dto.UserShopInfoDTO;
 import com.dianping.rotate.admin.model.ShopModel;
+import com.dianping.rotate.admin.model.UserShopModel;
 import com.dianping.rotate.admin.serviceAgent.RotateServiceAgent;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,21 @@ public class RotateController {
 		result.put("items", userShopInfoDTOs);
 		result.put("total", total);
 		return result;
+	}
+
+	@RequestMapping(value = "/changeOwner", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> changeOwner(@RequestBody UserShopModel userShopModel){
+		Map<String, Object> result = Maps.newHashMap();
+		List<UserShopInfoDTO> userShopInfoDTOs = rotateServiceAgent.changeOwner(userShopModel.getBizID(),
+				userShopModel.getCityID(), userShopModel.getSalesID(),userShopModel.getRotateGroupShopID(),
+				userShopModel.getShopID(), userShopModel.getShopGroupID(), userShopModel.getRotateGroupID(),
+				userShopModel.getPageSize(), userShopModel.getPageIndex());
+		int total = rotateServiceAgent.getTotalNumOfUserShop(userShopModel.getShopID(), userShopModel.getBizID(),
+				userShopModel.getCityID());
+
+		result.put("items", userShopInfoDTOs);
+		result.put("total", total);
+		return  result;
 	}
 }
