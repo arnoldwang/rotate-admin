@@ -3,6 +3,49 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
+    <bean id="apolloShopService" class="com.dianping.dpsf.spring.ProxyBeanFactory" init-method="init">
+        <property name="serviceName" value="http://service.dianping.com/rotate/shop/ApolloShopService_0.0.1" />
+        <property name="iface" value="com.dianping.rotate.shop.api.ApolloShopService" />
+        <property name="serialize" value="hessian" />
+        <property name="callMethod" value="sync" />
+        <property name="timeout" value="8000" />
+    </bean>
+
+    <bean id="rotateGroupShopService" class="com.dianping.dpsf.spring.ProxyBeanFactory" init-method="init">
+        <property name="serviceName" value="http://service.dianping.com/rotate/shop/RotateGroupShopService_0.0.1" />
+        <property name="iface" value="com.dianping.rotate.shop.api.RotateGroupShopService" />
+        <property name="serialize" value="hessian" />
+        <property name="callMethod" value="sync" />
+        <property name="timeout" value="8000" />
+    </bean>
+
+    <bean id="rotateGroupService" class="com.dianping.dpsf.spring.ProxyBeanFactory" init-method="init">
+        <property name="serviceName" value="http://service.dianping.com/rotate/shop/RotateGroupService_0.0.1" />
+        <property name="iface" value="com.dianping.rotate.shop.api.RotateGroupService" />
+        <property name="serialize" value="hessian" />
+        <property name="callMethod" value="sync" />
+        <property name="timeout" value="8000" />
+    </bean>
+
+    <bean id="rotateGroupUserService" class="com.dianping.dpsf.spring.ProxyBeanFactory"
+          init-method="init">
+        <property name="serviceName"
+                  value="http://service.dianping.com/rotate/core/RotateGroupUserService_0.0.1" />
+        <property name="iface" value="com.dianping.rotate.core.api.service.RotateGroupUserService" />
+        <property name="serialize" value="hessian" />
+        <property name="callMethod" value="sync" />
+        <property name="timeout" value="5000" />
+    </bean>
+
+    <bean id="shopService" class="com.dianping.dpsf.spring.ProxyBeanFactory"
+          init-method="init">
+        <property name="serviceName"
+                  value="http://service.dianping.com/shopService/shopService_2.0.0" />
+        <property name="iface" value="com.dianping.shopremote.remote.ShopService" />
+        <property name="serialize" value="hessian" />
+        <property name="callMethod" value="sync" />
+        <property name="timeout" value="5000" />
+    </bean>
 
     <bean id="territoryService" class="com.dianping.dpsf.spring.ProxyBeanFactory" init-method="init">
         <property name="serviceName" value="http://service.dianping.com/rotate/territory/TerritoryService_0.0.1" />

@@ -70,36 +70,36 @@
     </filter-mapping>
 
     <!-- CAS -->
-    <filter>
-        <filter-name>ssoAllInOneFilter</filter-name>
-        <filter-class>com.dianping.rotate.admin.sso.SsoAllInOneFilter</filter-class>
-        <init-param>
-            <param-name>serverNameLionKey</param-name>
-            <param-value>rotate-pc-web.serverName</param-value>
-        </init-param>
-    </filter>
+    <!--<filter>-->
+        <!--<filter-name>ssoAllInOneFilter</filter-name>-->
+        <!--<filter-class>com.dianping.rotate.admin.sso.SsoAllInOneFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>serverNameLionKey</param-name>-->
+            <!--<param-value>rotate-pc-web.serverName</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
 
-    <filter-mapping>
-        <filter-name>ssoAllInOneFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>
+    <!--<filter-mapping>-->
+        <!--<filter-name>ssoAllInOneFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+        <!--<dispatcher>REQUEST</dispatcher>-->
+        <!--<dispatcher>FORWARD</dispatcher>-->
+    <!--</filter-mapping>-->
 
-    <filter>
-        <filter-name>authorizeFilter</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-        <init-param>
-            <param-name>targetBeanName</param-name>
-            <param-value>authorizeFilter</param-value>
-        </init-param>
-    </filter>
+    <!--<filter>-->
+        <!--<filter-name>authorizeFilter</filter-name>-->
+        <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>targetBeanName</param-name>-->
+            <!--<param-value>authorizeFilter</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
 
-    <filter-mapping>
-        <filter-name>authorizeFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-    </filter-mapping>
+    <!--<filter-mapping>-->
+        <!--<filter-name>authorizeFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+        <!--<dispatcher>REQUEST</dispatcher>-->
+    <!--</filter-mapping>-->
 
 
     <!-- Context param and listener -->
