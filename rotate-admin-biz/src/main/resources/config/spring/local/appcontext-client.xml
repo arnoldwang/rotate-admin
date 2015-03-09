@@ -171,7 +171,7 @@
         <property name="timeout" value="5000"/>
     </bean>
 
-    <bean id="apolloShopSearcher" class="com.dianping.dpsf.spring.ProxyBeanFactory"
+    <bean class="com.dianping.dpsf.spring.ProxyBeanFactory"
           init-method="init">
         <property name="serviceName" value="search.arts.apolloshop"/>
         <property name="iface" value="com.dp.arts.client.SearchService"/>
@@ -180,5 +180,16 @@
         <property name="timeout" value="2000"/>
     </bean>
 
+
+    <bean class="com.dianping.dpsf.spring.ProxyBeanFactory"
+          init-method="init">
+        <property name="serviceName"
+                  value="http://service.dianping.com/rotate/shop/ApolloShopService_0.0.1"/>
+        <property name="iface"
+                  value="com.dianping.rotate.shop.api.ApolloShopService"/>
+        <property name="serialize" value="hessian"/>
+        <property name="callMethod" value="sync"/>
+        <property name="timeout" value="5000"/>
+    </bean>
 
 </beans>

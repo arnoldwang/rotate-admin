@@ -5,6 +5,7 @@ import com.dianping.ba.base.organizationalstructure.api.user.dto.UserDto;
 import com.dianping.combiz.entity.City;
 import com.dianping.combiz.service.CityService;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
+import com.dianping.rotate.shop.api.ApolloShopService;
 import com.dianping.rotate.territory.api.TerritoryService;
 import com.dianping.rotate.territory.dto.TerritoryDto;
 import com.dp.arts.client.SearchService;
@@ -19,10 +20,7 @@ import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,6 +44,9 @@ public class ShopController {
 
     @Autowired
     CityService cityService;
+
+    @Autowired
+    ApolloShopService apolloShopService;
 
     private static final String[] fields = {
         "shopname",  "shopid", "bizrotateids", "bigcustomerbiz", "territoryids", "cityid", "bizusers"
@@ -92,6 +93,33 @@ public class ShopController {
         return buildSearchResults(response, bizId);
     }
 
+
+    @RequestMapping(value = "/setVIP", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean markBigCustomer(@RequestBody Map o) {
+        return setBigCustomer(o, 1);
+    }
+
+    @RequestMapping(value = "/cancelVIP", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean unmarkBigCustomer(@RequestBody Map o) {
+        return setBigCustomer(o, 0);
+    }
+
+    private boolean setBigCustomer(Map o, int type) {
+        try {
+            Integer bizId = (Integer) o.get("bizId");
+            List<Map> items = (List<Map>) o.get("selectedItems");
+            return apolloShopService.updateApolloShopTypeByShopIDAndBizID(Lists.transform(items, new Function<Map, Integer>() {
+                @Override
+                public Integer apply(Map input) {
+                    return (Integer) input.get("shopId");
+                }
+            }), bizId, type);
+        } catch (Exception e) {
+            throw new ApplicationException(e.getMessage());
+        }
+    }
 
     private Object buildSearchResults(Response response, final String bizId) {
         if (!response.getStatus().equals(Response.OK)) {
@@ -197,17 +225,6 @@ public class ShopController {
         public Integer getCityId() {
             return Integer.valueOf(record.get("cityid"));
         }
-
-//        public String getCityName() {
-//            Integer cityId = Integer.valueOf(record.get("cityid"));
-//            if (cityId != null) {
-//                City city = cityService.loadCity(cityId);
-//                if (city != null) {
-//                    return city.getCityName();
-//                }
-//            }
-//            return null;
-//        }
 
         private String getValueFromRecordField(String sFields, String bizId) {
             if (sFields == null) {
