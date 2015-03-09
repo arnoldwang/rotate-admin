@@ -198,17 +198,6 @@ public class ShopController {
             return Integer.valueOf(record.get("cityid"));
         }
 
-//        public String getCityName() {
-//            Integer cityId = Integer.valueOf(record.get("cityid"));
-//            if (cityId != null) {
-//                City city = cityService.loadCity(cityId);
-//                if (city != null) {
-//                    return city.getCityName();
-//                }
-//            }
-//            return null;
-//        }
-
         private String getValueFromRecordField(String sFields, String bizId) {
             if (sFields == null) {
                 return null;
