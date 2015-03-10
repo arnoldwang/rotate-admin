@@ -1,5 +1,6 @@
 package com.dianping.rotate.admin.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -26,10 +27,12 @@ public class LoginUtils {
     }
 
     public static Integer getUserLoginIdWithRequest(HttpServletRequest req) {
-
         String userInfoStr = req.getRemoteUser();
-        String[] infos = userInfoStr.split("\\|");
+        if (StringUtils.isEmpty(userInfoStr)) {
+            return 0;
+        }
         try {
+            String[] infos = userInfoStr.split("\\|");
             return Integer.parseInt(infos[1]);
         } catch (Exception e) {
             return 0;
