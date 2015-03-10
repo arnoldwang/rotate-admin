@@ -102,6 +102,7 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 			if (rotateGroupUserDTO != null)
 				if (salesId == rotateGroupUserDTO.getUserId()) {
 					newRotateGroupId = rotateGroupUserDTO.getRotateGroupId();
+					rotateGroupService.updateType(newRotateGroupId, 1);//合并到已有的轮转组，则已有的轮转组变为连锁店
 					break;
 				}
 		}
