@@ -134,12 +134,12 @@ public class ShopController {
         try {
             List<Map> items = (List<Map>) o.get("selectedItems");
 
-            com.dianping.rotate.smt.dto.Response<Boolean> ret = rotateGroupUserService.releaseToPublic(Lists.transform(items, new Function<Map, Integer>() {
+            com.dianping.rotate.smt.dto.Response<Boolean> ret = rotateGroupUserService.batchReleaseToPublic(Lists.transform(items, new Function<Map, Integer>() {
                 @Override
                 public Integer apply(Map input) {
-                    return (Integer) input.get("shopId");
+                    return (Integer) input.get("rotateId");
                 }
-            }), loginId, loginId);
+            }), loginId);
 
             if (ret.isSuccess()) {
                 return ret.getObj();
@@ -160,10 +160,10 @@ public class ShopController {
             Integer salesId = (Integer) o.get("salesId");
             List<Map> items = (List<Map>) o.get("selectedItems");
 
-            com.dianping.rotate.smt.dto.Response<Boolean> ret = rotateGroupUserService.transfer(Lists.transform(items, new Function<Map, Integer>() {
+            com.dianping.rotate.smt.dto.Response<Boolean> ret = rotateGroupUserService.batchTransfer(Lists.transform(items, new Function<Map, Integer>() {
                 @Override
                 public Integer apply(Map input) {
-                    return (Integer) input.get("shopId");
+                    return (Integer) input.get("rotateId");
                 }
             }), salesId, loginId);
 
@@ -240,6 +240,9 @@ public class ShopController {
 
         public Boolean isBigCustomer() {
             String sBigCustomers = record.get("bigcustomerbiz");
+            if (StringUtils.isEmpty(sBigCustomers)) {
+                return false;
+            }
             String[] bigCustomers = sBigCustomers.split("\\s");
             return Arrays.asList(bigCustomers).contains(bizId);
         }
