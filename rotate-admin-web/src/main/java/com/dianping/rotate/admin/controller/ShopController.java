@@ -2,7 +2,6 @@ package com.dianping.rotate.admin.controller;
 
 import com.dianping.ba.base.organizationalstructure.api.user.UserService;
 import com.dianping.ba.base.organizationalstructure.api.user.dto.UserDto;
-import com.dianping.combiz.entity.City;
 import com.dianping.combiz.service.CityService;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.util.LoginUtils;

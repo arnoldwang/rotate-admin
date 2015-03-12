@@ -32,6 +32,7 @@
         <rotate.version>1.0-SNAPSHOT</rotate.version>
         <rotate.territory.api>2.4.4-SNAPSHOT</rotate.territory.api>
         <rotate.shop.api>1.1.2-SNAPSHOT</rotate.shop.api>
+        <rotate.core.api>0.0.9-SNAPSHOT</rotate.core.api>
         <project.version.biz>1.0-SNAPSHOT</project.version.biz>
         <rotate.shop.api>1.1.2-SNAPSHOT</rotate.shop.api>
         <ba.base.organizationalstructure.api>0.0.17</ba.base.organizationalstructure.api>
@@ -169,6 +170,18 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>3.3.2</version>
+            </dependency>
+
+            <!-- swallow -->
+            <dependency>
+                <groupId>com.dianping.swallow</groupId>
+                <artifactId>swallow-consumerclient</artifactId>
+                <version>0.6.10</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dianping.swallow</groupId>
+                <artifactId>swallow-producerclient</artifactId>
+                <version>0.6.10</version>
             </dependency>
 
             <!-- dp framework -->

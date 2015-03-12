@@ -18,6 +18,16 @@
     </properties>
 
     <dependencies>
+        <!-- swallow -->
+        <dependency>
+            <groupId>com.dianping.swallow</groupId>
+            <artifactId>swallow-consumerclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dianping.swallow</groupId>
+            <artifactId>swallow-producerclient</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.dianping</groupId>
             <artifactId>rotate-core-api</artifactId>
@@ -47,8 +57,9 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-
         </dependency>
+
+
         <dependency>
             <groupId>smt-base</groupId>
             <artifactId>smt-base</artifactId>
