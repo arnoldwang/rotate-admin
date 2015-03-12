@@ -119,7 +119,8 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 					throw new ApplicationException("销售私海连锁店数量已满，请确认后重试！");
 
 				newRotateGroupId = rotateGroupUserDTO.getRotateGroupId();
-				rotateGroupService.updateType(newRotateGroupId, 1);//合并到已有的轮转组，则已有的轮转组变为连锁店
+				if(rotateGroupService.getRotateGroup(newRotateGroupId).getType() != 1)//合并到已有的轮转组，则已有的轮转组变为连锁店
+					rotateGroupService.updateType(newRotateGroupId, 1);
 				messageType = "merge";
 				break;
 			}
@@ -133,6 +134,9 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 
 		updateRotateGroupShop(rotateGroupShopId, newRotateGroupId, shopId, shopGroupId);
 		sendMessage(rotateGroupId, newRotateGroupId, salesId, messageType);
+
+		if(rotateGroupShopService.getRotateGroupShop(rotateGroupId).size() == 0)//被合并/拆分轮转组下没有门店，则删除轮转组
+			rotateGroupService.deleteRotateGroupByRotateGroupID(rotateGroupId);
 
 		return getUserShopInfo(shopId, bizId, cityId, pageSize, pageIndex);
 	}
