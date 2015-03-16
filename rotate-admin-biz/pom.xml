@@ -18,6 +18,24 @@
     </properties>
 
     <dependencies>
+        <!-- swallow -->
+        <dependency>
+            <groupId>com.dianping.swallow</groupId>
+            <artifactId>swallow-consumerclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dianping.swallow</groupId>
+            <artifactId>swallow-producerclient</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dianping</groupId>
+            <artifactId>rotate-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dp.arts</groupId>
+            <artifactId>arts-client</artifactId>
+        </dependency>
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
@@ -39,8 +57,9 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-
         </dependency>
+
+
         <dependency>
             <groupId>smt-base</groupId>
             <artifactId>smt-base</artifactId>
@@ -60,6 +79,14 @@
         <dependency>
             <groupId>com.dianping</groupId>
             <artifactId>rotate-shop-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dianping</groupId>
+            <artifactId>shop-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dianping</groupId>
+            <artifactId>rotate-core-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
