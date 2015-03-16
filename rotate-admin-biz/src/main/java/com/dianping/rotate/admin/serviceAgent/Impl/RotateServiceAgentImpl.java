@@ -120,7 +120,7 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 
 				newRotateGroupId = rotateGroupUserDTO.getRotateGroupId();
 				if(rotateGroupService.getRotateGroup(newRotateGroupId).getType() != 1)//合并到已有的轮转组，已有的轮转组单店变为连锁店
-					rotateGroupService.updateType(newRotateGroupId, 1);
+					rotateGroupService.updateTypeUsedBySplitAndMerge(newRotateGroupId, 1);
 				messageType = "merge";
 				break;
 			}
@@ -133,42 +133,37 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 		}
 
 		updateRotateGroupShop(rotateGroupShopId, newRotateGroupId, shopId, shopGroupId);
-		sendMessage(rotateGroupId, newRotateGroupId, salesId, messageType);
 
 		if(rotateGroupShopService.getRotateGroupShop(rotateGroupId).size() == 0)//被合并/拆分轮转组下没有门店，则删除轮转组
-			rotateGroupService.deleteRotateGroupByRotateGroupID(rotateGroupId);
+			rotateGroupService.deleteRotateGroupUsedBySplitAndMerge(rotateGroupId);
 		else if(rotateGroupShopService.getRotateGroupShop(rotateGroupId).size() == 1)//被合并/拆分轮转组从连锁店变单店
-			rotateGroupService.updateType(rotateGroupId, 0);
+			rotateGroupService.updateTypeUsedBySplitAndMerge(rotateGroupId, 0);
+
+		updateRotateGroupUser(rotateGroupId, newRotateGroupId, salesId, messageType);
 
 		return getUserShopInfo(shopId, bizId, cityId, pageSize, pageIndex);
 	}
 
 	@SuppressWarnings("unchecked")
-	private void sendMessage(int rotateGroupId, int newRotateGroupId, int newUserId, String messageType) {
-		try {
+	private void updateRotateGroupUser(int rotateGroupId, int newRotateGroupId, int newUserId, String messageType) {
 			RotateGroupUserDTO oldUser = rotateGroupUserService.findByRotateGroupId(rotateGroupId);
 			Integer oldUserId = null;
 			if (oldUser != null)
 				oldUserId = oldUser.getUserId();
 
-			Map<String, Object> messageBody = Maps.newHashMap();
-			messageBody.put("type", messageType);
 			Map<String, Integer> oldValue = Maps.newHashMap();
 			oldValue.put("rotateGroupId", rotateGroupId);
 			oldValue.put("owner", oldUserId);
-			messageBody.put("oldValues", Lists.newArrayList(oldValue));
+
 			Map<String, Integer> newValue = Maps.newHashMap();
 			newValue.put("rotateGroupId", newRotateGroupId);
 			newValue.put("owner", newUserId);
-			messageBody.put("newValues", Lists.newArrayList(newValue));
 
-			ProducerConfig config = new ProducerConfig();
-			config.setMode(ProducerMode.SYNC_MODE);
-			Producer p = ProducerFactoryImpl.getInstance().createProducer(Destination.topic("dp_apollo_rotategroup_change"), config);
-			p.sendMessage(JsonUtils.toStr(messageBody));
-		} catch (Exception e) {
-			throw new ApplicationException("轮转组合/拆分并异常", e.getMessage());
-		}
+		    boolean isSuccess = rotateGroupUserService.rotateGroupSplitOrMerge(messageType,
+					Lists.newArrayList(oldValue), Lists.newArrayList(newValue)).isSuccess();
+
+			if(!isSuccess)
+				throw new ApplicationException("轮转组合/拆分并异常");
 	}
 
 
