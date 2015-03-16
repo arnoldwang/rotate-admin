@@ -5,7 +5,6 @@ import com.dianping.combiz.service.CityService;
 import com.dianping.rotate.admin.dto.UserShopInfoDTO;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.RotateServiceAgent;
-import com.dianping.rotate.admin.utils.JsonUtils;
 import com.dianping.rotate.core.api.dto.RotateGroupUserDTO;
 import com.dianping.rotate.core.api.service.RotateGroupUserService;
 import com.dianping.rotate.shop.api.ApolloShopService;
@@ -18,11 +17,6 @@ import com.dianping.rotate.shop.dto.ApolloShopDTO;
 import com.dianping.rotate.shop.dto.RotateGroupShopDTO;
 import com.dianping.shopremote.remote.ShopService;
 import com.dianping.shopremote.remote.dto.ShopDTO;
-import com.dianping.swallow.common.message.Destination;
-import com.dianping.swallow.producer.Producer;
-import com.dianping.swallow.producer.ProducerConfig;
-import com.dianping.swallow.producer.ProducerMode;
-import com.dianping.swallow.producer.impl.ProducerFactoryImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,12 +108,12 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 
 		for (RotateGroupShopDTO rotateGroupShopDTO : rotateGroupShopDTOs) {
 			RotateGroupUserDTO rotateGroupUserDTO = rotateGroupUserService.findByRotateGroupId(rotateGroupShopDTO.getRotateGroupID());
-			if (rotateGroupUserDTO != null && salesId == rotateGroupUserDTO.getUserId()){
+			if (rotateGroupUserDTO != null && salesId == rotateGroupUserDTO.getUserId()) {
 				if (!rotateGroupUserService.validateNotOnlineGroupCountLimit(RotateGroupTypeEnum.CHAIN.getCode(), salesId).isSuccess())
 					throw new ApplicationException("销售私海连锁店数量已满，请确认后重试！");
 
 				newRotateGroupId = rotateGroupUserDTO.getRotateGroupId();
-				if(rotateGroupService.getRotateGroup(newRotateGroupId).getType() != 1)//合并到已有的轮转组，已有的轮转组单店变为连锁店
+				if (rotateGroupService.getRotateGroup(newRotateGroupId).getType() != 1)//合并到已有的轮转组，已有的轮转组单店变为连锁店
 					rotateGroupService.updateTypeUsedBySplitAndMerge(newRotateGroupId, 1);
 				messageType = "merge";
 				break;
@@ -134,36 +128,38 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 
 		updateRotateGroupShop(rotateGroupShopId, newRotateGroupId, shopId, shopGroupId);
 
-		if(rotateGroupShopService.getRotateGroupShop(rotateGroupId).size() == 0)//被合并/拆分轮转组下没有门店，则删除轮转组
+		if (rotateGroupShopService.getRotateGroupShop(rotateGroupId).size() == 0)//被合并/拆分轮转组下没有门店，则删除轮转组
 			rotateGroupService.deleteRotateGroupUsedBySplitAndMerge(rotateGroupId);
-		else if(rotateGroupShopService.getRotateGroupShop(rotateGroupId).size() == 1)//被合并/拆分轮转组从连锁店变单店
+		else if (rotateGroupShopService.getRotateGroupShop(rotateGroupId).size() == 1)//被合并/拆分轮转组从连锁店变单店
 			rotateGroupService.updateTypeUsedBySplitAndMerge(rotateGroupId, 0);
 
-		updateRotateGroupUser(rotateGroupId, newRotateGroupId, salesId, messageType);
+		updateRotateGroupUser(shopId, rotateGroupId, newRotateGroupId, salesId, messageType);
 
 		return getUserShopInfo(shopId, bizId, cityId, pageSize, pageIndex);
 	}
 
 	@SuppressWarnings("unchecked")
-	private void updateRotateGroupUser(int rotateGroupId, int newRotateGroupId, int newUserId, String messageType) {
-			RotateGroupUserDTO oldUser = rotateGroupUserService.findByRotateGroupId(rotateGroupId);
-			Integer oldUserId = null;
-			if (oldUser != null)
-				oldUserId = oldUser.getUserId();
+	private void updateRotateGroupUser(int shopId, int rotateGroupId, int newRotateGroupId, int newUserId, String messageType) {
+		RotateGroupUserDTO oldUser = rotateGroupUserService.findByRotateGroupId(rotateGroupId);
+		Integer oldUserId = null;
+		if (oldUser != null)
+			oldUserId = oldUser.getUserId();
 
-			Map<String, Integer> oldValue = Maps.newHashMap();
-			oldValue.put("rotateGroupId", rotateGroupId);
-			oldValue.put("owner", oldUserId);
+		Map<String, Integer> oldValue = Maps.newHashMap();
+		oldValue.put("rotateGroupId", rotateGroupId);
+		oldValue.put("owner", oldUserId);
 
-			Map<String, Integer> newValue = Maps.newHashMap();
-			newValue.put("rotateGroupId", newRotateGroupId);
-			newValue.put("owner", newUserId);
+		Map<String, Integer> newValue = Maps.newHashMap();
+		newValue.put("rotateGroupId", newRotateGroupId);
+		newValue.put("owner", newUserId);
 
-		    boolean isSuccess = rotateGroupUserService.rotateGroupSplitOrMerge(messageType,
-					Lists.newArrayList(oldValue), Lists.newArrayList(newValue)).isSuccess();
+		boolean isSuccess = rotateGroupUserService.rotateGroupSplitOrMerge(messageType,
+				Lists.newArrayList(oldValue), Lists.newArrayList(newValue)).isSuccess();
 
-			if(!isSuccess)
-				throw new ApplicationException("轮转组合/拆分并异常");
+		if (!isSuccess)
+			throw new ApplicationException("轮转组合/拆分并异常");
+		else
+			rotateGroupShopService.sendMessage(newRotateGroupId, newUserId, Lists.newArrayList(shopId), rotateGroupId, oldUserId);
 	}
 
 
