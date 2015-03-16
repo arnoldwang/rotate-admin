@@ -96,6 +96,9 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
     public Integer saveTerritoryRule(TerritoryRuleDto territoryRuleDto, int operatorId) {
 
         try {
+            if(territoryRuleDto.getRule().isEmpty()){
+                throw new ApplicationException("规则表达式不能为空!");
+            }
             Response<Integer> r =  territoryRuleService.saveTerritoryRule(territoryRuleDto, operatorId);
             if(r.isSuccess()){
                 return r.getObj();
