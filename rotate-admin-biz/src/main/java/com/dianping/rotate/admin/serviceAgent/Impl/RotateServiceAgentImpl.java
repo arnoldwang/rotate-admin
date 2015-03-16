@@ -15,12 +15,15 @@ import com.dianping.rotate.shop.constants.ApolloShopTypeEnum;
 import com.dianping.rotate.shop.constants.RotateGroupTypeEnum;
 import com.dianping.rotate.shop.dto.ApolloShopDTO;
 import com.dianping.rotate.shop.dto.RotateGroupShopDTO;
+import com.dianping.rotate.smt.dto.Response;
 import com.dianping.shopremote.remote.ShopService;
 import com.dianping.shopremote.remote.dto.ShopDTO;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -98,6 +101,7 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 		return totalNum;
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public List<UserShopInfoDTO> changeOwner(int bizId, int cityId, int salesId, int rotateGroupShopId, int shopId,
 											 int shopGroupId, int rotateGroupId, int pageSize, int pageIndex) {
@@ -153,11 +157,11 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 		newValue.put("rotateGroupId", newRotateGroupId);
 		newValue.put("owner", newUserId);
 
-		boolean isSuccess = rotateGroupUserService.rotateGroupSplitOrMerge(messageType,
-				Lists.newArrayList(oldValue), Lists.newArrayList(newValue)).isSuccess();
+		Response response = rotateGroupUserService.rotateGroupSplitOrMerge(messageType,
+				Lists.newArrayList(oldValue), Lists.newArrayList(newValue));
 
-		if (!isSuccess)
-			throw new ApplicationException("轮转组合/拆分并异常");
+		if (!response.isSuccess())
+			throw new ApplicationException(response.getComment());
 		else
 			rotateGroupShopService.sendMessage(newRotateGroupId, newUserId, Lists.newArrayList(shopId), rotateGroupId, oldUserId);
 	}
