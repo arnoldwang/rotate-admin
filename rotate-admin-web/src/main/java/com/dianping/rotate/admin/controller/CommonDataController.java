@@ -46,7 +46,7 @@ public class CommonDataController {
         SimpleTerritoryRulePropertyTypeMap.put(TerritoryRulePropertyEnum.Province,"province");
         SimpleTerritoryRulePropertyTypeMap.put(TerritoryRulePropertyEnum.ShopStatus,"apolloShopStatus");
         SimpleTerritoryRulePropertyTypeMap.put(TerritoryRulePropertyEnum.Type,"apolloShopType");
-        SimpleTerritoryRulePropertyTypeMap.put(TerritoryRulePropertyEnum.CityID,"cityId");
+        SimpleTerritoryRulePropertyTypeMap.put(TerritoryRulePropertyEnum.CityID,"city");
     }
 
 
