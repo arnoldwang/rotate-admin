@@ -114,10 +114,11 @@ public class ShopController {
         try {
             Integer bizId = (Integer) o.get("bizId");
             List<Map> items = (List<Map>) o.get("selectedItems");
-            return apolloShopService.updateApolloShopTypeByShopIDAndBizID(Lists.transform(items, new Function<Map, Integer>() {
+
+            return apolloShopService.updateApolloShopTypeByRotateGroupID(Lists.transform(items, new Function<Map, Integer>() {
                 @Override
                 public Integer apply(Map input) {
-                    return (Integer) input.get("shopId");
+                    return (Integer) input.get("rotateId");
                 }
             }), bizId, type);
         } catch (Exception e) {
@@ -206,13 +207,6 @@ public class ShopController {
         }
 
         return shopSearchRequest;
-    }
-
-
-     @RequestMapping(value = "/markBigCustomer", method = RequestMethod.POST)
-     @ResponseBody
-     public void markBigCustomer() {
-
     }
 
 

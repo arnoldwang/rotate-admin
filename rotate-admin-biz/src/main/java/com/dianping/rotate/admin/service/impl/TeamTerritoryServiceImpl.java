@@ -10,7 +10,7 @@ import com.dianping.rotate.admin.serviceAgent.ApolloBaseServiceAgent;
 import com.dianping.rotate.org.api.TeamService;
 import com.dianping.rotate.org.dto.Team;
 import com.dianping.rotate.territory.api.TerritoryChiefService;
-import com.dianping.rotate.territory.dto.TerritoryDto;
+import com.dianping.rotate.territory.dto.TerritoryTeamDto;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -86,26 +86,26 @@ public class TeamTerritoryServiceImpl implements TeamTerritoryService {
             return Lists.newArrayList();
         }
 
-        final Map<Integer, TerritoryDto> teamIdToTerritoryMap = rotateTeamTerritoryService.getTeamToTerritoryMap(Lists.transform(teams, new Function<Team, Integer>() {
+        final Map<Integer, TerritoryTeamDto> teamIdToTerritoryMap = rotateTeamTerritoryService.getTeamToTerritoryMap(Lists.transform(teams, new Function<Team, Integer>() {
             @Override
             public Integer apply(Team input) {
                 return input.getTeamID();
             }
         }));
 
-        final Map<Integer, Integer> territoryIdToChiefIdMap = rotateTerritoryChiefService.getTerritoryToChiefMap(Lists.transform(Lists.newArrayList(teamIdToTerritoryMap.values()), new Function<TerritoryDto, Integer>() {
+        final Map<Integer, Integer> territoryIdToChiefIdMap = rotateTerritoryChiefService.getTerritoryToChiefMap(Lists.transform(Lists.newArrayList(teamIdToTerritoryMap.values()), new Function<TerritoryTeamDto, Integer>() {
             @Override
-            public Integer apply(TerritoryDto input) {
-                return input.getId();
+            public Integer apply(TerritoryTeamDto input) {
+                return input.getTerritoryId();
             }
         }));
 
-        List<UserDto> users = userService.queryUserByLoginIDs(Lists.newArrayList(territoryIdToChiefIdMap.values()));
-
-        final Map<Integer, UserDto> chiefIdToChiefMap = Maps.newHashMap();
-        for (UserDto user: users) {
-            chiefIdToChiefMap.put(user.getLoginId(), user);
-        }
+//        List<UserDto> users = userService.queryUserByLoginIDs(Lists.newArrayList(territoryIdToChiefIdMap.values()));
+//
+//        final Map<Integer, UserDto> chiefIdToChiefMap = Maps.newHashMap();
+//        for (UserDto user: users) {
+//            chiefIdToChiefMap.put(user.getLoginId(), user);
+//        }
 
         return Lists.transform(teams, new Function<Team, TeamTerritoryDTO>() {
             @Override
@@ -114,19 +114,22 @@ public class TeamTerritoryServiceImpl implements TeamTerritoryService {
                 dto.setTeamId(input.getTeamID());
                 dto.setTeamName(input.getTeamName());
 
-                TerritoryDto territory = teamIdToTerritoryMap.get(dto.getTeamId());
+
+                TerritoryTeamDto territory = teamIdToTerritoryMap.get(dto.getTeamId());
                 if (territory != null) {
-                    dto.setTerritoryId(territory.getId());
+                    dto.setTerritoryId(territory.getTerritoryId());
                     dto.setTerritoryName(territory.getTerritoryName());
+                    dto.setUpdateTime(territory.getUpdateTime());
+                    dto.setUpdateByName(userService.queryUserByLoginID(territory.getUpdateBy()).getRealName());
 
-                    Integer chiefId = territoryIdToChiefIdMap.get(territory.getId());
-
-                    if (chiefId != null) {
-                        UserDto chief = chiefIdToChiefMap.get(chiefId);
-                        if (chief != null) {
-                            dto.setTerritoryChiefName(chief.getRealName());
-                        }
-                    }
+//                    Integer chiefId = territoryIdToChiefIdMap.get(territory.getId());
+//
+//                    if (chiefId != null) {
+//                        UserDto chief = chiefIdToChiefMap.get(chiefId);
+//                        if (chief != null) {
+//                            dto.setTerritoryChiefName(chief.getRealName());
+//                        }
+//                    }
                 }
                 return dto;
             }

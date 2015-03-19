@@ -1,5 +1,6 @@
 package com.dianping.rotate.admin.serviceAgent;
 
+import com.dianping.rotate.admin.dto.TerritoryRuleExtendDTO;
 import com.dianping.rotate.territory.dto.TerritoryRuleDto;
 import com.dianping.rotate.territory.dto.TerritoryRunHistoryDto;
 
@@ -15,7 +16,7 @@ public interface TerritoryRuleServiceAgent {
      * @param territoryId
      * @return
      */
-    List<TerritoryRuleDto> getExtendsRuleByTerritoryId(Integer territoryId);
+    List<TerritoryRuleExtendDTO> getExtendsRuleByTerritoryId(Integer territoryId);
 
 
     List<TerritoryRuleDto> getOwnerRuleWithItems(Integer territoryId);
@@ -24,7 +25,7 @@ public interface TerritoryRuleServiceAgent {
      * @param territoryId
      * @return
      */
-    List<TerritoryRuleDto> getOwnerRuleByTerritoryId(Integer territoryId);
+    List<TerritoryRuleExtendDTO> getOwnerRuleByTerritoryId(Integer territoryId);
 
     /**
      * 查询战区的规则描述
