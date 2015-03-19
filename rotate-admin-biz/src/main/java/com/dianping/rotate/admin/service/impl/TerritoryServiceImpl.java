@@ -87,6 +87,7 @@ public class TerritoryServiceImpl implements TerritoryService {
                     UserDto chief = chiefIdToChiefMap.get(chiefId);
                     if (chief != null) {
                         output.setTerritoryChiefName(chief.getRealName());
+                        output.setTerritoryChiefDepartmentName(chief.getDepartmentName());
                     }
                 }
 

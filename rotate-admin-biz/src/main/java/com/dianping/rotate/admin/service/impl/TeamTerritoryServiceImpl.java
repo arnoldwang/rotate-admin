@@ -114,19 +114,20 @@ public class TeamTerritoryServiceImpl implements TeamTerritoryService {
                 dto.setTeamId(input.getTeamID());
                 dto.setTeamName(input.getTeamName());
 
+
                 TerritoryDto territory = teamIdToTerritoryMap.get(dto.getTeamId());
                 if (territory != null) {
                     dto.setTerritoryId(territory.getId());
                     dto.setTerritoryName(territory.getTerritoryName());
 
-                    Integer chiefId = territoryIdToChiefIdMap.get(territory.getId());
-
-                    if (chiefId != null) {
-                        UserDto chief = chiefIdToChiefMap.get(chiefId);
-                        if (chief != null) {
-                            dto.setTerritoryChiefName(chief.getRealName());
-                        }
-                    }
+//                    Integer chiefId = territoryIdToChiefIdMap.get(territory.getId());
+//
+//                    if (chiefId != null) {
+//                        UserDto chief = chiefIdToChiefMap.get(chiefId);
+//                        if (chief != null) {
+//                            dto.setTerritoryChiefName(chief.getRealName());
+//                        }
+//                    }
                 }
                 return dto;
             }

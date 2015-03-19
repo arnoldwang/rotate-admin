@@ -40,7 +40,12 @@ public class TeamController {
         return true;
     }
 
-
+    @RequestMapping(value="/unbindTeam", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean unbindTeam(@RequestBody TeamTerritoryDTO dto) {
+        rotateTeamTerritoryService.unbindTeam(dto.getTeamId());
+        return true;
+    }
 
     @RequestMapping(value="/queryAll")
     @ResponseBody

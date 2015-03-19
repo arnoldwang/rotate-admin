@@ -10,6 +10,7 @@ import lombok.Data;
 public class TerritoryExtendDTO extends TerritoryDto {
     private Integer territoryChiefId;
     private String territoryChiefName;
+    private String territoryChiefDepartmentName;
     private Integer notOnlineMutGroupCountLimit;
     private Integer notOnlineSingleGroupCountLimit;
 }

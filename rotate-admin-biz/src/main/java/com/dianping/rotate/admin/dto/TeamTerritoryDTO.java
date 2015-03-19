@@ -1,5 +1,7 @@
 package com.dianping.rotate.admin.dto;
 
+import java.util.Date;
+
 /**
  * Created by yangjie on 1/27/15.
  */
@@ -9,6 +11,24 @@ public class TeamTerritoryDTO {
     private Integer territoryId;
     private String territoryName;
     private String territoryChiefName;
+    private String updateBy;
+    private Date updateTime;
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
     public Integer getTeamId() {
         return teamId;
