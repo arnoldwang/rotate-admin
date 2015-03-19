@@ -117,7 +117,7 @@ public class TeamTerritoryServiceImpl implements TeamTerritoryService {
 
                 TerritoryTeamDto territory = teamIdToTerritoryMap.get(dto.getTeamId());
                 if (territory != null) {
-                    dto.setTerritoryId(territory.getId());
+                    dto.setTerritoryId(territory.getTerritoryId());
                     dto.setTerritoryName(territory.getTerritoryName());
                     dto.setUpdateTime(territory.getUpdateTime());
                     dto.setUpdateByName(userService.queryUserByLoginID(territory.getUpdateBy()).getRealName());
