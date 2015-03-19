@@ -11,15 +11,15 @@ public class TeamTerritoryDTO {
     private Integer territoryId;
     private String territoryName;
     private String territoryChiefName;
-    private String updateBy;
+    private String updateByName;
     private Date updateTime;
 
-    public String getUpdateBy() {
-        return updateBy;
+    public String getUpdateByName() {
+        return updateByName;
     }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
+    public void setUpdateByName(String updateByName) {
+        this.updateByName = updateByName;
     }
 
     public Date getUpdateTime() {
