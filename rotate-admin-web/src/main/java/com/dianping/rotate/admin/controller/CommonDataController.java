@@ -46,7 +46,6 @@ public class CommonDataController {
         SimpleTerritoryRulePropertyTypeMap.put(TerritoryRulePropertyEnum.Province,"province");
         SimpleTerritoryRulePropertyTypeMap.put(TerritoryRulePropertyEnum.ShopStatus,"apolloShopStatus");
         SimpleTerritoryRulePropertyTypeMap.put(TerritoryRulePropertyEnum.Type,"apolloShopType");
-        SimpleTerritoryRulePropertyTypeMap.put(TerritoryRulePropertyEnum.CityID,"city");
     }
 
 
@@ -194,7 +193,7 @@ public class CommonDataController {
         result.put(SimpleTerritoryRulePropertyTypeMap.get(TerritoryRulePropertyEnum.Province), getProvince());
         result.put(SimpleTerritoryRulePropertyTypeMap.get(TerritoryRulePropertyEnum.Type), getApolloShopType());
         result.put(SimpleTerritoryRulePropertyTypeMap.get(TerritoryRulePropertyEnum.ShopStatus), getApolloShopStatus());
-        result.put(SimpleTerritoryRulePropertyTypeMap.get(TerritoryRulePropertyEnum.CityID), getCities());
+        result.put("city", getCities());
         result.put("ruleType", getRuleType());
     }
 
