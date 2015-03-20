@@ -67,11 +67,19 @@ public class TerritoryServiceImpl implements TerritoryService {
 
         final Map<Integer, TerritoryRotateConfigDto> terrtoryIdToConfigMap = territoryRotateConfigService.getTerritoryRotateConfigMap(tids);
 
-        List<UserDto> users = userService.queryUserByLoginIDs(Lists.newArrayList(territoryIdToChiefIdMap.values()));
 
-        final Map<Integer, UserDto> chiefIdToChiefMap = Maps.newHashMap();
-        for (UserDto user: users) {
-            chiefIdToChiefMap.put(user.getLoginId(), user);
+        final Map<Integer, UserDto> userIdToUser = Maps.newHashMap();
+        for (UserDto user: userService.queryUserByLoginIDs(Lists.newArrayList(territoryIdToChiefIdMap.values()))) {
+            userIdToUser.put(user.getLoginId(), user);
+        }
+
+        for (UserDto user: userService.queryUserByLoginIDs(Lists.transform(ts, new Function<TerritoryDto, Integer>() {
+            @Override
+            public Integer apply(TerritoryDto input) {
+                return input.getUpdateBy();
+            }
+        }))) {
+            userIdToUser.put(user.getLoginId(), user);
         }
 
         return Lists.transform(ts, new Function<TerritoryDto, TerritoryExtendDTO>() {
@@ -81,12 +89,18 @@ public class TerritoryServiceImpl implements TerritoryService {
                 output.setId(input.getId());
                 output.setBizId(input.getBizId());
                 output.setTerritoryName(input.getTerritoryName());
+                UserDto updateBy = userIdToUser.get(input.getUpdateBy());
+                if (updateBy != null) {
+                    output.setUpdateByName(updateBy.getRealName());
+                }
+                output.setUpdateTime(input.getUpdateTime());
 
                 Integer chiefId = territoryIdToChiefIdMap.get(input.getId());
                 if (chiefId != null) {
-                    UserDto chief = chiefIdToChiefMap.get(chiefId);
+                    UserDto chief = userIdToUser.get(chiefId);
                     if (chief != null) {
                         output.setTerritoryChiefName(chief.getRealName());
+                        output.setTerritoryChiefDepartmentName(chief.getDepartmentName());
                     }
                 }
 

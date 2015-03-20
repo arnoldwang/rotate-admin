@@ -1,5 +1,6 @@
 package com.dianping.rotate.admin.serviceAgent.Impl;
 
+import com.dianping.ba.base.organizationalstructure.api.user.UserService;
 import com.dianping.combiz.entity.Category;
 import com.dianping.combiz.entity.City;
 import com.dianping.combiz.entity.Region;
@@ -7,7 +8,9 @@ import com.dianping.combiz.service.CategoryService;
 import com.dianping.combiz.service.CityService;
 import com.dianping.combiz.service.ProvinceService;
 import com.dianping.combiz.service.RegionService;
+import com.dianping.rotate.admin.dto.TerritoryRuleExtendDTO;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
+import com.dianping.rotate.admin.framework.BeanMappingService;
 import com.dianping.rotate.admin.serviceAgent.TerritoryRuleServiceAgent;
 import com.dianping.rotate.shop.constants.ApolloShopStatusEnum;
 import com.dianping.rotate.shop.constants.ApolloShopTypeEnum;
@@ -18,6 +21,8 @@ import com.dianping.rotate.territory.dto.TerritoryRuleItemDto;
 import com.dianping.rotate.territory.dto.TerritoryRunHistoryDto;
 import com.dianping.rotate.territory.enums.RuleTypeEnum;
 import com.dianping.rotate.territory.enums.TerritoryRulePropertyEnum;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -47,13 +52,27 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
     @Autowired
     private ProvinceService provinceService;
 
+    @Autowired
+    private BeanMappingService beanMappingService;
+
+    @Autowired
+    private UserService userService;
+
 
     @Override
-    public List<TerritoryRuleDto> getExtendsRuleByTerritoryId(Integer territoryId) {
+    public List<TerritoryRuleExtendDTO> getExtendsRuleByTerritoryId(Integer territoryId) {
         if (territoryId == null || territoryId == 0) {
             throw new ApplicationException("战区ID未指定!");
         }
-        return territoryRuleService.getExtendsRuleByTerritoryId(territoryId);
+
+        return Lists.transform(territoryRuleService.getExtendsRuleByTerritoryId(territoryId), new Function<TerritoryRuleDto, TerritoryRuleExtendDTO>() {
+            @Override
+            public TerritoryRuleExtendDTO apply(TerritoryRuleDto input) {
+                TerritoryRuleExtendDTO t = beanMappingService.transform(input, TerritoryRuleExtendDTO.class);
+                t.setUpdateByName(userService.queryUserByLoginID(input.getUpdateBy()).getRealName());
+                return t;
+            }
+        });
     }
 
     @Override
@@ -65,15 +84,20 @@ public class TerritoryRuleServiceAgentImpl implements TerritoryRuleServiceAgent 
     }
 
     @Override
-    public List<TerritoryRuleDto> getOwnerRuleByTerritoryId(Integer territoryId) {
+    public List<TerritoryRuleExtendDTO> getOwnerRuleByTerritoryId(Integer territoryId) {
         if (territoryId == null || territoryId == 0) {
             throw new ApplicationException("战区ID未指定!");
         }
 
-        return territoryRuleService.getOwnerRuleByTerritoryId(territoryId);
+        return Lists.transform(territoryRuleService.getOwnerRuleByTerritoryId(territoryId), new Function<TerritoryRuleDto, TerritoryRuleExtendDTO>() {
+            @Override
+            public TerritoryRuleExtendDTO apply(TerritoryRuleDto input) {
+                TerritoryRuleExtendDTO t = beanMappingService.transform(input, TerritoryRuleExtendDTO.class);
+                t.setUpdateByName(userService.queryUserByLoginID(input.getUpdateBy()).getRealName());
+                return t;
+            }
+        });
     }
-
-
 
     @Override
     public TerritoryRuleDto queryTerritoryRuleTips(Integer territoryId) {

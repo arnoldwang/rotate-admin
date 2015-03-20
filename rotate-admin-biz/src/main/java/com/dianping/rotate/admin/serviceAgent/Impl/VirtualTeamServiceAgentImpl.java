@@ -129,7 +129,7 @@ public class VirtualTeamServiceAgentImpl implements VirtualTeamServiceAgent {
 
         //bind team territory
         if(virtualTeamVo.getTerritoryId() != null && virtualTeamVo.getTerritoryId()>0) {
-            Response responseTeamTerritory = teamTerritoryService.bind(responseTiger.getObj(), virtualTeamVo.getTerritoryId());
+            Response responseTeamTerritory = teamTerritoryService.bind(responseTiger.getObj(), virtualTeamVo.getTerritoryId(), operatorId);
             if (!responseTeamTerritory.isSuccess()) {
                 throw new ApplicationException(responseTeamTerritory.getComment());
             }

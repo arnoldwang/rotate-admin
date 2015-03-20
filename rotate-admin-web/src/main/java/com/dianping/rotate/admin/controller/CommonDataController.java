@@ -137,8 +137,8 @@ public class CommonDataController {
             @Override
             public Object apply(Category category) {
                 Map map = Maps.newHashMap();
-                map.put("text",category.getName());
-                map.put("value",category.getId());
+                map.put("text", category.getName());
+                map.put("value", category.getId());
                 return map;
             }
         }))     ;
@@ -193,7 +193,20 @@ public class CommonDataController {
         result.put(SimpleTerritoryRulePropertyTypeMap.get(TerritoryRulePropertyEnum.Province), getProvince());
         result.put(SimpleTerritoryRulePropertyTypeMap.get(TerritoryRulePropertyEnum.Type), getApolloShopType());
         result.put(SimpleTerritoryRulePropertyTypeMap.get(TerritoryRulePropertyEnum.ShopStatus), getApolloShopStatus());
+        result.put("city", getCities());
         result.put("ruleType", getRuleType());
+    }
+
+    private Object getCities() {
+        return Lists.transform(cityService.findCities(), new Function<City, Object>() {
+            @Override
+            public Object apply(City city) {
+                Map map = Maps.newHashMap();
+                map.put("text",city.getCityName());
+                map.put("value",city.getCityID());
+                return map;
+            }
+        });
     }
 
     private Object getApolloShopStatus() {

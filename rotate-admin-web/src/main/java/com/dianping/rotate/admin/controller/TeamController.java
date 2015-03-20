@@ -3,6 +3,7 @@ package com.dianping.rotate.admin.controller;
 import com.dianping.rotate.admin.dto.TeamTerritoryDTO;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.service.TeamTerritoryService;
+import com.dianping.rotate.admin.util.LoginUtils;
 import com.dianping.rotate.org.dto.Team;
 import com.dianping.rotate.smt.dto.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class TeamController {
     @RequestMapping(value="/bindTerritory", method = RequestMethod.POST)
     @ResponseBody
     public Boolean bindTerritory(@RequestBody TeamTerritoryDTO dto) {
-        Response<Void> r = rotateTeamTerritoryService.bind(dto.getTeamId(), dto.getTerritoryId());
+        Response<Void> r = rotateTeamTerritoryService.bind(dto.getTeamId(), dto.getTerritoryId(), LoginUtils.getUserLoginId());
         if (!r.isSuccess()) {
             throw new ApplicationException(r.getComment());
         }
@@ -40,7 +41,12 @@ public class TeamController {
         return true;
     }
 
-
+    @RequestMapping(value="/unbindTeam", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean unbindTeam(@RequestBody TeamTerritoryDTO dto) {
+        rotateTeamTerritoryService.unbindTeam(dto.getTeamId());
+        return true;
+    }
 
     @RequestMapping(value="/queryAll")
     @ResponseBody

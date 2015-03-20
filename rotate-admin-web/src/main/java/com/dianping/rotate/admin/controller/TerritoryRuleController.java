@@ -1,6 +1,7 @@
 package com.dianping.rotate.admin.controller;
 
 import com.dianping.remote.share.Translator;
+import com.dianping.rotate.admin.dto.TerritoryRuleExtendDTO;
 import com.dianping.rotate.admin.exceptions.ApplicationException;
 import com.dianping.rotate.admin.serviceAgent.TerritoryRuleServiceAgent;
 import com.dianping.rotate.admin.serviceAgent.TerritoryServiceAgent;
@@ -139,7 +140,7 @@ public class TerritoryRuleController {
      */
     @RequestMapping(value = "/queryOwnerTerritoryRule",method = RequestMethod.GET)
     @ResponseBody
-    public List<TerritoryRuleDto> queryOwnerTerritoryRule(@RequestParam Integer territoryId){
+    public List<TerritoryRuleExtendDTO> queryOwnerTerritoryRule(@RequestParam Integer territoryId){
 
 
         return territoryRuleServiceAgent.getOwnerRuleByTerritoryId(territoryId);
