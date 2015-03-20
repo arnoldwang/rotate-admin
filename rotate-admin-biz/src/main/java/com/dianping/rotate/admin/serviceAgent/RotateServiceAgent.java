@@ -15,5 +15,5 @@ public interface RotateServiceAgent {
 	int getTotalNumOfUserShop(int shopId, int bizId, int cityId);
 
 	List<UserShopInfoDTO> changeOwner(int bizId, int cityId, int salesId, int rotateGroupShopId, int shopId,
-									  int shopGroupId, int rotateGroupId, int pageSize, int pageIndex);
+									  int shopGroupId, int rotateGroupId, int pageSize, int pageIndex, Integer loginId);
 }

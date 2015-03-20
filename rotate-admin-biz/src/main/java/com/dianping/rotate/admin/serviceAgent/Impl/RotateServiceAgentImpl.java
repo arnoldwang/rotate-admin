@@ -104,7 +104,7 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public List<UserShopInfoDTO> changeOwner(int bizId, int cityId, int salesId, int rotateGroupShopId, int shopId,
-											 int shopGroupId, int rotateGroupId, int pageSize, int pageIndex) {
+											 int shopGroupId, int rotateGroupId, int pageSize, int pageIndex, Integer loginId) {
 		List<RotateGroupShopDTO> rotateGroupShopDTOs =
 				rotateGroupShopService.getAllRotateGroupShopByShopGroupIDAndBizIDAndCityID(shopGroupId, bizId, cityId);
 		int newRotateGroupId = 0;
@@ -137,13 +137,13 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 		else if (rotateGroupShopService.getRotateGroupShop(rotateGroupId).size() == 1)//被合并/拆分轮转组从连锁店变单店
 			rotateGroupService.updateTypeUsedBySplitAndMerge(rotateGroupId, 0);
 
-		updateRotateGroupUser(shopId, rotateGroupId, newRotateGroupId, salesId, messageType);
+		updateRotateGroupUser(shopId, rotateGroupId, newRotateGroupId, salesId, messageType, loginId);
 
 		return getUserShopInfo(shopId, bizId, cityId, pageSize, pageIndex);
 	}
 
 	@SuppressWarnings("unchecked")
-	private void updateRotateGroupUser(int shopId, int rotateGroupId, int newRotateGroupId, int newUserId, String messageType) {
+	private void updateRotateGroupUser(int shopId, int rotateGroupId, int newRotateGroupId, int newUserId, String messageType, Integer loginId) {
 		RotateGroupUserDTO oldUser = rotateGroupUserService.findByRotateGroupId(rotateGroupId);
 		Integer oldUserId = null;
 		if (oldUser != null)
@@ -158,7 +158,7 @@ public class RotateServiceAgentImpl implements RotateServiceAgent {
 		newValue.put("owner", newUserId);
 
 		Response response = rotateGroupUserService.rotateGroupSplitOrMerge(messageType,
-				Lists.newArrayList(oldValue), Lists.newArrayList(newValue));
+				Lists.newArrayList(oldValue), Lists.newArrayList(newValue), loginId);
 
 		if (!response.isSuccess())
 			throw new ApplicationException(response.getComment());
