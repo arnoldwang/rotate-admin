@@ -13,4 +13,5 @@ public class TerritoryExtendDTO extends TerritoryDto {
     private String territoryChiefDepartmentName;
     private Integer notOnlineMutGroupCountLimit;
     private Integer notOnlineSingleGroupCountLimit;
+    private String updateByName;
 }

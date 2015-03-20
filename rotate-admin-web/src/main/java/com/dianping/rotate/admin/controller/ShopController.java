@@ -131,24 +131,31 @@ public class ShopController {
     @ResponseBody
     public boolean release(@RequestBody Map o) {
         Integer loginId = LoginUtils.getUserLoginId();
-        try {
-            List<Map> items = (List<Map>) o.get("selectedItems");
+        List<Map> items;
 
-            com.dianping.rotate.smt.dto.Response<Boolean> ret = rotateGroupUserService.batchReleaseToPublic(Lists.transform(items, new Function<Map, Integer>() {
+        try {
+            items = (List<Map>) o.get("selectedItems");
+        } catch (Exception e) {
+            throw new ApplicationException("请传入selectedItems");
+        }
+
+        com.dianping.rotate.smt.dto.Response<Boolean> ret;
+        try {
+            ret = rotateGroupUserService.batchReleaseToPublic(Lists.transform(items, new Function<Map, Integer>() {
                 @Override
                 public Integer apply(Map input) {
                     return (Integer) input.get("rotateId");
                 }
             }), loginId);
-
-            if (ret.isSuccess()) {
-                return ret.getObj();
-            } else {
-                throw new ApplicationException(ret.getComment());
-            }
-
         } catch (Exception e) {
             throw new ApplicationException(e.getMessage());
+        }
+
+
+        if (ret.isSuccess()) {
+            return ret.getObj();
+        } else {
+            throw new ApplicationException(ret.getComment());
         }
     }
 
@@ -156,25 +163,32 @@ public class ShopController {
     @ResponseBody
     public boolean transfer(@RequestBody Map o) {
         Integer loginId = LoginUtils.getUserLoginId();
+        Integer salesId;
+        List<Map> items;
         try {
-            Integer salesId = (Integer) o.get("salesId");
-            List<Map> items = (List<Map>) o.get("selectedItems");
+             salesId = (Integer) o.get("salesId");
+             items = (List<Map>) o.get("selectedItems");
+        } catch (Exception e) {
+            throw new ApplicationException("请传入selectedItems和salesId");
+        }
 
-            com.dianping.rotate.smt.dto.Response<Boolean> ret = rotateGroupUserService.batchTransfer(Lists.transform(items, new Function<Map, Integer>() {
+        com.dianping.rotate.smt.dto.Response<Boolean> ret;
+
+        try {
+            ret = rotateGroupUserService.batchTransfer(Lists.transform(items, new Function<Map, Integer>() {
                 @Override
                 public Integer apply(Map input) {
                     return (Integer) input.get("rotateId");
                 }
             }), salesId, loginId);
-
-            if (ret.isSuccess()) {
-                return ret.getObj();
-            } else {
-                throw new ApplicationException(ret.getComment());
-            }
-
         } catch (Exception e) {
             throw new ApplicationException(e.getMessage());
+        }
+
+        if (ret.isSuccess()) {
+            return ret.getObj();
+        } else {
+            throw new ApplicationException(ret.getComment());
         }
     }
 
@@ -236,6 +250,7 @@ public class ShopController {
             if (StringUtils.isEmpty(sBigCustomers)) {
                 return false;
             }
+
             String[] bigCustomers = sBigCustomers.split("\\s");
             return Arrays.asList(bigCustomers).contains(bizId);
         }
@@ -243,6 +258,10 @@ public class ShopController {
         public String getTerritoryName() {
             Integer bizId = Integer.valueOf(this.bizId);
             String sTerritoryIds = record.get("territoryids");
+            if (StringUtils.isEmpty(sTerritoryIds)) {
+                return null;
+            }
+
             String[] territoryIds = sTerritoryIds.split("\\s");
 
             List<TerritoryDto> territoryDtos = territoryService.batchQuery(Lists.transform(Arrays.asList(territoryIds), new Function<String, Integer>() {
@@ -284,6 +303,7 @@ public class ShopController {
             if (sFields == null) {
                 return null;
             }
+
             String[] fields = sFields.split("\\s");
             for (String field: fields) {
                 String[] pair = field.split(":");
