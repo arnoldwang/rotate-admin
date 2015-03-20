@@ -4,6 +4,7 @@ import com.dianping.rotate.admin.dto.UserShopInfoDTO;
 import com.dianping.rotate.admin.model.ShopModel;
 import com.dianping.rotate.admin.model.UserShopModel;
 import com.dianping.rotate.admin.serviceAgent.RotateServiceAgent;
+import com.dianping.rotate.admin.util.LoginUtils;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,11 +43,12 @@ public class RotateController {
 	@RequestMapping(value = "/changeOwner", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> changeOwner(@RequestBody UserShopModel userShopModel){
+		Integer loginId = LoginUtils.getUserLoginId();
 		Map<String, Object> result = Maps.newHashMap();
 		List<UserShopInfoDTO> userShopInfoDTOs = rotateServiceAgent.changeOwner(userShopModel.getBizID(),
 				userShopModel.getCityID(), userShopModel.getSalesID(),userShopModel.getRotateGroupShopID(),
 				userShopModel.getShopID(), userShopModel.getShopGroupID(), userShopModel.getRotateGroupID(),
-				userShopModel.getPageSize(), userShopModel.getPageIndex());
+				userShopModel.getPageSize(), userShopModel.getPageIndex(), loginId);
 		int total = rotateServiceAgent.getTotalNumOfUserShop(userShopModel.getShopID(), userShopModel.getBizID(),
 				userShopModel.getCityID());
 
