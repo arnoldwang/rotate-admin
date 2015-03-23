@@ -14,6 +14,7 @@ import com.dianping.combiz.util.CodeConstants;
 import com.dianping.rotate.admin.serviceAgent.ApolloBaseServiceAgent;
 import com.dianping.rotate.admin.serviceAgent.CategoryServiceAgent;
 import com.dianping.rotate.admin.serviceAgent.UserServiceAgent;
+import com.dianping.rotate.admin.utils.AssembleBuOptionsUtils;
 import com.dianping.rotate.shop.constants.ApolloShopStatusEnum;
 import com.dianping.rotate.shop.constants.ApolloShopTypeEnum;
 import com.dianping.rotate.territory.enums.RuleTypeEnum;
@@ -195,6 +196,11 @@ public class CommonDataController {
         result.put(SimpleTerritoryRulePropertyTypeMap.get(TerritoryRulePropertyEnum.ShopStatus), getApolloShopStatus());
         result.put("city", getCities());
         result.put("ruleType", getRuleType());
+        result.put("buCategory", getBuCategory());
+    }
+
+    private Object getBuCategory() {
+        return AssembleBuOptionsUtils.getBuOptions();
     }
 
     private Object getCities() {

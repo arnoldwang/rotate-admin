@@ -7,4 +7,10 @@ public class ConfigUtils {
     public static boolean isWantResignation() {
         return PropertiesLoaderSupportUtils.getBoolProperty("rotate-admin-web.userService.wantResignation", false);
     }
+
+    public static String getBuAssnCheckBox() {
+        return PropertiesLoaderSupportUtils.getProperty("rotate-admin-web.buAssnCheckBox");
+    }
+
+
 }

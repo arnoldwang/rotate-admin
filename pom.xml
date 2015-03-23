@@ -43,6 +43,7 @@
         <cas.client.core.product.version>3.2.1-memcached.STABLE.4</cas.client.core.product.version>
         <rotate-core-api.version>0.1.0-SNAPSHOT</rotate-core-api.version>
         <arts.version>1.2.9</arts.version>
+        <customer.data.api.version>1.1.2</customer.data.api.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -51,7 +52,11 @@
                 <artifactId>arts-client</artifactId>
                 <version>${arts.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.dianping</groupId>
+                <artifactId>customer-data-api</artifactId>
+                <version>${customer.data.api.version}</version>
+            </dependency>
             <dependency>
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer</artifactId>

@@ -20,6 +20,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,7 @@ import java.util.Map;
 @RequestMapping("/shop")
 public class ShopController {
     @Autowired
+    @Qualifier("rotateSearchService")
     private SearchService searchService;
 
     @Autowired
