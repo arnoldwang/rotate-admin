@@ -26,8 +26,6 @@ public class Report {
     @ResponseBody
     public Map<String, Object> queryShopInfo(@RequestBody SearchShopVo searchShopVo){
 
-
-
         Map<String, Object> result = crossBuShopReportServiceAgent.getCrossBuShopReport(searchShopVo);
 
         return result;

@@ -10,12 +10,12 @@ import java.util.Map;
  */
 public enum BuOptionsEnum {
 
-    WEDDING(1,"结婚"),
-    FILM(2,"电影"),
-    HOTEL(3,"酒店"),
-    JY(4,"交易平台"),
-    TG(5,"推广"),
-    YD(6,"预订");
+    WEDDING(105,"结婚"),
+    FILM(102,"电影"),
+    HOTEL(103,"酒店"),
+    JY(101,"交易平台"),
+    TG(104,"推广"),
+    YD(106,"预订");
 
     private int id;
     private String desc;
