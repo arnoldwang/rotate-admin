@@ -30,7 +30,7 @@ public class CrossBuShopReportServiceAgentImpl implements CrossBuShopReportServi
         if(CollectionUtils.isEmpty(searchShopVo.getBus()) || searchShopVo.getBizId() ==null) throw new ApplicationException("请选择BizId");
 
         try {
-            Map<String, Object> conditions = gererateConditions(searchShopVo.getBizId(), searchShopVo.getBus());
+            Map<String, Object> conditions = generateConditions(searchShopVo.getBizId(), searchShopVo.getBus());
 
             PageModel pageModel = crossBuShopReportService.getCrossBuShopReport(conditions,searchShopVo.getPageIndex(),searchShopVo.getPageSize());
 
@@ -47,10 +47,10 @@ public class CrossBuShopReportServiceAgentImpl implements CrossBuShopReportServi
         }
     }
 
-    private Map<String, Object> gererateConditions(Integer bizId, List<Integer> bus) {
+    private Map<String, Object> generateConditions(Integer bizId, List<Integer> bus) {
         Map<String,Object> conditions = new HashMap<String, Object>();
 
-        conditions.put("bizId",bizId);
+        conditions.put("biz_id",bizId);
 
         conditions.put("sales_biz_id",bus);
         return conditions;
